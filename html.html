@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" class="lang-btn">English</a></li>
+                <li><a href="#" class="lang-btn">Spanish</a></li>
+                <li><a href="#" class="lang-btn">French</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <section class="tracker-section">
+                <h2>Step Count: <span id="step-count">0</span></h2>
+                <h2>Water Intake: <span id="water-intake">0</span> mL</h2>
+            </section>
+            <section class="medicine-section">
+                <h2>Medicine Intake</h2>
+                <form>
+                    <input type="text" id="medicine-name" placeholder="Medicine Name">
+                    <input type="time" id="medicine-time" placeholder="Time">
+                    <button id="set-medicine-btn">Set Reminder</button>
+                </form>
+            </section>
+            <section class="appointment-section">
+                <h2>Doctor's Appointment</h2>
+                <form>
+                    <input type="date" id="appointment-date" placeholder="Date">
+                    <input type="time" id="appointment-time" placeholder="Time">
+                    <button id="set-appointment-btn">Set Reminder</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
