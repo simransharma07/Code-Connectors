@@ -1,51 +1,29 @@
-// Get elements
-const stepCountElement = document.getElementById('step-count');
-const waterIntakeElement = document.getElementById('water-intake');
-const medicineNameInput = document.getElementById('medicine-name');
-const medicineTimeInput = document.getElementById('medicine-time');
-const setMedicineBtn = document.getElementById('set-medicine-btn');
-const appointmentDateInput = document.getElementById('appointment-date');
-const appointmentTimeInput = document.getElementById('appointment-time');
-const setAppointmentBtn = document.getElementById('set-appointment-btn');
+document.addEventListener("DOMContentLoaded", function () {
+    const feedbackModal = document.getElementById('feedback-modal');
+    const openFeedbackBtn = document.getElementById('open-feedback-btn');
+    const closeButton = document.querySelector(".close-btn");
+    const cancelButton = document.querySelector(".cancel-btn");
 
-// Initialize variables
-let stepCount = 0;
-let waterIntake = 0;
-let medicineReminders = [];
-let appointmentReminders = [];
+    // Open feedback modal
+    openFeedbackBtn.addEventListener("click", function () {
+        feedbackModal.style.display = "flex";
+    });
 
-// Add event listeners
-setMedicineBtn.addEventListener('click', setMedicineReminder);
-setAppointmentBtn.addEventListener('click', setAppointmentReminder);
+    // Close feedback modal
+    function closePopup() {
+        feedbackModal.style.display = "none";
+    }
 
-// Functions
-function setMedicineReminder() {
-    const medicineName = medicineNameInput.value;
-const medicineTime = medicineTimeInput.value;
-medicineReminders.push({ name: medicineName, time: medicineTime });
-console.log(medicineReminders);
-medicineNameInput.value = '';
-medicineTimeInput.value = '';
-}
+    closeButton.addEventListener("click", closePopup);
+    cancelButton.addEventListener("click", closePopup);
 
-function setAppointmentReminder() {
-    const appointmentDate = appointmentDateInput.value;
-    const appointmentTime = appointmentTimeInput.value;
-    appointmentReminders.push({ date: appointmentDate, time: appointmentTime });
-    console.log(appointmentReminders);
-    appointmentDateInput.value = '';
-    appointmentTimeInput.value = '';
-}
+    // Emoji Selection
+    const emojis = document.querySelectorAll(".emoji");
+    emojis.forEach(emoji => {
+        emoji.addEventListener("click", function () {
+            emojis.forEach(e => e.classList.remove("selected"));
+            this.classList.add("selected");
+        });
+    });
+});
 
-// Update step count and water intake display
-function updateDisplay() {
-    stepCountElement.textContent = stepCount;
-    waterIntakeElement.textContent = waterIntake + ' mL';
-}
-
-// Simulate step count and water intake increase
-setInterval(() => {
-    stepCount++;
-    waterIntake += 100;
-    updateDisplay();
-}, 1000);
