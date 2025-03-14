@@ -1,15 +1,16 @@
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    text-align: center;
 }
 
 header {
     background-color: #333;
     color: #fff;
     padding: 1em;
-    text-align: center;
 }
 
 nav ul {
@@ -44,27 +45,6 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tracker-section {
-    background-color: #f7f7f7;
-    padding: 1em;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.medicine-section {
-    background-color: #f7f7f7;
-    padding: 1em;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.appointment-section {
-    background-color: #f7f7f7;
-    padding: 1em;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
 button {
     background-color: #333;
     color: #fff;
@@ -72,8 +52,68 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    margin: 10px;
 }
 
 button:hover {
     background-color: #555;
+}
+
+/* Feedback Modal */
+.feedback-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback-container {
+    background: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    border: colour #27ae60;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+/* Emoji Rating */
+.emoji-rating {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.emoji {
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.emoji.selected {
+    opacity: 1;
+    transform: scale(1.2);
 }
