@@ -6,14 +6,6 @@
     font-family: Arial, sans-serif;
 }
 
-body {
-    background: url("https://source.unsplash.com/1600x900/?health,fitness") no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
 /* Login and Dashboard Containers */
 .login-container, .dashboard-container {
