@@ -1,3 +1,19 @@
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevents page reload
+    
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (username.trim() !== "" && password.trim() !== "") {
+        document.getElementById("loginPage").style.display = "none"; // Hide login
+        document.getElementById("dashboardPage").style.display = "block"; // Show dashboard
+    } else {
+        alert("Please enter valid credentials.");
+    }
+});
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const feedbackModal = document.getElementById('feedback-modal');
     const openFeedbackBtn = document.getElementById('open-feedback-btn');
