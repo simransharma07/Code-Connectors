@@ -172,6 +172,19 @@ button:hover {
 .close-btn:hover {
     color: red;
 }
+/* Time Picker Styles */
+.time-picker {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.time-picker select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
 
 /* Emoji Rating */
 .emoji-rating {
