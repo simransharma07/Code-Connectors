@@ -59,8 +59,17 @@
                 <h2>Medicine Intake</h2>
                 <form>
                     <input type="text" id="medicine-name" placeholder="Medicine Name">
-                    <input type="time" id="medicine-time" placeholder="Time">
-                    <button type="button" id="set-medicine-btn">Set Reminder</button>
+                    <!-- Replaced input type="time" with a custom time picker -->
+                        <div class="time-picker">
+                            <select id="medicine-hour"></select>
+                            <select id="medicine-minute"></select>
+                            <select id="medicine-ampm">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
+                
+                        <button type="button" id="set-medicine-btn">Set Reminder</button>
                 </form>
             </section>
 
@@ -68,7 +77,15 @@
                 <h2>Doctor's Appointment</h2>
                 <form>
                     <input type="date" id="appointment-date">
-                    <input type="time" id="appointment-time">
+                    <!-- Replaced input type="time" with a custom time picker -->
+                        <div class="time-picker">
+                            <select id="appointment-hour"></select>
+                            <select id="appointment-minute"></select>
+                            <select id="appointment-ampm">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
                     <button type="button" id="set-appointment-btn">Set Reminder</button>
                 </form>
             </section>
