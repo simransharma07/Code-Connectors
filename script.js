@@ -12,8 +12,6 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     }
 });
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const feedbackModal = document.getElementById('feedback-modal');
     const openFeedbackBtn = document.getElementById('open-feedback-btn');
@@ -55,14 +53,13 @@ document.addEventListener("DOMContentLoaded", function () {
 // Set Reminders
 document.getElementById("set-medicine-btn").addEventListener("click", function () {
     let medicineName = document.getElementById("medicine-name").value;
-    let medicineTime = document.getElementById("medicine-time").value;
+    let medicineHour = document.getElementById("medicine-hour").value;
+    let medicineMinute = document.getElementById("medicine-minute").value;
+    let medicineAmPm = document.getElementById("medicine-ampm").value;
+    
     
     if (medicineName.trim() !== "") {
-        let reminderMessage = `Reminder set for ${medicineName}`;
-        if (medicineTime) {
-            reminderMessage += ` at ${medicineTime}`;
-        }
-        alert(reminderMessage);
+        alert(`Reminder set for ${medicineName} at ${medicineHour}:${medicineMinute} ${medicineAmPm}`);
     } else {
         alert("Please enter medicine name.");
     }
@@ -70,35 +67,52 @@ document.getElementById("set-medicine-btn").addEventListener("click", function (
 
 document.getElementById("set-appointment-btn").addEventListener("click", function () {
     let appointmentDate = document.getElementById("appointment-date").value;
-    let appointmentTime = document.getElementById("appointment-time").value;
-    if (appointmentDate.trim() !== "" && appointmentTime.trim() !== "") {
-        alert(`Appointment set for ${appointmentDate} at ${appointmentTime}`);
+    let appointmentHour = document.getElementById("appointment-hour").value;
+    let appointmentMinute = document.getElementById("appointment-minute").value;
+    let appointmentAmPm = document.getElementById("appointment-ampm").value;
+    if (appointmentDate.trim() !== "") {
+        alert(`Appointment set for ${appointmentDate} at ${appointmentHour}:${appointmentMinute} ${appointmentAmPm}`);
     } else {
-        alert("Please select appointment date and time.");
+        alert("Please select an appointment date.");
     }
 });
 
-// Clock-style Time Selection
 document.addEventListener("DOMContentLoaded", function () {
-    const medicineTimeContainer = document.getElementById("medicine-time-container");
-    
-    let timePicker = document.createElement("select");
-    timePicker.id = "medicine-time";
-    timePicker.classList.add("time-picker");
-    
-    for (let hour = 0; hour < 24; hour++) {
-        for (let min = 0; min < 60; min += 5) {
-            let formattedHour = hour.toString().padStart(2, '0');
-            let formattedMin = min.toString().padStart(2, '0');
+    function populateTimeDropdowns(hourId, minuteId, ampmId) {
+        let hourSelect = document.getElementById(hourId);
+        let minuteSelect = document.getElementById(minuteId);
+        let ampmSelect = document.getElementById(ampmId);
+        // Clear previous options to avoid duplicates
+        hourSelect.innerHTML = "";
+        minuteSelect.innerHTML = "";
+        ampmSelect.innerHTML = "";
+        for (let i = 1; i <= 12; i++) {
             let option = document.createElement("option");
-            option.value = `${formattedHour}:${formattedMin}`;
-            option.textContent = `${formattedHour}:${formattedMin}`;
-            timePicker.appendChild(option);
+            option.value = i;
+            option.textContent = i;
+            hourSelect.appendChild(option);
         }
+
+        for (let i = 0; i < 60; i++) {
+            let option = document.createElement("option");
+            option.value = i.toString().padStart(2, '0');
+            option.textContent = i.toString().padStart(2, '0');
+            minuteSelect.appendChild(option);
+        }
+
+        ["AM", "PM"].forEach(ampm => {
+            let option = document.createElement("option");
+            option.value = ampm;
+            option.textContent = ampm;
+            ampmSelect.appendChild(option);
+        });
     }
-    
-    medicineTimeContainer.appendChild(timePicker);
+
+    populateTimeDropdowns("medicine-hour", "medicine-minute", "medicine-ampm");
+    populateTimeDropdowns("appointment-hour", "appointment-minute", "appointment-ampm");
 });
+    
+    
 
 
 
