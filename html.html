@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <!-- Login Page -->
      <div class="login-container" id="loginPage">
         <div class="login-box">
@@ -47,6 +48,17 @@
         </div>
 
     
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" class="lang-btn">English</a></li>
+                <li><a href="#" class="lang-btn">Spanish</a></li>
+                <li><a href="#" class="lang-btn">French</a></li>
+            </ul>
+        </nav>
+    </header>
+
     
     <main>
         <div class="container">
@@ -59,6 +71,7 @@
                 <h2>Medicine Intake</h2>
                 <form>
                     <input type="text" id="medicine-name" placeholder="Medicine Name">
+
                     <!-- Replaced input type="time" with a custom time picker -->
                         <div class="time-picker">
                             <select id="medicine-hour"></select>
@@ -70,6 +83,10 @@
                         </div>
                 
                         <button type="button" id="set-medicine-btn">Set Reminder</button>
+
+                    <input type="time" id="medicine-time" placeholder="Time">
+                    <button type="button" id="set-medicine-btn">Set Reminder</button>
+
                 </form>
             </section>
 
@@ -77,6 +94,7 @@
                 <h2>Doctor's Appointment</h2>
                 <form>
                     <input type="date" id="appointment-date">
+
                     <!-- Replaced input type="time" with a custom time picker -->
                         <div class="time-picker">
                             <select id="appointment-hour"></select>
@@ -86,6 +104,9 @@
                                 <option value="PM">PM</option>
                             </select>
                         </div>
+
+                    <input type="time" id="appointment-time">
+
                     <button type="button" id="set-appointment-btn">Set Reminder</button>
                 </form>
             </section>
@@ -134,3 +155,9 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+ 
+ 
+

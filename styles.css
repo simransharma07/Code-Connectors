@@ -1,4 +1,5 @@
 
+
 * {
     margin: 0;
     padding: 0;
@@ -172,6 +173,7 @@ button:hover {
 .close-btn:hover {
     color: red;
 }
+
 /* Time Picker Styles */
 .time-picker {
     display: flex;
