@@ -9,16 +9,23 @@
 
 
 /* Login and Dashboard Containers */
-.login-container, .dashboard-container {
+/* Center login and dashboard */
+.login-container,
+.dashboard-container {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     width: 350px;
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-h2, h3 {
+h2, 
+h3 {
     color: #2c3e50;
     margin-bottom: 10px;
 }
@@ -29,7 +36,9 @@ label {
     margin-top: 10px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -56,31 +65,47 @@ textarea {
     background-color: #219150;
 }
 
-.logout-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
+/* Feedback Modal */
+.feedback-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.logout-btn:hover {
-    background-color: #c0392b;
-}
-
-.section {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+/* Feedback Container */
+.feedback-container {
+    background: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
+    position: relative;
+}
+/* Emoji Rating */
+.emoji-rating {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.emoji {
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.emoji.selected {
+    opacity: 1;
+    transform: scale(1.2);
 }
 
 header {
@@ -104,76 +129,6 @@ nav li {
     color: #fff;
     text-decoration: none;
 }
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2em;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-/* Feedback Modal */
-.feedback-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.feedback-container {
-    background: white;
-    width: 400px;
-    padding: 20px;
-    border-radius: 10px;
-    border: colour #27ae60;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    position: relative;
-}
-
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.close-btn:hover {
-    color: red;
-}
-
 /* Time Picker Styles */
 .time-picker {
     display: flex;
@@ -181,29 +136,5 @@ button:hover {
     margin-top: 5px;
 }
 
-.time-picker select {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
 
-/* Emoji Rating */
-.emoji-rating {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-}
 
-.emoji {
-    font-size: 24px;
-    cursor: pointer;
-    opacity: 0.5;
-    transition: 0.3s;
-}
-
-.emoji.selected {
-    opacity: 1;
-    transform: scale(1.2);
-}
