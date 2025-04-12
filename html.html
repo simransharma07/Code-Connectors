@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Wrapper to manage layout switching -->
+    <div id="app">
 
     <!-- Login Page -->
      <div class="login-container" id="loginPage">
@@ -36,92 +38,92 @@
   
      <!-- Dashboard (Initially Hidden) -->
     <div class="dashboard-container" id="dashboardPage" style="display: none;">
-        <h2>Welcome to Your Health Dashboard</h2>
-        
-        <!-- Language Change -->
-        <div class="section">
-            <label for="language">Select Language:</label>
-            <select id="language">
-                <option value="english">English</option>
-                <option value="hindi">Hindi</option>
-                <option value="spanish">Spanish</option>
-            </select>
-        </div>
-
-    
-
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#" class="lang-btn">English</a></li>
-                <li><a href="#" class="lang-btn">Spanish</a></li>
-                <li><a href="#" class="lang-btn">French</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    
-    <main>
-        <div class="container">
-            <section class="tracker-section">
-                <h2>Step Count: <span id="step-count">0</span></h2>
-                <h2>Water Intake: <span id="water-intake">0</span> mL</h2>
-            </section>
-
-            <section class="medicine-section">
-                <h2>Medicine Intake</h2>
-                <form>
-                    <input type="text" id="medicine-name" placeholder="Medicine Name">
-
-                    <!-- Replaced input type="time" with a custom time picker -->
-                        <div class="time-picker">
-                            <select id="medicine-hour"></select>
-                            <select id="medicine-minute"></select>
-                            <select id="medicine-ampm">
-                                <option value="AM">AM</option>
-                                <option value="PM">PM</option>
-                            </select>
+        <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="#">🏠 Home</a></li>
+                        <li><a href="#">📊 Stats</a></li>
+                        <li><a href="#">📅 Appointments</a></li>
+                        <li><a href="#">⚙ Settings</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            <!-- Main Content -->
+            <main class="dashboard-content">
+                <header>
+                    <h1>Welcome to Your Health Dashboard</h1>
+                    <div class="profile">
+                        <span>You</span>
+                        <img src="profile-placeholder.png" alt="Profile Picture" />
+                    </div>
+                </header>
+                <section class="activity-section">
+                    <h2>Find Your Activity</h2>
+                    <div class="activity-cards">
+                        <div class="activity-card">
+                            <img src="yoga-placeholder.png" alt="Yoga" />
+                            <h3>🧘 Yoga</h3>
+                            <p>60 minutes - 430 kcal/hour</p>
+                            <button>Try It Now</button>
                         </div>
-                
-                        <button type="button" id="set-medicine-btn">Set Reminder</button>
-
-                    <input type="time" id="medicine-time" placeholder="Time">
-                    <button type="button" id="set-medicine-btn">Set Reminder</button>
-
-                </form>
-            </section>
-
-            <section class="appointment-section">
-                <h2>Doctor's Appointment</h2>
-                <form>
-                    <input type="date" id="appointment-date">
-
-                    <!-- Replaced input type="time" with a custom time picker -->
-                        <div class="time-picker">
-                            <select id="appointment-hour"></select>
-                            <select id="appointment-minute"></select>
-                            <select id="appointment-ampm">
-                                <option value="AM">AM</option>
-                                <option value="PM">PM</option>
-                            </select>
+                        <div class="activity-card">
+                            <img src="cardio-placeholder.png" alt="Cardio" />
+                            <h3>🏃‍♂️ Cardio</h3>
+                            <p>60 minutes - 500 kcal/hour</p>
+                            <button>Try It Now</button>
                         </div>
+                        <!-- New Activity Cards for Sleep and Water Intake -->
+                        <div class="activity-card sleep">
+                            <h3>🛏️ Sleep</h3>
+                            <button>Track Sleep</button>
+                        </div>
+                        <div class="activity-card water">
+                            <h3>💧 Water Intake</h3>
+                            <button>Track Water</button>
+                        </div>
+                    </div>
+                </section>
 
-                    <input type="time" id="appointment-time">
+                <section class="stats-section">
+                    <h2>📈 Statistics</h2>
+                    <div class="stats-chart">
+                        <!-- Placeholder for statistics chart -->
+                    </div>
+                    <ul class="stats-info">
+                        <li>🏋️ Training: 2 hours/week</li>
+                        <li>🚶 Steps: 24 km/week</li>
+                        <li>🔥 Calories Burned: 5467 kcal/week</li>
+                    </ul>
+                </section>
 
-                    <button type="button" id="set-appointment-btn">Set Reminder</button>
-                </form>
-            </section>
-        </div>
+                <section class="medicine-section">
+                    <h2>💊 Medicine Intake</h2>
+                    <form id="medicine-form">
+                        <input type="text" id="medicine-name" placeholder="Medicine Name" required />
+                        <input type="time" id="medicine-time" required />
+                        <button type="submit">Set Reminder</button>
+                    </form>
+                </section>
 
+                <section class="appointment-section">
+                    <h2>🩺 Doctor's Appointment</h2>
+                    <form id="appointment-form">
+                        <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
+                        <input type="date" id="appointment-date" required />
+                        <input type="time" id="appointment-time" required />
+                        <button type="submit">Set Reminder</button>
+                    </form>
+                </section>
         <!-- Feedback Button -->
-        <button id="open-feedback-btn">Give Feedback</button>
+        <button id="open-feedback-btn">📝 Give Feedback</button>
 
         <!-- Feedback Modal (Initially Hidden) -->
         <div id="feedback-modal" class="feedback-modal" style="display: none;">
             <div class="feedback-container">
-                <button class="close-btn" onclick="closePopup()">❌</button>
+                <button class="close-btn" >❌</button>
                 
-                <h2>Give feedback</h2>
+                <h2>Give Feedback</h2>
                 <p>What do you think of Beeptech?</p>
 
                 <!-- Emoji rating -->
@@ -134,8 +136,9 @@
                 </div>
 
                 <!-- Feedback input -->
-                <textarea placeholder="Do you have any thoughts you’d like to share?"></textarea>
-
+                        <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
+                        <!-- Feedback warning message -->
+                        <p id="warningMessage" style="color: red; font-size: 14px;"></p>
                 <!-- Follow-up question -->
                 <p>May we follow up on your feedback?</p>
                 <div class="follow-up">
@@ -146,12 +149,14 @@
                 <!-- Buttons -->
                 <div class="buttons">
                     <button class="send-btn">Send</button>
-                    <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+                    <button class="cancel-btn">Cancel</button>
                 </div>
             </div>
         </div>
 
     </main>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
