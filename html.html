@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Wrapper to manage layout switching -->
     <div id="app">
 
-    <!-- Login Page -->
-     <div class="login-container" id="loginPage">
-        <div class="login-box">
-            <img src="Screenshot 2025-03-10 210211.png" alt="BEEPTECH" class="logo">
+        <!-- Login Page -->
+        <div class="login-container" id="loginPage">
+            <div class="login-box">
+                <img src="Screenshot 2025-03-10 210211.png" alt="BEEPTECH" class="logo">
 
-            <h2>Welcome to BEEPTECH</h2>
-            <p>Track your health & wellness in one place</p>
-             <form id="loginForm" action="#" method="POST"> 
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter Username" required> 
-                
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter Password" required>
-                
-                <div class="remember">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember Me</label>
-                </div>
+                <h2>Welcome to BEEPTECH</h2>
+                <p>Track your health & wellness in one place</p>
+                <form id="loginForm" action="#" method="POST">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter Username" required>
 
-                <button type="submit" class="btn">Sign In</button>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter Password" required>
 
-                <p><a href="#">Forgot Password?</a></p>
-            </form>
+                    <div class="remember">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember Me</label>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+
+                    <p><a href="#">Forgot Password?</a></p>
+                </form>
+            </div>
         </div>
-    </div>
         <!-- New dashboard updated -->
-  
-     <!-- Dashboard (Initially Hidden) -->
-    <div class="dashboard-container" id="dashboardPage" style="display: none;">
-        <!-- Sidebar -->
+
+        <!-- Dashboard (Initially Hidden) -->
+        <div class="dashboard-container" id="dashboardPage" style="display: none;">
+            <!-- Sidebar -->
             <aside class="sidebar">
                 <nav>
                     <ul>
@@ -116,55 +118,49 @@
                         <button type="submit">Set Reminder</button>
                     </form>
                 </section>
-        <!-- Feedback Button -->
-        <button id="open-feedback-btn">📝 Give Feedback</button>
+                <!-- Feedback Button -->
+                <button id="open-feedback-btn">📝 Give Feedback</button>
 
-        <!-- Feedback Modal (Initially Hidden) -->
-        <div id="feedback-modal" class="feedback-modal" style="display: none;">
-            <div class="feedback-container">
-                <button class="close-btn" >❌</button>
-                
-                <h2>Give Feedback</h2>
-                <p>What do you think of Beeptech?</p>
+                <!-- Feedback Modal (Initially Hidden) -->
+                <div id="feedback-modal" class="feedback-modal" style="display: none;">
+                    <div class="feedback-container">
+                        <button class="close-btn">❌</button>
 
-                <!-- Emoji rating -->
-                <div class="emoji-rating">
-                    <span class="emoji" data-value="1">😠</span>
-                    <span class="emoji" data-value="2">🙁</span>
-                    <span class="emoji" data-value="3">😐</span>
-                    <span class="emoji selected" data-value="4">🙂</span>
-                    <span class="emoji" data-value="5">😀</span>
-                </div>
+                        <h2>Give Feedback</h2>
+                        <p>What do you think of Beeptech?</p>
 
-                <!-- Feedback input -->
-                        <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
+                        <!-- Emoji rating -->
+                        <div class="emoji-rating">
+                            <span class="emoji" data-value="1">😠</span>
+                            <span class="emoji" data-value="2">🙁</span>
+                            <span class="emoji" data-value="3">😐</span>
+                            <span class="emoji selected" data-value="4">🙂</span>
+                            <span class="emoji" data-value="5">😀</span>
+                        </div>
+
+                        <!-- Feedback input -->
+                        <textarea id="feedback-text"
+                            placeholder="Do you have any thoughts you’d like to share?"></textarea>
                         <!-- Feedback warning message -->
                         <p id="warningMessage" style="color: red; font-size: 14px;"></p>
-                <!-- Follow-up question -->
-                <p>May we follow up on your feedback?</p>
-                <div class="follow-up">
-                    <label><input type="radio" name="follow-up" value="yes" checked> Yes</label>
-                    <label><input type="radio" name="follow-up" value="no"> No</label>
-                </div>
+                        <!-- Follow-up question -->
+                        <p>May we follow up on your feedback?</p>
+                        <div class="follow-up">
+                            <label><input type="radio" name="follow-up" value="yes" checked> Yes</label>
+                            <label><input type="radio" name="follow-up" value="no"> No</label>
+                        </div>
 
-                <!-- Buttons -->
-                <div class="buttons">
-                    <button class="send-btn">Send</button>
-                    <button class="cancel-btn">Cancel</button>
+                        <!-- Buttons -->
+                        <div class="buttons">
+                            <button class="send-btn">Send</button>
+                            <button class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-    </main>
+            </main>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
+
 </html>
-
-
-
- 
- 
-
