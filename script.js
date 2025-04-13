@@ -2,149 +2,120 @@
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevents page reload
     
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+const username = document.getElementById("username").value.trim();
+const password = document.getElementById("password").value.trim();
 
-    if (username.trim() !== "" && password.trim() !== "") {
-        document.getElementById("loginPage").style.display = "none"; // Hide login
-        document.getElementById("dashboardPage").style.display = "block"; // Show dashboard
-    } else {
-        alert("Please enter valid credentials.");
+if (username && password) {
+    // Hide login page and show the dashboard
+    document.getElementById("loginPage").style.display = "none"; // Hide login
+    document.getElementById("dashboardPage").style.display = "flex"; // Show dashboard
+} else {
+    alert("Please enter valid credentials.");
     }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const feedbackModal = document.getElementById('feedback-modal');
-    const openFeedbackBtn = document.getElementById('open-feedback-btn');
-    const closeButton = document.querySelector(".close-btn");
-    const cancelButton = document.querySelector(".cancel-btn");
-    const sendButton = document.querySelector(".send-btn");
-    const feedbackInput = document.querySelector("textarea");
+    // Medicine Intake Form Submission
+    const medicineForm = document.querySelector("#medicine-form");
+    if (medicineForm) {
+        medicineForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const medicineName = document.querySelector("#medicine-name").value.trim();
+            const medicineTime = document.querySelector("#medicine-time").value.trim();
 
-    // Open feedback modal
-    openFeedbackBtn.addEventListener("click", function () {
-        feedbackModal.style.display = "flex";
+            if (medicineName && medicineTime) {
+                alert(`Medicine Reminder Set: ${medicineName} at ${medicineTime}`);
+                medicineForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+    }
+    
+    // Appointment Form Submission
+    const appointmentForm = document.querySelector("#appointment-form");
+    if (appointmentForm) {
+        appointmentForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const doctorName = document.querySelector("#doctor-name").value.trim();
+            const appointmentDate = document.querySelector("#appointment-date").value.trim();
+            const appointmentTime = document.querySelector("#appointment-time").value.trim();
+
+            if (doctorName && appointmentDate && appointmentTime) {
+                alert(`Appointment Set: Dr. ${doctorName} on ${appointmentDate} at ${appointmentTime}`);
+                appointmentForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+    }
+    // Styling input fields ONLY in medicine and appointment forms
+    document.querySelectorAll("#medicine-form input, #appointment-form input").forEach(input => {
+        Object.assign(input.style, {
+            display: "block",
+            width: "100%",
+            maxWidth: "400px",
+            margin: "5px 0",
+            padding: "8px",
+            textAlign: "left"
+        });
     });
 
-    // Close feedback modal
-    function closePopup() {
-        feedbackModal.style.display = "none";
+    // Adjust button styles ONLY in medicine and appointment forms
+    document.querySelectorAll("#medicine-form button, #appointment-form button").forEach(button => {
+        Object.assign(button.style, {
+            display: "block",
+            margin: "10px auto",
+            width: "180px",
+            padding: "10px 15px",
+            textAlign: "center"
+        });
+    });
+    
+    // Feedback Modal Handling
+    const feedbackModal = document.getElementById("feedback-modal");
+    const openFeedbackBtn = document.getElementById("open-feedback-btn");
+    const closeFeedbackBtn = document.querySelector(".close-btn");
+    const sendFeedbackBtn = document.querySelector(".send-btn");
+    const cancelFeedbackBtn = document.querySelector(".cancel-btn");
+
+    function showModal() {
+        feedbackModal.style.display = "flex"; // Use flex to center modal
+        feedbackModal.style.opacity = "1";
     }
 
-    closeButton.addEventListener("click", closePopup);
-    cancelButton.addEventListener("click", closePopup);
-    sendButton.addEventListener("click", function () {
-        if (feedbackInput.value.trim() === "") {
-            alert("Please write some feedback before submitting.");
-        } else {
-            alert("Thank you for your feedback!");
-            closePopup();
-        }
-    });
+    function closeModal() {
+        feedbackModal.style.opacity = "0";
+        setTimeout(() => {
+            feedbackModal.style.display = "none";
+        }, 200); // Add fade-out effect
+    }
 
-    // Emoji Selection
-    const emojis = document.querySelectorAll(".emoji");
-    emojis.forEach(emoji => {
+    if (openFeedbackBtn) openFeedbackBtn.addEventListener("click", showModal);
+    if (closeFeedbackBtn) closeFeedbackBtn.addEventListener("click", closeModal);
+    if (cancelFeedbackBtn) cancelFeedbackBtn.addEventListener("click", closeModal);
+    
+    // Emoji Rating Selection
+   document.querySelectorAll(".emoji").forEach(emoji => {
         emoji.addEventListener("click", function () {
-            emojis.forEach(e => e.classList.remove("selected"));
+            document.querySelectorAll(".emoji").forEach(e => e.classList.remove("selected"));
             this.classList.add("selected");
         });
     });
-});
-// Set Reminders
-document.getElementById("set-medicine-btn").addEventListener("click", function () {
-    let medicineName = document.getElementById("medicine-name").value;
-    let medicineHour = document.getElementById("medicine-hour").value;
-    let medicineMinute = document.getElementById("medicine-minute").value;
-    let medicineAmPm = document.getElementById("medicine-ampm").value;
     
-    
-    if (medicineName.trim() !== "") {
-        alert(`Reminder set for ${medicineName} at ${medicineHour}:${medicineMinute} ${medicineAmPm}`);
-    } else {
-        alert("Please enter medicine name.");
-    }
-});
+    // Send Feedback with Validation
+    if (sendFeedbackBtn) {
+        sendFeedbackBtn.addEventListener("click", function () {
+            const feedbackText = document.querySelector("#feedback-text").value.trim();
 
-document.getElementById("set-appointment-btn").addEventListener("click", function () {
-    let appointmentDate = document.getElementById("appointment-date").value;
-    let appointmentHour = document.getElementById("appointment-hour").value;
-    let appointmentMinute = document.getElementById("appointment-minute").value;
-    let appointmentAmPm = document.getElementById("appointment-ampm").value;
-    if (appointmentDate.trim() !== "") {
-        alert(`Appointment set for ${appointmentDate} at ${appointmentHour}:${appointmentMinute} ${appointmentAmPm}`);
-    } else {
-        alert("Please select an appointment date.");
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    function populateTimeDropdowns(hourId, minuteId, ampmId) {
-        let hourSelect = document.getElementById(hourId);
-        let minuteSelect = document.getElementById(minuteId);
-        let ampmSelect = document.getElementById(ampmId);
-        // Clear previous options to avoid duplicates
-        hourSelect.innerHTML = "";
-        minuteSelect.innerHTML = "";
-        ampmSelect.innerHTML = "";
-        for (let i = 1; i <= 12; i++) {
-            let option = document.createElement("option");
-            option.value = i;
-            option.textContent = i;
-            hourSelect.appendChild(option);
-        }
-
-        for (let i = 0; i < 60; i++) {
-            let option = document.createElement("option");
-            option.value = i.toString().padStart(2, '0');
-            option.textContent = i.toString().padStart(2, '0');
-            minuteSelect.appendChild(option);
-        }
-
-        ["AM", "PM"].forEach(ampm => {
-            let option = document.createElement("option");
-            option.value = ampm;
-            option.textContent = ampm;
-            ampmSelect.appendChild(option);
+            if (feedbackText === "") {
+                document.getElementById("warningMessage").innerText = "Please write some feedback before submitting.";
+            } else {
+                alert("Thanks for your feedback!");
+                closeModal();
+                document.getElementById("warningMessage").innerText = "";
+                document.getElementById("feedback-text").value = "";
+            }
         });
     }
-
-    populateTimeDropdowns("medicine-hour", "medicine-minute", "medicine-ampm");
-    populateTimeDropdowns("appointment-hour", "appointment-minute", "appointment-ampm");
 });
-    
-    
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const feedbackModal = document.getElementById('feedback-modal');
-    const openFeedbackBtn = document.getElementById('open-feedback-btn');
-    const closeButton = document.querySelector(".close-btn");
-    const cancelButton = document.querySelector(".cancel-btn");
-
-    // Open feedback modal
-    openFeedbackBtn.addEventListener("click", function () {
-        feedbackModal.style.display = "flex";
-    });
-
-    // Close feedback modal
-    function closePopup() {
-        feedbackModal.style.display = "none";
-    }
-
-    closeButton.addEventListener("click", closePopup);
-    cancelButton.addEventListener("click", closePopup);
-
-    // Emoji Selection
-    const emojis = document.querySelectorAll(".emoji");
-    emojis.forEach(emoji => {
-        emoji.addEventListener("click", function () {
-            emojis.forEach(e => e.classList.remove("selected"));
-            this.classList.add("selected");
-        });
-    });
-});
-
-
