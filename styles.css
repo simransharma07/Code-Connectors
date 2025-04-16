@@ -20,6 +20,19 @@ body {
     height: 100vh;
     width: 100%;
 }
+/* buttonand birthday for gender  */
+.gender-btn {
+  background: #2196F3;
+}
+
+.skip-btn {
+  background: #999;
+}
+
+.birthday-select {
+  margin-top: 15px;
+}
+
 
 /* Sidebar */
 .sidebar {
