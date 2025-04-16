@@ -35,6 +35,35 @@
                 </form>
             </div>
         </div>
+        <!-- Gender Selection Page -->
+<div class="container" id="genderContainer">
+  <div class="gender-page">
+    <h2>Select Gender or Skip</h2>
+    <button class="gender-btn" onclick="selectGender('Male')">Male</button>
+    <button class="gender-btn" onclick="selectGender('Female')">Female</button>
+    <button class="skip-btn" onclick="selectGender('Skipped')">Skip</button>
+
+    <div class="birthday-select">
+      <h3>Set Your Birthday</h3>
+      <select id="day">
+        <option>Day</option>
+        <!-- Days will be added via JavaScript -->
+      </select>
+      <select id="month">
+        <option>Month</option>
+        <!-- Months will be added via JavaScript -->
+      </select>
+      <select id="year">
+        <option>Year</option>
+        <!-- Years will be added via JavaScript -->
+      </select>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
         <!-- New dashboard updated -->
 
         <!-- Dashboard (Initially Hidden) -->
