@@ -14,6 +14,64 @@ if (username && password) {
     }
 });
 
+// gender
+window.onload = function () {
+  populateDropdowns();
+};
+
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if (user && pass) {
+    document.getElementById("loginContainer").style.display = "none";
+    document.getElementById("genderContainer").style.display = "flex";
+  } else {
+    alert("Enter username and password!");
+  }
+}
+
+function selectGender(gender) {
+  const day = document.getElementById("day").value;
+  const month = document.getElementById("month").value;
+  const year = document.getElementById("year").value;
+
+  alert(`Gender: ${gender}\nBirthday: ${day}-${month}-${year}`);
+}
+
+function populateDropdowns() {
+  const daySelect = document.getElementById("day");
+  const monthSelect = document.getElementById("month");
+  const yearSelect = document.getElementById("year");
+
+  for (let i = 1; i <= 31; i++) {
+    let opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    daySelect.appendChild(opt);
+  }
+
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  months.forEach((month, index) => {
+    let opt = document.createElement("option");
+    opt.value = index + 1;
+    opt.textContent = month;
+    monthSelect.appendChild(opt);
+  });
+
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 1920; y--) {
+    let opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    yearSelect.appendChild(opt);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // Medicine Intake Form Submission
     const medicineForm = document.querySelector("#medicine-form");
