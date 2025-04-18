@@ -112,10 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     populateTimeDropdowns("appointment-hour", "appointment-minute", "appointment-ampm");
 });
     
-    
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const feedbackModal = document.getElementById('feedback-modal');
