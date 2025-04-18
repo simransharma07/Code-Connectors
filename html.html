@@ -1,5 +1,6 @@
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,35 @@
                 </form>
             </div>
         </div>
+        <!-- Gender Selection Page -->
+<!--         new page added  -->
+        <div id="female-birth-page" class="hidden">
+<div class="container" id="genderContainer">
+  <div class="gender-page">
+    <h2>Select Gender or Skip</h2>
+    <button class="gender-btn" onclick="selectGender('Male')">Male</button>
+    <button class="gender-btn" onclick="selectGender('Female')">Female</button>
+    <button class="skip-btn" onclick="selectGender('Skipped')">Skip</button>
+
+    <div class="birthday-select">
+      <h3>Set Your Birthday</h3>
+      <select id="day">
+        <option>Day</option>
+        <!-- Days will be added via JavaScript -->
+      </select>
+      <select id="month">
+        <option>Month</option>
+        <!-- Months will be added via JavaScript -->
+      </select>
+      <select id="year">
+        <option>Year</option>
+        <!-- Years will be added via JavaScript -->
+      </select>
+    </div>
+  </div>
+</div>
+
+
         <!-- New dashboard updated -->
 
         <!-- Dashboard (Initially Hidden) -->
@@ -65,17 +95,22 @@
                             <img src="yoga-placeholder.png" alt="Yoga" />
                             <h3>🧘 Yoga</h3>
                             <p>60 minutes - 430 kcal/hour</p>
+                            <a href="https://www.youtube.com/watch?v=1-lO2U7mxIY" target="_blank">
                             <button>Try It Now</button>
+                            </a>
                         </div>
                         <div class="activity-card">
                             <img src="cardio-placeholder.png" alt="Cardio" />
                             <h3>🏃‍♂️ Cardio</h3>
                             <p>60 minutes - 500 kcal/hour</p>
+                           <a href="https://www.youtube.com/watch?v=pB4Zr9ECN1g" target="_blank">
                             <button>Try It Now</button>
+                            </a>
                         </div>
                         <!-- New Activity Cards for Sleep and Water Intake -->
                         <div class="activity-card sleep">
-                            <h3>🛏️ Sleep</h3>
+                            <h3>🛏️ 
+                               Sleep</h3>
                             <button>Track Sleep</button>
                         </div>
                         <div class="activity-card water">
@@ -163,4 +198,3 @@
 </body>
 
 </html>
-[09:13, 18/04/2025] Cimran😒: document.getEleme
