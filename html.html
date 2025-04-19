@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Tracker</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 
 <body>
@@ -42,22 +43,27 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <nav>
-                    <ul>
-                        <li><a href="#">🏠 Home</a></li>
-                        <li><a href="#">📊 Stats</a></li>
-                        <li><a href="#">📅 Appointments</a></li>
-                        <li><a href="#">⚙ Settings</a></li>
-                    </ul>
+                    <div class="mobile-sidebar" id="mobileSidebar">
+                        <div class="sidebar-header">
+                            <div class="profile">
+                                <img src="D:\health tracker\light orange default pfp base.jpg" alt="Profile Picture" />
+                                <span>You</span>
+                            </div>
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li><a href="#" onclick="showSection(event, 'home')">🏠 Home</a></li>
+                            <li><a href="#" onclick="showSection(event, 'stats')">📊 Stats</a></li>
+                            <li><a href="#" onclick="showSection(event, 'appointments')">📅 Appointments</a></li>
+                            <li><a href="#" onclick="showSection(event, 'settings')">⚙ Settings</a></li>
+                        </ul>
                 </nav>
+                <!-- Toggle button -->
+                <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             </aside>
             <!-- Main Content -->
             <main class="dashboard-content">
                 <header>
                     <h1>Welcome to Your Health Dashboard</h1>
-                    <div class="profile">
-                        <span>You</span>
-                        <img src="profile-placeholder.png" alt="Profile Picture" />
-                    </div>
                 </header>
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
@@ -90,29 +96,19 @@
                         </div>
                     </div>
                 </section>
-
-                <section class="stats-section">
+                
+                <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
                     <div class="stats-chart">
-                        <!-- Placeholder for statistics chart -->
+                        <ul class="stats-info">
+                            <li>🏋️ Training: 2 hours/week</li>
+                            <li>🚶 Steps: 24 km/week</li>
+                            <li>🔥 Calories Burned: 5467 kcal/week</li>
+                        </ul>
                     </div>
-                    <ul class="stats-info">
-                        <li>🏋️ Training: 2 hours/week</li>
-                        <li>🚶 Steps: 24 km/week</li>
-                        <li>🔥 Calories Burned: 5467 kcal/week</li>
-                    </ul>
                 </section>
 
-                <section class="medicine-section">
-                    <h2>💊 Medicine Intake</h2>
-                    <form id="medicine-form">
-                        <input type="text" id="medicine-name" placeholder="Medicine Name" required />
-                        <input type="time" id="medicine-time" required />
-                        <button type="submit">Set Reminder</button>
-                    </form>
-                </section>
-
-                <section class="appointment-section">
+                <section class="appointment-section" id="appointmentsection" style="display: none;">
                     <h2>🩺 Doctor's Appointment</h2>
                     <form id="appointment-form">
                         <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
@@ -121,6 +117,7 @@
                         <button type="submit">Set Reminder</button>
                     </form>
                 </section>
+                <section class="settings-section" id="settingsSection" style="display: none;">
                 <!-- Feedback Button -->
                 <button id="open-feedback-btn">📝 Give Feedback</button>
 
@@ -161,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+                </section>
             </main>
 
         </div>
