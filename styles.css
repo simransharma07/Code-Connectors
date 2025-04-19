@@ -7,61 +7,104 @@
 
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family:'Segoe UI', sans-serif;
+    color: #111827;
     margin: 0;
     padding: 0;
     height: 100vh;
-    background: #f8f8f8;
+    background: #f9fafb;
+    
 }
-
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background:orangered;
+    color: white;
+    padding-top: 20px;
+    transition: 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .mobile-sidebar.active {
+    left: 0;
+  }
+  
+  .sidebar-header {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #fff;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    padding: 20px;
+  }
+  
+  .sidebar-menu li {
+    padding: 12px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar-menu li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 20px;
+    transition: 0.2s;
+  }
+  
+  .sidebar-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: orangered;
+    color: white;
+    font-size: 22px;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+  }
 /* Dashboard Container Layout */
 .dashboard-container {
     display: flex;
     height: 100vh;
     width: 100%;
+    justify-content:center;
 }
-
-/* Sidebar */
-.sidebar {
-    width: 220px;
-    background: #222;
-    color: white;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-}
-
-.sidebar ul li {
-    margin: 20px 0;
-    width: 100%;
-}
-
-.sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-}
-
-.sidebar ul li a:hover {
-    background-color: #333;
-}
+@keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .dashboard-content header h1 {
+    opacity: 0;
+    width:100%;
+    margin-top:20px;
+    animation: fadeSlideIn 1s ease-out forwards;
+    text-align:center;
+    color:orangered;
+    font-weight: 600;
+    font-size:2.5em;
+  }
 
 /* Dashboard Content */
 .dashboard-content {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
+    animation:fadeIn 1.2s ease-in;
 }
 
 /* Header */
@@ -71,6 +114,10 @@ header {
     align-items: center;
     margin-bottom: 20px;
 }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
 .profile img {
     width: 40px;
@@ -104,10 +151,12 @@ header {
     background-color: black;
     color: white;
     border: none;
-    padding: 10px 15px;
+    border-radius:8px;
+    padding: 10px 16px;
     cursor: pointer;
+    font-weight:500;
     border-radius: 5px;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .activity-card button:hover {
@@ -196,7 +245,7 @@ form button {
 .set-reminder-btn,
 .medicine-section button,
 .appointment-section button {
-    background-color: #28a745;
+    background-color: orangered;
     /* Green */
     color: white;
     border: none;
@@ -213,7 +262,7 @@ form button {
 .set-reminder-btn:hover,
 .medicine-section button:hover,
 .appointment-section button:hover {
-    background-color: #218838;
+    background-color: orangered;
     /* Dark green */
 }
 
@@ -320,6 +369,11 @@ form button {
     text-align: center;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.feedback-modal {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .close-btn {

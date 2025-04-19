@@ -13,6 +13,32 @@ if (username && password) {
     alert("Please enter valid credentials.");
     }
 });
+window.addEventListener('load', () => {
+    document.querySelector('.dashboard-content header h1').style.animationDelay = '0.3s';
+  });
+  function toggleSidebar() {
+    document.getElementById("mobileSidebar").classList.toggle("active");
+  }
+function showSection(event, sectionId) {
+    event.preventDefault();
+
+    // Hide all sections
+    document.querySelectorAll('.stats-section, .appointment-section, .settings-section, .activity-section').forEach(sec => {
+        sec.style.display = 'none';
+    });
+
+    // Show the selected section
+    if (sectionId === 'home') {
+        document.querySelector('.activity-section').style.display = 'block';
+    } else if (sectionId === 'stats') {
+        document.querySelector('.statssection').style.display = 'block';
+    } else if (sectionId === 'appointments') {
+        document.querySelector('.appointmentsection').style.display = 'block';
+    } else if (sectionId === 'settings') {
+        document.querySelector('.settingssection').style.display = 'block';
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // Medicine Intake Form Submission
