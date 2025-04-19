@@ -31,11 +31,11 @@ function showSection(event, sectionId) {
     if (sectionId === 'home') {
         document.querySelector('.activity-section').style.display = 'block';
     } else if (sectionId === 'stats') {
-        document.querySelector('.statssection').style.display = 'block';
+        document.querySelector('.stats-section').style.display = 'block';
     } else if (sectionId === 'appointments') {
-        document.querySelector('.appointmentsection').style.display = 'block';
+        document.querySelector('.appointment-section').style.display = 'block';
     } else if (sectionId === 'settings') {
-        document.querySelector('.settingssection').style.display = 'block';
+        document.querySelector('.settings-section').style.display = 'block';
     }
 }
 
