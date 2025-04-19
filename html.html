@@ -7,19 +7,18 @@
     <title>Health Tracker</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <!-- Wrapper to manage layout switching -->
     <div id="app">
-
         <!-- Login Page -->
         <div class="login-container" id="loginPage">
             <div class="login-box">
                 <img src="Screenshot 2025-03-10 210211.png" alt="BEEPTECH" class="logo">
                 <h2>Welcome to BEEPTECH</h2>
                 <p>Track your health & wellness in one place</p>
-                <form id="loginForm" action="#" method="POST">
+                <form id="loginForm">
                     <label for="username">Username</label>
                     <input type="text" id="username" placeholder="Enter Username" required>
 
@@ -31,14 +30,12 @@
                         <label for="remember">Remember Me</label>
                     </div>
                     <button type="submit" class="btn">Sign In</button>
-
                     <p><a href="#">Forgot Password?</a></p>
                 </form>
             </div>
         </div>
-        <!-- New dashboard updated -->
 
-        <!-- Dashboard (Initially Hidden) -->
+        <!-- Dashboard -->
         <div class="dashboard-container" id="dashboardPage" style="display: none;">
             <!-- Sidebar -->
             <aside class="sidebar">
@@ -57,14 +54,18 @@
                             <li><a href="#" onclick="showSection(event, 'settings')">⚙ Settings</a></li>
                         </ul>
                 </nav>
-                <!-- Toggle button -->
                 <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             </aside>
+
             <!-- Main Content -->
             <main class="dashboard-content">
                 <header>
-                    <h1>Welcome to Your Health Dashboard</h1>
+                    <div class="dashboard-header">
+                        <h1>Welcome to Your Health Dashboard</h1>
+                      </div>
+                      
                 </header>
+
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
                     <div class="activity-cards">
@@ -84,10 +85,8 @@
                                 <button>Try It Now</button>
                             </a>
                         </div>
-                        <!-- New Activity Cards for Sleep and Water Intake -->
                         <div class="activity-card sleep">
-                            <h3>🛏️
-                                Sleep</h3>
+                            <h3>🛏️ Sleep</h3>
                             <button>Track Sleep</button>
                         </div>
                         <div class="activity-card water">
@@ -96,15 +95,30 @@
                         </div>
                     </div>
                 </section>
-                
+
+                <!-- Clean Stats Section -->
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                    <div class="stats-chart">
-                        <ul class="stats-info">
-                            <li>🏋️ Training: 2 hours/week</li>
-                            <li>🚶 Steps: 24 km/week</li>
-                            <li>🔥 Calories Burned: 5467 kcal/week</li>
-                        </ul>
+                        <div class="stat-card">
+                            <i class="fas fa-dumbbell icon"></i>
+                            <h3>Training</h3>
+                            <p id="trainingDisplay">0 hours/week</p>
+                            <input type="number" id="trainingInput" placeholder="Enter hours/week">
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shoe-prints icon"></i>
+                            <h3>Steps</h3>
+                            <p id="stepsDisplay">0 km/week</p>
+                            <input type="number" id="stepsInput" placeholder="Enter km/week">
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-fire icon"></i>
+                            <h3>Calories</h3>
+                            <p id="caloriesDisplay">0 kcal/week</p>
+                            <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
+                        </div>
+                    <div class="update-button">
+                        <button onclick="updateStats()">Update Stats</button>
                     </div>
                 </section>
 
@@ -117,53 +131,40 @@
                         <button type="submit">Set Reminder</button>
                     </form>
                 </section>
+
                 <section class="settings-section" id="settingsSection" style="display: none;">
-                <!-- Feedback Button -->
-                <button id="open-feedback-btn">📝 Give Feedback</button>
+                    <button id="open-feedback-btn">📝 Give Feedback</button>
 
-                <!-- Feedback Modal (Initially Hidden) -->
-                <div id="feedback-modal" class="feedback-modal" style="display: none;">
-                    <div class="feedback-container">
-                        <button class="close-btn">❌</button>
-
-                        <h2>Give Feedback</h2>
-                        <p>What do you think of Beeptech?</p>
-
-                        <!-- Emoji rating -->
-                        <div class="emoji-rating">
-                            <span class="emoji" data-value="1">😠</span>
-                            <span class="emoji" data-value="2">🙁</span>
-                            <span class="emoji" data-value="3">😐</span>
-                            <span class="emoji selected" data-value="4">🙂</span>
-                            <span class="emoji" data-value="5">😀</span>
-                        </div>
-
-                        <!-- Feedback input -->
-                        <textarea id="feedback-text"
-                            placeholder="Do you have any thoughts you’d like to share?"></textarea>
-
-                        <!-- Feedback warning message -->
-                        <p id="warningMessage" style="color: red; font-size: 14px;"></p>
-                        <!-- Follow-up question -->
-                        <p>May we follow up on your feedback?</p>
-                        <div class="follow-up">
-                            <label><input type="radio" name="follow-up" value="yes" checked> Yes</label>
-                            <label><input type="radio" name="follow-up" value="no"> No</label>
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="buttons">
-                            <button class="send-btn">Send</button>
-                            <button class="cancel-btn">Cancel</button>
+                    <div id="feedback-modal" class="feedback-modal" style="display: none;">
+                        <div class="feedback-container">
+                            <button class="close-btn">❌</button>
+                            <h2>Give Feedback</h2>
+                            <p>What do you think of Beeptech?</p>
+                            <div class="emoji-rating">
+                                <span class="emoji" data-value="1">😠</span>
+                                <span class="emoji" data-value="2">🙁</span>
+                                <span class="emoji" data-value="3">😐</span>
+                                <span class="emoji selected" data-value="4">🙂</span>
+                                <span class="emoji" data-value="5">😀</span>
+                            </div>
+                            <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
+                            <p id="warningMessage" style="color: red; font-size: 14px;"></p>
+                            <p>May we follow up on your feedback?</p>
+                            <div class="follow-up">
+                                <label><input type="radio" name="follow-up" value="yes" checked> Yes</label>
+                                <label><input type="radio" name="follow-up" value="no"> No</label>
+                            </div>
+                            <div class="buttons">
+                                <button class="send-btn">Send</button>
+                                <button class="cancel-btn">Cancel</button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </section>
             </main>
-
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
-
 </html>
