@@ -5,90 +5,349 @@
     font-family: Arial, sans-serif;
 }
 
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #f8f8f8;
+}
 
-/* Login and Dashboard Containers */
-/* Center login and dashboard */
-.login-container,
+/* Dashboard Container Layout */
 .dashboard-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #222;
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #333;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Activity Cards */
+.activity-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.activity-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.activity-card:hover {
+    transform: scale(1.05);
+}
+
+/* 'Try It Now' Button for Activity Cards */
+.activity-card button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.activity-card button:hover {
+    background-color: #333;
+}
+
+/* Add margin below the "Find Your Activity" heading */
+.activity-section h2 {
+    margin-bottom: 20px;
+    /* Add space below the header */
+}
+
+/* Additional Activity Cards */
+.activity-card.sleep,
+.activity-card.water {
+    background: #e0f7fa;
+    /* Light blue background for Water and Sleep */
+    border: 1px solid #008cba;
+    /* Border with blue */
+}
+
+/* Adjust Button Text for Specific Activities */
+.activity-card.sleep button {
+    background-color: #008cba;
+    /* Blue color for Sleep button */
+}
+
+.activity-card.water button {
+    background-color: #00796b;
+    /* Greenish color for Water button */
+}
+
+/* Hover Effects for New Activities */
+.activity-card.sleep button:hover {
+    background-color: #004c61;
+    /* Darker blue for Sleep button hover */
+}
+
+.activity-card.water button:hover {
+    background-color: #004d40;
+    /* Darker green for Water button hover */
+}
+
+/* Sections */
+.stats-section,
+.medicine-section,
+.appointment-section {
+    margin-top: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjusted Input Box Sizes */
+.medicine-section input,
+.medicine-section button,
+.appointment-section input,
+.appointment-section button {
+    width: 90%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.medicine-section input[type="text"],
+.medicine-section input[type="time"],
+.medicine-section input[type="date"],
+.appointment-section input[type="text"],
+.appointment-section input[type="time"],
+.appointment-section input[type="date"] {
+    max-width: 160px;
+}
+
+/* Form Inputs & Buttons */
+form input,
+form button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Set Reminder Button */
+.set-reminder-btn,
+.medicine-section button,
+.appointment-section button {
+    background-color: #28a745;
+    /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.set-reminder-btn:hover,
+.medicine-section button:hover,
+.appointment-section button:hover {
+    background-color: #218838;
+    /* Dark green */
+}
+
+/* Login Container */
+.login-container {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     width: 350px;
-
-    .text-center {
-        text-align: center;
-    }
-
+    text-align: center;
+    /*center aligned*/
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-h2,
-h3 {
+.login-container h2,
+.login-container h3 {
     color: #2c3e50;
     margin-bottom: 10px;
 }
 
-label {
+.login-container label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
 }
 
-input,
-select,
-textarea {
-    width: 100%;
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 90%;
+    max-width: 300px;
     padding: 10px;
-    margin-top: 5px;
+    margin: 10px auto;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
+    display: block;
 }
 
-textarea {
-    height: 80px;
-    resize: none;
+/* Autofill Fix */
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000000 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
-.btn {
-    background-color: #27ae60;
+.login-container .btn {
+    background-color: #28a745;
     color: white;
-    padding: 10px;
+    padding: 6px 12px;
+    /* Tighter padding */
+    font-size: 14px;
+    /* Small readable text */
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
+    /* Rounded like in your image */
     cursor: pointer;
     margin-top: 10px;
+    width: 80px;
+    /* Fixed width */
+    height: 35px;
+    /* Fixed height */
+    text-align: center;
+    line-height: 1.2;
+    /* Ensure vertical alignment */
 }
 
-.btn:hover {
-    background-color: #219150;
+.login-container .btn:hover {
+    background-color: #218838;
+    /* Dark green on hover */
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Feedback Modal */
-.feedback-modal {
+#feedback-modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Feedback Container */
+/* Feedback Box */
 .feedback-container {
     background: white;
-    width: 400px;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
     text-align: center;
     position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    background: none;
+}
+
+/* Feedback Button */
+#open-feedback-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#open-feedback-btn:hover {
+    background-color: #0056b3;
 }
 
 /* Emoji Rating */
@@ -96,46 +355,77 @@ textarea {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin: 15px 0;
+    font-size: 24px;
+    margin: 10px 0;
 }
 
 .emoji {
-    font-size: 24px;
     cursor: pointer;
-    opacity: 0.5;
-    transition: 0.3s;
 }
 
 .emoji.selected {
     opacity: 1;
     transform: scale(1.2);
+    transition: 0.2s;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav li {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.lang-btn {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Time Picker Styles */
-.time-picker {
+/* Modal Buttons */
+.buttons {
     display: flex;
-    gap: 5px;
-    margin-top: 5px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.send-btn,
+.cancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.send-btn {
+    background: #28a745;
+    /* Green */
+    color: white;
+}
+
+.cancel-btn {
+    background: #dc3545;
+    /* Red */
+    color: white;
+}
+
+.send-btn:hover {
+    background: #218838;
+    /* Dark green */
+}
+
+.cancel-btn:hover {
+    background: #c82333;
+    /* Dark red */
+}
+
+/* Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* "Try It Now" Button - Black */
+#try-it-now-btn {
+    background-color: black;
+    /* Black */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#try-it-now-btn:hover {
+    background-color: #333;
+    /* Dark gray on hover */
 }
