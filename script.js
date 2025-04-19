@@ -1,3 +1,4 @@
+
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevents page reload
     
