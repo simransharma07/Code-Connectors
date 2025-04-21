@@ -14,6 +14,18 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 });
 
 // ---------------- Gender Page Handling ----------------
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+  
+    // Add login validation here if needed
+  
+    // Hide login page
+    document.getElementById("loginPage").classList.add("hidden");
+  
+    // Show gender page
+    document.querySelector(".gender-body").classList.remove("hidden");
+  });
+  
 let selectedGender = "";
 
 function selectGender(gender) {
@@ -30,17 +42,19 @@ function continueNext() {
         alert("Please select a gender and enter your birthday.");
         return;
     }
-
+    console.log("Gender selected:", selectedGender);
+ 
+    
     console.log("Gender:", selectedGender, "Birthday:", birthday);
     // Save to localStorage or send to backend if needed
 
     document.getElementById("genderPage").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "flex";
+    document.getElementById("dashboardPage").style.display = "block";
 }
 
 function skip() {
     document.getElementById("genderPage").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "flex";
+    document.getElementById("dashboardPage").style.display = "block";
 }
 
 // ---------------- Header Animation on Load ----------------
