@@ -15,7 +15,7 @@
   .gender-body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #121212;
+    background-color: rgba(255, 255, 255, 1); /* Non-opaque background */
     color: white;
     display: flex;
     justify-content: center;
@@ -37,9 +37,10 @@
   }
   
   .gender-selection {
-    display: flex;
+    display: block;
     justify-content: space-around;
     margin: 20px 0;
+    opacity:1;
   }
   
   .gender {
@@ -47,7 +48,7 @@
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: opacity 0.3s ease-in-out;
   }
   
   .gender.selected {
@@ -86,6 +87,25 @@
     cursor: pointer;
     text-decoration: underline;
   }
+  /* Give the modal a higher z-index only when it's active */
+.modal {
+  position: absolute;
+  z-index: 1000; /* Show on top when needed */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+
+/* Disable or hide modal when not in use */
+.modal.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
   
 
   .welcome-wrapper {
