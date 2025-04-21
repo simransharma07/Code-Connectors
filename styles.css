@@ -12,6 +12,82 @@
     height: 100vh;
     background: #f9fafb;
   }
+  .gender-body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #121212;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background: #1f1f1f;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    margin-bottom: 10px;
+  }
+  
+  .gender-selection {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .gender {
+    border: 2px solid #888;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .gender.selected {
+    border-color: #00f0ff;
+    background: #2a2a2a;
+  }
+  
+  .gender img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  input[type="date"] {
+    padding: 10px;
+    margin-top: 10px;
+    width: 80%;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: #00c2ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .skip {
+    margin-top: 10px;
+    color: #aaa;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+
   .welcome-wrapper {
     display: flex;
     justify-content: center;
