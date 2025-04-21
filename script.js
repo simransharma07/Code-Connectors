@@ -7,11 +7,41 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 
     if (username && password) {
         document.getElementById("loginPage").style.display = "none";
-        document.getElementById("dashboardPage").style.display = "flex";
+        document.getElementById("genderPage").style.display = "block"; // show gender setup next
     } else {
         alert("Please enter valid credentials.");
     }
 });
+
+// ---------------- Gender Page Handling ----------------
+let selectedGender = "";
+
+function selectGender(gender) {
+    selectedGender = gender;
+    document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
+    const selected = document.querySelector(`.gender[onclick="selectGender('${gender}')"]`);
+    if (selected) selected.classList.add("selected");
+}
+
+function continueNext() {
+    const birthday = document.getElementById("birthday").value;
+
+    if (!selectedGender || !birthday) {
+        alert("Please select a gender and enter your birthday.");
+        return;
+    }
+
+    console.log("Gender:", selectedGender, "Birthday:", birthday);
+    // Save to localStorage or send to backend if needed
+
+    document.getElementById("genderPage").style.display = "none";
+    document.getElementById("dashboardPage").style.display = "flex";
+}
+
+function skip() {
+    document.getElementById("genderPage").style.display = "none";
+    document.getElementById("dashboardPage").style.display = "flex";
+}
 
 // ---------------- Header Animation on Load ----------------
 window.addEventListener('load', () => {
