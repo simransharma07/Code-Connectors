@@ -16,46 +16,52 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 // ---------------- Gender Page Handling ----------------
 document.getElementById("loginForm").addEventListener("submit", function (e) {
     e.preventDefault();
-  
-    // Add login validation here if needed
-  
+
     // Hide login page
     document.getElementById("loginPage").classList.add("hidden");
-  
+
     // Show gender page
     document.querySelector(".gender-body").classList.remove("hidden");
-  });
-  
+});
 let selectedGender = "";
 
 function selectGender(gender) {
-    selectedGender = gender;
-    document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
-    const selected = document.querySelector(`.gender[onclick="selectGender('${gender}')"]`);
-    if (selected) selected.classList.add("selected");
+  selectedGender = gender;
+  document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
+  const selected = document.querySelector(`.gender[data-gender="${gender}"]`);
+  if (selected) selected.classList.add("selected");
 }
 
-function continueNext() {
-    const birthday = document.getElementById("birthday").value;
+function submitForm() {
+  const birthday = document.getElementById("birthday").value;
 
-    if (!selectedGender || !birthday) {
-        alert("Please select a gender and enter your birthday.");
-        return;
-    }
-    console.log("Gender selected:", selectedGender);
- 
-    
-    console.log("Gender:", selectedGender, "Birthday:", birthday);
-    // Save to localStorage or send to backend if needed
+  if (!selectedGender) {
+    alert("Please select your gender.");
+    return;
+  }
 
-    document.getElementById("genderPage").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "block";
+  if (!birthday) {
+    alert("Please enter your birthday.");
+    return;
+  }
+
+  // Log the selected values (or save them)
+  console.log("Gender:", selectedGender);
+  console.log("Birthday:", birthday);
+
+  // Move to the dashboard
+  document.querySelector(".gender-body").classList.add("hidden");
+  document.getElementById("dashboardPage").style.display = "block";
 }
 
 function skip() {
-    document.getElementById("genderPage").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "block";
+  document.querySelector(".gender-body").classList.add("hidden");
+  document.getElementById("dashboardPage").style.display = "block";
 }
+
+
+
+
 
 // ---------------- Header Animation on Load ----------------
 window.addEventListener('load', () => {
