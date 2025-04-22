@@ -173,6 +173,7 @@ button {
   border-radius: 8px;
 }
 
+
 /* Disable or hide modal when not in use */
 .modal.hidden {
   display: none;
