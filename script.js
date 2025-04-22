@@ -199,6 +199,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+// -------- Track Water --------
+    document.querySelector(".activity-card.water button").addEventListener("click", function() {
+        const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
+        if (waterIntake && !isNaN(waterIntake)) {
+            alert(`Water Intake Recorded: ${waterIntake} liters`);
+            // You can save this data to local storage or a server if needed
+        } else {
+            alert("Please enter a valid number for water intake.");
+        }
+    });
+
+    // -------- Track Sleep --------
+    document.querySelector(".activity-card.sleep button").addEventListener("click", function() {
+        const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
+        if (sleepDuration && !isNaN(sleepDuration)) {
+            alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
+            // You can save this data to local storage or a server if needed
+        } else {
+            alert("Please enter a valid number for sleep duration.");
+        }
+    });
+
 
 // ---------------- Stats Update Function ----------------
 function updateStats() {
