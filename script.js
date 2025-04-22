@@ -199,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+// ------Sleep and water acitivity enabled-----
 // -------- Track Water --------
     document.querySelector(".activity-card.water button").addEventListener("click", function() {
         const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
