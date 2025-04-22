@@ -1,92 +1,167 @@
 /* Reset & Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    color: #111827;
-    height: 100vh;
-    background: #f9fafb;
-  }
-  .gender-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: rgba(255, 255, 255, 1); /* Non-opaque background */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .container {
-    background: #1f1f1f;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-  }
-  
-  h2 {
-    margin-bottom: 10px;
-  }
-  
-  .gender-selection {
-    display: block;
-    justify-content: space-around;
-    margin: 20px 0;
-    opacity:1;
-  }
-  
-  .gender {
-    border: 2px solid #888;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .gender.selected {
-    border-color: #00f0ff;
-    background: #2a2a2a;
-  }
-  
-  .gender img {
-    width: 60px;
-    height: 60px;
-  }
-  
-  input[type="date"] {
-    padding: 10px;
-    margin-top: 10px;
-    width: 80%;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-  }
-  
-  button {
-    margin-top: 20px;
-    padding: 10px 25px;
-    background: #00c2ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .skip {
-    margin-top: 10px;
-    color: #aaa;
-    cursor: pointer;
-    text-decoration: underline;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #111827;
+  height: 100vh;
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  /* Sky blue gradient */
+}
+
+/* Gender Page Body */
+.gender-body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: rgba(255, 255, 255, 1);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: #1f1f1f;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.gender-selection {
+  display: block;
+  justify-content: space-around;
+  margin: 20px 0;
+  opacity: 1;
+}
+
+.gender {
+  border: 2px solid #888;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gender.selected {
+  border-color: #00f0ff;
+  background: #2a2a2a;
+}
+
+.gender img {
+  width: 60px;
+  height: 60px;
+}
+
+input[type="date"] {
+  padding: 10px;
+  margin-top: 10px;
+  width: 80%;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  background: #00c2ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.skip {
+  margin-top: 10px;
+  color: #aaa;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Login Styles */
+.login-container {
+  background: rgba(255, 255, 255, 0.92);
+  /* Transparent white for sky-blue visibility */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  width: 350px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-container h2,
+.login-container h3 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.login-container label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 90%;
+  max-width: 300px;
+  padding: 10px;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  display: block;
+}
+
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-container .btn {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 80px;
+  height: 35px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.login-container .btn:hover {
+  background-color: #218838;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   /* Give the modal a higher z-index only when it's active */
 .modal {
   position: absolute;
@@ -95,7 +170,6 @@
   padding: 20px;
   border-radius: 8px;
 }
-
 
 /* Disable or hide modal when not in use */
 .modal.hidden {
