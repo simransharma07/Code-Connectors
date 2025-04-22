@@ -34,32 +34,32 @@
                 </form>
             </div>
         </div>
-<!-- gender page -->
-<div class="gender-body hidden">
-    <div class="container">
-      <h2>Set Your Gender and Birthday</h2>
-      <p>This helps us generate personalized data for you.</p>
-  
-      <div class="gender-selection">
-        <div class="gender" data-gender="male" onclick="selectGender('male')">
-          <img src="https://i.imgur.com/GNlPMzK.png" alt="Male" />
-          <p>Male</p>
+        <!-- gender page -->
+        <div class="gender-body hidden">
+            <div class="container">
+                <h2>Set Your Gender and Birthday</h2>
+                <p>This helps us generate personalized data for you.</p>
+
+                <div class="gender-selection">
+                    <div class="gender" data-gender="male" onclick="selectGender('male')">
+                        <img src="https://i.imgur.com/GNlPMzK.png" alt="Male" />
+                        <p>Male</p>
+                    </div>
+                    <div class="gender" data-gender="female" onclick="selectGender('female')">
+                        <img src="https://i.imgur.com/jP6qzN4.png" alt="Female" />
+                        <p>Female</p>
+                    </div>
+                </div>
+
+                <label for="birthday">Birthday:</label><br />
+                <input type="date" id="birthday"><br />
+
+                <button onclick="submitForm()">Continue</button>
+                <p class="skip" onclick="skip()">Skip</p>
+            </div>
         </div>
-        <div class="gender" data-gender="female" onclick="selectGender('female')">
-          <img src="https://i.imgur.com/jP6qzN4.png" alt="Female" />
-          <p>Female</p>
-        </div>
-      </div>
-  
-      <label for="birthday">Birthday:</label><br />
-      <input type="date" id="birthday"><br />
-  
-      <button onclick="submitForm()">Continue</button>
-      <p class="skip" onclick="skip()">Skip</p>
-    </div>
-  </div>
-  
-  
+
+
 
         <!-- Dashboard -->
         <div class="dashboard-container" id="dashboardPage" style="display: none;">
@@ -88,8 +88,8 @@
                 <header>
                     <div class="dashboard-header">
                         <h1>Welcome to Your Health Dashboard</h1>
-                      </div>
-                      
+                    </div>
+
                 </header>
 
                 <section class="activity-section">
@@ -125,24 +125,24 @@
                 <!-- Clean Stats Section -->
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                        <div class="stat-card">
-                            <i class="fas fa-dumbbell icon"></i>
-                            <h3>Training</h3>
-                            <p id="trainingDisplay">0 hours/week</p>
-                            <input type="number" id="trainingInput" placeholder="Enter hours/week">
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-shoe-prints icon"></i>
-                            <h3>Steps</h3>
-                            <p id="stepsDisplay">0 km/week</p>
-                            <input type="number" id="stepsInput" placeholder="Enter km/week">
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-fire icon"></i>
-                            <h3>Calories</h3>
-                            <p id="caloriesDisplay">0 kcal/week</p>
-                            <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
-                        </div>
+                    <div class="stat-card">
+                        <i class="fas fa-dumbbell icon"></i>
+                        <h3>Training</h3>
+                        <p id="trainingDisplay">0 hours/week</p>
+                        <input type="number" id="trainingInput" placeholder="Enter hours/week">
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shoe-prints icon"></i>
+                        <h3>Steps</h3>
+                        <p id="stepsDisplay">0 km/week</p>
+                        <input type="number" id="stepsInput" placeholder="Enter km/week">
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire icon"></i>
+                        <h3>Calories</h3>
+                        <p id="caloriesDisplay">0 kcal/week</p>
+                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
+                    </div>
                     <div class="update-button">
                         <button onclick="updateStats()">Update Stats</button>
                     </div>
@@ -155,6 +155,21 @@
                         <input type="date" id="appointment-date" required />
                         <input type="time" id="appointment-time" required />
                         <button type="submit">Set Reminder</button>
+                    </form>
+
+                    <!-- Medicine Intake Section -->
+                    <h2>💊 Medicine Intake</h2>
+                    <form id="medicine-form">
+                        <label for="medicine-name">Medicine Name</label>
+                        <input type="text" id="medicine-name" placeholder="Enter Medicine Name" required />
+
+                        <label for="medicine-dose">Dose</label>
+                        <input type="text" id="medicine-dose" placeholder="Enter Dose (e.g., 500mg)" required />
+
+                        <label for="medicine-time">Time</label>
+                        <input type="time" id="medicine-time" required />
+
+                        <button type="submit">Set Medicine Reminder</button>
                     </form>
                 </section>
 
@@ -173,7 +188,8 @@
                                 <span class="emoji selected" data-value="4">🙂</span>
                                 <span class="emoji" data-value="5">😀</span>
                             </div>
-                            <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
+                            <textarea id="feedback-text"
+                                placeholder="Do you have any thoughts you’d like to share?"></textarea>
                             <p id="warningMessage" style="color: red; font-size: 14px;"></p>
                             <p>May we follow up on your feedback?</p>
                             <div class="follow-up">
@@ -193,4 +209,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
