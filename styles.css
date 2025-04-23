@@ -370,6 +370,11 @@ header {
 
 .activity-card.sleep button {
   background-color: #008cba;
+  height: 40px;
+  justify-content:space-between;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
 }
 
 .activity-card.water button {
@@ -426,7 +431,7 @@ header {
 }
 
 .update-stats-btn {
-  background-color: #ffa500;
+  background-color:orangered;
   color: white;
   padding: 12px 20px;
   font-size: 1rem;
@@ -439,7 +444,7 @@ header {
 }
 
 .update-stats-btn:hover {
-  background-color: #ff8700;
+  background-color:orangered;
 }
 
 
@@ -698,7 +703,7 @@ form button {
 
 button {
   padding: 10px 20px;
-  background-color: orange;
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 8px;
