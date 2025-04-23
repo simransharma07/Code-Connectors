@@ -45,11 +45,11 @@
 
                 <div class="gender-selection">
                     <div class="gender" data-gender="male" onclick="selectGender('male')">
-                        <img src="https://github.com/simransharma07/Code-Connectors/blob/main/male%20.png?raw=true" alt="Male" />
+                           <img src="male .png" alt="Male" />
                         <p>Male</p>
                     </div>
                     <div class="gender" data-gender="female" onclick="selectGender('female')">
-                        <img src="https://github.com/simransharma07/Code-Connectors/blob/main/femae.png?raw=true" alt="Female" />
+                        <img src="femae.png" alt="Female" />
                         <p>Female</p>
                     </div>
                 </div>
@@ -90,25 +90,10 @@
 
             <!-- Main Content -->
             <main class="dashboard-content">
-                <header>
-                    <div class="dashboard-header">
-
-                        <h1>Welcome to Your Health Dashboard</h1>
-                    </div>
-
+                <header class="dashboard-header">
+                    <h1>Welcome to Your Health Dashboard</h1>
+                    <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
                 </header>
-
-
-                        <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
-
-                        <h1>Welcome to Your Health Dashboard</h1>
-                      </div>
-                      
-                </header>
-
-                
-            
-
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
                     <div class="activity-cards">
@@ -255,16 +240,13 @@
             </main>
         </div>
     </div>
-    <div id="contributorsPanel" class="contributors-panel">
+    <!-- Contributors Panel -->
+    <div id="contributorsPanel" class="contributors-panel" style="display: none;">
         <h3>Manage Contributors</h3>
         <button onclick="addContributor()">Add Contributor</button>
         <div><strong>Contributors:</strong></div>
-        <ul id="contributorList">
-          
-        </ul>
-      </div>
-      
-
+        <ul id="contributorList"></ul>
+    </div>
 
     <script src="script.js"></script>
 </body>
