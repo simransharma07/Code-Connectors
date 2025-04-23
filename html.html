@@ -45,11 +45,11 @@
 
                 <div class="gender-selection">
                     <div class="gender" data-gender="male" onclick="selectGender('male')">
-                        <img src="https://github.com/simransharma07/Code-Connectors/blob/main/male%20.png?raw=true" alt="Male" />
+                        <img src="male .png" alt="Male" />
                         <p>Male</p>
                     </div>
                     <div class="gender" data-gender="female" onclick="selectGender('female')">
-                        <img src="https://github.com/simransharma07/Code-Connectors/blob/main/femae.png?raw=true" alt="Female" />
+                        <img src="femae.png" alt="Female" />
                         <p>Female</p>
                     </div>
                 </div>
@@ -62,6 +62,7 @@
             </div>
         </div>
 
+
         <!-- Dashboard -->
         <div class="dashboard-container" id="dashboardPage" style="display: none;">
             <!-- Sidebar -->
@@ -70,11 +71,7 @@
                     <div class="mobile-sidebar" id="mobileSidebar">
                         <div class="sidebar-header">
                             <div class="profile">
-
                                 <img src="profileicon.png" alt="Profile Picture" />
-
-                                <img src="D:\health tracker\light orange default pfp base.jpg" alt="Profile Picture" />
-
                                 <span>You</span>
                             </div>
                         </div>
@@ -84,30 +81,17 @@
                             <li><a href="#" onclick="showSection(event, 'appointments')">📅 Appointments</a></li>
                             <li><a href="#" onclick="showSection(event, 'settings')">⚙ Settings</a></li>
                         </ul>
+                    </div>
                 </nav>
                 <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             </aside>
 
             <!-- Main Content -->
             <main class="dashboard-content">
-                <header>
-                    <div class="dashboard-header">
-
-                        <h1>Welcome to Your Health Dashboard</h1>
-                    </div>
-
+                <header class="dashboard-header">
+                    <h1>Welcome to Your Health Dashboard</h1>
+                    <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
                 </header>
-
-
-                        <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
-
-                        <h1>Welcome to Your Health Dashboard</h1>
-                      </div>
-                      
-                </header>
-
-                
-            
 
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
@@ -116,17 +100,15 @@
                             <img src="yoga-placeholder.png" alt="Yoga" />
                             <h3>🧘 Yoga</h3>
                             <p>60 minutes - 430 kcal/hour</p>
-                            <a href="https://www.youtube.com/watch?v=1-lO2U7mxIY" target="_blank">
-                                <button>Try It Now</button>
-                            </a>
+                            <a href="https://www.youtube.com/watch?v=1-lO2U7mxIY" target="_blank"><button>Try It
+                                    Now</button></a>
                         </div>
                         <div class="activity-card">
                             <img src="cardio-placeholder.png" alt="Cardio" />
                             <h3>🏃‍♂️ Cardio</h3>
                             <p>60 minutes - 500 kcal/hour</p>
-                            <a href="https://www.youtube.com/watch?v=pB4Zr9ECN1g" target="_blank">
-                                <button>Try It Now</button>
-                            </a>
+                            <a href="https://www.youtube.com/watch?v=pB4Zr9ECN1g" target="_blank"><button>Try It
+                                    Now</button></a>
                         </div>
                         <div class="activity-card sleep">
                             <h3>🛏️ Sleep</h3>
@@ -139,55 +121,32 @@
                     </div>
                 </section>
 
-                <!-- Clean Stats Section -->
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-
                     <div class="stat-card">
                         <i class="fas fa-dumbbell icon"></i>
                         <h3>Training</h3>
                         <p id="trainingDisplay">0 hours/week</p>
-                        <input type="number" id="trainingInput" placeholder="Enter hours/week">
+                        <input type="number" id="trainingInput" placeholder="Enter hours/week" />
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-shoe-prints icon"></i>
                         <h3>Steps</h3>
                         <p id="stepsDisplay">0 km/week</p>
-                        <input type="number" id="stepsInput" placeholder="Enter km/week">
+                        <input type="number" id="stepsInput" placeholder="Enter km/week" />
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-fire icon"></i>
                         <h3>Calories</h3>
                         <p id="caloriesDisplay">0 kcal/week</p>
-                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
+                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
                     </div>
-
-                        <div class="stat-card">
-                            <i class="fas fa-dumbbell icon"></i>
-                            <h3>Training</h3>
-                            <p id="trainingDisplay">0 hours/week</p>
-                            <input type="number" id="trainingInput" placeholder="Enter hours/week">
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-shoe-prints icon"></i>
-                            <h3>Steps</h3>
-                            <p id="stepsDisplay">0 km/week</p>
-                            <input type="number" id="stepsInput" placeholder="Enter km/week">
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-fire icon"></i>
-                            <h3>Calories</h3>
-                            <p id="caloriesDisplay">0 kcal/week</p>
-                            <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
-                        </div>
-
                     <div class="update-button">
                         <button onclick="updateStats()">Update Stats</button>
                     </div>
                 </section>
 
                 <section class="appointment-section" id="appointmentsection" style="display: none;">
-
                     <h2>🩺 Doctor's Appointment</h2>
                     <form id="appointment-form">
                         <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
@@ -196,8 +155,6 @@
                         <button type="submit">Set Reminder</button>
                     </form>
 
-
-                    <!-- Medicine Intake Section -->
                     <h2>💊 Medicine Intake</h2>
                     <form id="medicine-form">
                         <label for="medicine-name">Medicine Name</label>
@@ -208,20 +165,12 @@
 
                         <label for="medicine-time">Time</label>
                         <input type="time" id="medicine-time" required />
-
                         <button type="submit">Set Medicine Reminder</button>
                     </form>
                 </section>
 
-    
-
-
-                </section>
-
-
                 <section class="settings-section" id="settingsSection" style="display: none;">
                     <button id="open-feedback-btn">📝 Give Feedback</button>
-
                     <div id="feedback-modal" class="feedback-modal" style="display: none;">
                         <div class="feedback-container">
                             <button class="close-btn">❌</button>
@@ -234,16 +183,13 @@
                                 <span class="emoji selected" data-value="4">🙂</span>
                                 <span class="emoji" data-value="5">😀</span>
                             </div>
-
                             <textarea id="feedback-text"
                                 placeholder="Do you have any thoughts you’d like to share?"></textarea>
-                            <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
-
                             <p id="warningMessage" style="color: red; font-size: 14px;"></p>
                             <p>May we follow up on your feedback?</p>
                             <div class="follow-up">
-                                <label><input type="radio" name="follow-up" value="yes" checked> Yes</label>
-                                <label><input type="radio" name="follow-up" value="no"> No</label>
+                                <label><input type="radio" name="follow-up" value="yes" checked /> Yes</label>
+                                <label><input type="radio" name="follow-up" value="no" /> No</label>
                             </div>
                             <div class="buttons">
                                 <button class="send-btn">Send</button>
@@ -255,16 +201,14 @@
             </main>
         </div>
     </div>
-    <div id="contributorsPanel" class="contributors-panel">
+
+    <!-- Contributors Panel -->
+    <div id="contributorsPanel" class="contributors-panel" style="display: none;">
         <h3>Manage Contributors</h3>
         <button onclick="addContributor()">Add Contributor</button>
         <div><strong>Contributors:</strong></div>
-        <ul id="contributorList">
-          
-        </ul>
-      </div>
-      
-
+        <ul id="contributorList"></ul>
+    </div>
 
     <script src="script.js"></script>
 </body>
