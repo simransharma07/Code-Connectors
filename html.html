@@ -34,6 +34,7 @@
                 </form>
             </div>
         </div>
+
         <!-- gender page -->
         <div class="gender-body hidden">
             <div class="container">
@@ -61,6 +62,34 @@
 
 
 
+<!-- gender page -->
+<div class="gender-body hidden">
+    <div class="container">
+      <h2>Set Your Gender and Birthday</h2>
+      <p>This helps us generate personalized data for you.</p>
+  
+      <div class="gender-selection">
+        <div class="gender" data-gender="male" onclick="selectGender('male')">
+          <img src="https://i.imgur.com/GNlPMzK.png" alt="Male" />
+          <p>Male</p>
+        </div>
+        <div class="gender" data-gender="female" onclick="selectGender('female')">
+          <img src="https://i.imgur.com/jP6qzN4.png" alt="Female" />
+          <p>Female</p>
+        </div>
+      </div>
+  
+      <label for="birthday">Birthday:</label><br />
+      <input type="date" id="birthday"><br />
+  
+      <button onclick="submitForm()">Continue</button>
+      <p class="skip" onclick="skip()">Skip</p>
+    </div>
+  </div>
+  
+  
+
+
         <!-- Dashboard -->
         <div class="dashboard-container" id="dashboardPage" style="display: none;">
             <!-- Sidebar -->
@@ -69,7 +98,11 @@
                     <div class="mobile-sidebar" id="mobileSidebar">
                         <div class="sidebar-header">
                             <div class="profile">
+
                                 <img src="profileicon.png" alt="Profile Picture" />
+
+                                <img src="D:\health tracker\light orange default pfp base.jpg" alt="Profile Picture" />
+
                                 <span>You</span>
                             </div>
                         </div>
@@ -87,10 +120,22 @@
             <main class="dashboard-content">
                 <header>
                     <div class="dashboard-header">
+
                         <h1>Welcome to Your Health Dashboard</h1>
                     </div>
 
                 </header>
+
+
+                        <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
+
+                        <h1>Welcome to Your Health Dashboard</h1>
+                      </div>
+                      
+                </header>
+
+                
+            
 
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
@@ -125,6 +170,7 @@
                 <!-- Clean Stats Section -->
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
+
                     <div class="stat-card">
                         <i class="fas fa-dumbbell icon"></i>
                         <h3>Training</h3>
@@ -143,6 +189,26 @@
                         <p id="caloriesDisplay">0 kcal/week</p>
                         <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
                     </div>
+
+                        <div class="stat-card">
+                            <i class="fas fa-dumbbell icon"></i>
+                            <h3>Training</h3>
+                            <p id="trainingDisplay">0 hours/week</p>
+                            <input type="number" id="trainingInput" placeholder="Enter hours/week">
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shoe-prints icon"></i>
+                            <h3>Steps</h3>
+                            <p id="stepsDisplay">0 km/week</p>
+                            <input type="number" id="stepsInput" placeholder="Enter km/week">
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-fire icon"></i>
+                            <h3>Calories</h3>
+                            <p id="caloriesDisplay">0 kcal/week</p>
+                            <input type="number" id="caloriesInput" placeholder="Enter kcal/week">
+                        </div>
+
                     <div class="update-button">
                         <button onclick="updateStats()">Update Stats</button>
                     </div>
@@ -157,6 +223,7 @@
                         <input type="time" id="appointment-time" required />
                         <button type="submit">Set Reminder</button>
                     </form>
+
 
                     <!-- Medicine Intake Section -->
                     <h2>💊 Medicine Intake</h2>
@@ -176,6 +243,10 @@
 
     
 
+
+                </section>
+
+
                 <section class="settings-section" id="settingsSection" style="display: none;">
                     <button id="open-feedback-btn">📝 Give Feedback</button>
 
@@ -191,8 +262,11 @@
                                 <span class="emoji selected" data-value="4">🙂</span>
                                 <span class="emoji" data-value="5">😀</span>
                             </div>
+
                             <textarea id="feedback-text"
                                 placeholder="Do you have any thoughts you’d like to share?"></textarea>
+                            <textarea id="feedback-text" placeholder="Do you have any thoughts you’d like to share?"></textarea>
+
                             <p id="warningMessage" style="color: red; font-size: 14px;"></p>
                             <p>May we follow up on your feedback?</p>
                             <div class="follow-up">
@@ -209,6 +283,16 @@
             </main>
         </div>
     </div>
+    <div id="contributorsPanel" class="contributors-panel">
+        <h3>Manage Contributors</h3>
+        <button onclick="addContributor()">Add Contributor</button>
+        <div><strong>Contributors:</strong></div>
+        <ul id="contributorList">
+          
+        </ul>
+      </div>
+      
+
 
     <script src="script.js"></script>
 </body>
