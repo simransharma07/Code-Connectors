@@ -233,7 +233,7 @@ function updateStats() {
     if (steps) document.getElementById('stepsDisplay').textContent = `${steps} km/week`;
     if (calories) document.getElementById('caloriesDisplay').textContent = `${calories} kcal/week`;
 }
-=======
+
 
 
 
