@@ -7,11 +7,6 @@
     font-family: Arial, sans-serif;
   }
 
-
-   
-  
-  
-
   .gender-body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -144,7 +139,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   color: #111827;
   height: 100vh;
-  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  background: linear-gradient(to right, #e8edf5, #c2e9fb);
   /* Sky blue gradient */
 }
 
