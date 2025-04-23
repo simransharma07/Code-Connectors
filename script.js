@@ -39,6 +39,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     // Show gender page
     document.querySelector(".gender-body").classList.remove("hidden");
 });
+
 let selectedGender = "";
 
 function selectGender(gender) {
@@ -74,10 +75,6 @@ function skip() {
   document.querySelector(".gender-body").classList.add("hidden");
   document.getElementById("dashboardPage").style.display = "block";
 }
-
-
-
-
 
 // ---------------- Header Animation on Load ----------------
 window.addEventListener('load', () => {
@@ -215,6 +212,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+// -------- Track Water --------
+document.querySelector(".activity-card.water button").addEventListener("click", function() {
+    const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
+    if (waterIntake && !isNaN(waterIntake)) {
+        alert(`Water Intake Recorded: ${waterIntake} liters`);
+        // You can save this data to local storage or a server if needed
+    } else {
+        alert("Please enter a valid number for water intake.");
+    }
+});
+
+// -------- Track Sleep --------
+document.querySelector(".activity-card.sleep button").addEventListener("click", function() {
+    const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
+    if (sleepDuration && !isNaN(sleepDuration)) {
+        alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
+        // You can save this data to local storage or a server if needed
+    } else {
+        alert("Please enter a valid number for sleep duration.");
+    }
+});
+
 
 // ---------------- Stats Update Function ----------------
 function updateStats() {
@@ -226,3 +245,29 @@ function updateStats() {
     if (steps) document.getElementById('stepsDisplay').textContent = `${steps} km/week`;
     if (calories) document.getElementById('caloriesDisplay').textContent = `${calories} kcal/week`;
 }
+
+
+// Function to toggle the visibility of the contributors panel
+function toggleContributors() {
+    const contributorsPanel = document.getElementById("contributorsPanel");
+    contributorsPanel.style.display = contributorsPanel.style.display === "none" || contributorsPanel.style.display === "" ? "block" : "none";
+}
+
+// Function to add a new contributor
+function addContributor() {
+
+    const contributorName = prompt("Enter contributor name:");
+    if (contributorName) {
+        const contributorList = document.getElementById("contributorList");
+
+        // Create a new list item for the contributor
+        const newContributor = document.createElement("li");
+        newContributor.textContent = contributorName;
+
+        // Add the new contributor to the list
+        contributorList.appendChild(newContributor);
+    } else {
+        alert("Please enter a valid contributor name.");
+    }
+}
+
