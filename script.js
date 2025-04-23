@@ -213,3 +213,18 @@ function updateStats() {
     if (steps) document.getElementById('stepsDisplay').textContent = `${steps} km/week`;
     if (calories) document.getElementById('caloriesDisplay').textContent = `${calories} kcal/week`;
 }
+let isPanelOpen = false;
+
+function toggleContributors() {
+  const panel = document.getElementById('contributorsPanel');
+  isPanelOpen = !isPanelOpen;
+  panel.classList.toggle('open', isPanelOpen);
+}
+
+function addContributor() {
+  const list = document.getElementById('contributorList');
+  const newItem = document.createElement('li');
+  newItem.innerText = 'new_contributor_' + (list.children.length + 1);
+  list.appendChild(newItem);
+}
+
