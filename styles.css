@@ -143,6 +143,48 @@
   .mobile-sidebar.active {
     left: 0;
   }
+  /* Sidebar Styles */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: orangered;
+  color: white;
+  padding-top: 20px;
+  transition: 0.3s ease;
+  z-index: 1000;
+}
+
+/* Add this block below */
+.contributors-panel {
+  position: fixed;
+  top: 80px;
+  right: -400px;
+  width: 300px;
+  background: white;
+  border-left: 2px solid #ccc;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.contributors-panel.open {
+  right: 0;
+}
+
+.contributors-btn {
+  margin-top: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
   
   .sidebar-header {
     text-align: center;
@@ -251,6 +293,31 @@
     gap: 20px;
     flex-wrap: wrap;
   }
+  
+/* Contributors Section */
+.contributors-section {
+  background-color: #f0f0f0;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.contributors-section h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+button {
+  margin-top: 10px;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
   
   .activity-card {
     background: white;

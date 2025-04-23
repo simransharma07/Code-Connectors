@@ -54,6 +54,9 @@ function submitForm() {
   document.getElementById("dashboardPage").style.display = "block";
 }
 
+
+
+
 function skip() {
   document.querySelector(".gender-body").classList.add("hidden");
   document.getElementById("dashboardPage").style.display = "block";
