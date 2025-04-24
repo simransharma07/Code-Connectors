@@ -353,7 +353,12 @@ function initNutritionTracker() {
         { name: 'Greek Yogurt', calories: 100, protein: 10, carbs: 3.6, fat: 5 },
         { name: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
         { name: 'Avocado', calories: 234, protein: 2.9, carbs: 12, fat: 21 },
-        { name: 'Spinach', calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4 }
+        { name: 'Spinach', calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4 },
+        { name: 'Oatmeal', calories: 150, protein: 5, carbs: 27, fat: 3 },
+        { name: 'Sweet Potato', calories: 86, protein: 1.6, carbs: 20, fat: 0.1 },
+        { name: 'Quinoa', calories: 222, protein: 8, carbs: 39, fat: 3.6 },
+        { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fat: 50 },
+        { name: 'Milk', calories: 61, protein: 3.2, carbs: 4.8, fat: 3.3 }
     ];
     
     // Track daily nutrition totals
@@ -400,6 +405,9 @@ function initNutritionTracker() {
     
     // Initialize visual elements like progress indicators and charts
     initVisualElements();
+    
+    // Initialize calorie calculator
+    initCalorieCalculator();
     
     // Try to load saved data from localStorage
     loadSavedData();
@@ -585,8 +593,8 @@ function initNutritionTracker() {
                                 food.name.toLowerCase().includes(searchTerm)
                             );
                             
+                            // In a real app, show autocomplete dropdown here
                             if (matches.length && matches.length <= 5) {
-                                // In a real app, show autocomplete dropdown here
                                 console.log(`Matches for ${searchTerm}:`, matches.map(m => m.name));
                             }
                         }
@@ -798,6 +806,64 @@ function initNutritionTracker() {
         }
     }
     
+    function initCalorieCalculator() {
+        const calculatorForm = document.getElementById('calorie-calculator');
+        const resultContainer = document.getElementById('calculator-result');
+        
+        if (calculatorForm) {
+            calculatorForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form values
+                const age = parseInt(document.getElementById('calc-age').value);
+                const gender = document.getElementById('calc-gender').value;
+                const weight = parseFloat(document.getElementById('calc-weight').value);
+                const height = parseFloat(document.getElementById('calc-height').value);
+                const activityLevel = parseFloat(document.getElementById('calc-activity').value);
+                const goal = document.getElementById('calc-goal').value;
+                
+                // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
+                let bmr;
+                if (gender === 'male') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+                
+                // Calculate maintenance calories
+                const maintenance = Math.round(bmr * activityLevel);
+                
+                // Calculate target calories based on goal
+                let targetCalories;
+                if (goal === 'lose') {
+                    targetCalories = Math.round(maintenance - 500); // 500 calorie deficit
+                } else if (goal === 'gain') {
+                    targetCalories = Math.round(maintenance + 500); // 500 calorie surplus
+                } else {
+                    targetCalories = maintenance;
+                }
+                
+                // Display results
+                document.getElementById('bmr-result').textContent = Math.round(bmr);
+                document.getElementById('maintenance-result').textContent = maintenance;
+                document.getElementById('target-result').textContent = targetCalories;
+                
+                // Show result container with animation
+                resultContainer.classList.add('show');
+                
+                // Save calculated target to localStorage
+                localStorage.setItem('calculatedCalorieTarget', targetCalories);
+                
+                // Option to update calorie target in the app
+                if (confirm(`Would you like to update your daily calorie target to ${targetCalories} calories?`)) {
+                    document.getElementById('calorie-target').textContent = targetCalories;
+                    updateNutritionDisplay();
+                    localStorage.setItem('calorieTarget', targetCalories);
+                }
+            });
+        }
+    }
+    
     function initVisualElements() {
         // Initialize charts or visual elements here
         updateMacroChart();
@@ -866,6 +932,16 @@ function initNutritionTracker() {
         
         if (waterInterval) {
             document.getElementById('water-interval').value = waterInterval;
+        }
+        
+        // Load calorie target if previously calculated
+        const savedCalorieTarget = localStorage.getItem('calorieTarget');
+        if (savedCalorieTarget) {
+            const calorieTargetElem = document.getElementById('calorie-target');
+            if (calorieTargetElem) {
+                calorieTargetElem.textContent = savedCalorieTarget;
+                updateNutritionDisplay();
+            }
         }
     }
 }
@@ -1009,50 +1085,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const waterButton = document.querySelector(".activity-card.water button");
     if (waterButton) {
         waterButton.addEventListener("click", function() {
-            const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
-            if (waterIntake && !isNaN(waterIntake)) {
-                alert(`Water Intake Recorded: ${waterIntake} liters`);
-                // You can save this data to local storage or a server if needed
-            } else {
-                alert("Please enter a valid number for water intake.");
-            }
-        });
-    }
-
-    // -------- Track Sleep --------
-    const sleepButton = document.querySelector(".activity-card.sleep button");
-    if (sleepButton) {
-        sleepButton.addEventListener("click", function() {
-            const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
-            if (sleepDuration && !isNaN(sleepDuration)) {
-                alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
-                // You can save this data to local storage or a server if needed
-            } else {
-                alert("Please enter a valid number for sleep duration.");
-            }
+            // Add water tracking functionality here
         });
     }
 });
-
-// Function to toggle the visibility of the contributors panel
-function toggleContributors() {
-    const contributorsPanel = document.getElementById("contributorsPanel");
-    contributorsPanel.style.display = contributorsPanel.style.display === "none" || contributorsPanel.style.display === "" ? "block" : "none";
-}
-
-// Function to add a new contributor
-function addContributor() {
-    const contributorName = prompt("Enter contributor name:");
-    if (contributorName) {
-        const contributorList = document.getElementById("contributorList");
-
-        // Create a new list item for the contributor
-        const newContributor = document.createElement("li");
-        newContributor.textContent = contributorName;
-
-        // Add the new contributor to the list
-        contributorList.appendChild(newContributor);
-    } else {
-        alert("Please enter a valid contributor name.");
-    }
-}
