@@ -183,27 +183,100 @@
 
                     <div id="feedback-modal" class="feedback-modal" style="display: none;">
                         <div class="feedback-container">
-                            <button class="close-btn">❌</button>
-                            <h2>Give Feedback</h2>
-                            <p>What do you think of Beeptech?</p>
-                            <div class="emoji-rating">
-                                <span class="emoji" data-value="1">😠</span>
-                                <span class="emoji" data-value="2">🙁</span>
-                                <span class="emoji" data-value="3">😐</span>
-                                <span class="emoji selected" data-value="4">🙂</span>
-                                <span class="emoji" data-value="5">😀</span>
+                            <div class="feedback-header">
+                                <h2>Help Us Improve BEEPTECH</h2>
+                                <button class="close-btn" aria-label="Close feedback form">×</button>
                             </div>
-                            <textarea id="feedback-text"
-                                placeholder="Do you have any thoughts you’d like to share?"></textarea>
-                            <p id="warningMessage" style="color: red; font-size: 14px;"></p>
-                            <p>May we follow up on your feedback?</p>
-                            <div class="follow-up">
-                                <label><input type="radio" name="follow-up" value="yes" checked /> Yes</label>
-                                <label><input type="radio" name="follow-up" value="no" /> No</label>
+                            
+                            <div class="feedback-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <p class="progress-text">Step 1 of 3</p>
                             </div>
-                            <div class="buttons">
-                                <button class="send-btn">Send</button>
-                                <button class="cancel-btn">Cancel</button>
+
+                            <div class="feedback-step" id="step1">
+                                <h3>How would you rate your overall experience?</h3>
+                                <div class="rating-container">
+                                    <div class="emoji-rating">
+                                        <span class="emoji" data-value="1" title="Very Dissatisfied">😠</span>
+                                        <span class="emoji" data-value="2" title="Dissatisfied">🙁</span>
+                                        <span class="emoji" data-value="3" title="Neutral">😐</span>
+                                        <span class="emoji" data-value="4" title="Satisfied">🙂</span>
+                                        <span class="emoji" data-value="5" title="Very Satisfied">😀</span>
+                                    </div>
+                                    <div class="rating-text">Select a rating</div>
+                                </div>
+                                <div class="feedback-nav">
+                                    <button class="step-btn next-btn" disabled>Next</button>
+                                </div>
+                            </div>
+
+                            <div class="feedback-step hidden" id="step2">
+                                <h3>What aspects would you like to tell us about?</h3>
+                                <div class="category-selection">
+                                    <div class="category-option">
+                                        <input type="checkbox" id="cat-usability" name="category" value="usability">
+                                        <label for="cat-usability">Usability</label>
+                                    </div>
+                                    <div class="category-option">
+                                        <input type="checkbox" id="cat-features" name="category" value="features">
+                                        <label for="cat-features">Features</label>
+                                    </div>
+                                    <div class="category-option">
+                                        <input type="checkbox" id="cat-design" name="category" value="design">
+                                        <label for="cat-design">Design</label>
+                                    </div>
+                                    <div class="category-option">
+                                        <input type="checkbox" id="cat-performance" name="category" value="performance">
+                                        <label for="cat-performance">Performance</label>
+                                    </div>
+                                    <div class="category-option">
+                                        <input type="checkbox" id="cat-other" name="category" value="other">
+                                        <label for="cat-other">Other</label>
+                                    </div>
+                                </div>
+                                <div class="feedback-nav">
+                                    <button class="step-btn prev-btn">Back</button>
+                                    <button class="step-btn next-btn">Next</button>
+                                </div>
+                            </div>
+
+                            <div class="feedback-step hidden" id="step3">
+                                <h3>Please share your thoughts</h3>
+                                <textarea id="feedback-text" placeholder="What's working well? What could be improved? Any specific suggestions?"></textarea>
+                                <p id="warningMessage" class="warning-text"></p>
+                                
+                                <div class="contact-preference">
+                                    <h4>Would you like to be contacted about your feedback?</h4>
+                                    <div class="toggle-switch-container">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="contact-toggle">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span id="toggle-label">No</span>
+                                    </div>
+                                </div>
+                                
+                                <div id="contact-details" class="hidden">
+                                    <input type="email" id="contact-email" placeholder="Your email address" />
+                                </div>
+                                
+                                <div class="feedback-nav">
+                                    <button class="step-btn prev-btn">Back</button>
+                                    <button class="submit-btn">Submit Feedback</button>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-step hidden" id="thank-you">
+                                <div class="thank-you-content">
+                                    <div class="check-circle">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <h3>Thank You For Your Feedback!</h3>
+                                    <p>Your input helps us improve BEEPTECH for everyone.</p>
+                                    <button class="close-thank-you">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
