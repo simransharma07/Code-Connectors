@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Health Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -17,18 +16,18 @@
         <div class="login-container" id="loginPage">
             <div id="login-page-background"></div>
             <div class="login-box">
-                <img src="Screenshot 2025-03-10 210211.png" alt="BEEPTECH" class="logo">
+                <img src="Screenshot 2025-03-10 210211.png" alt="BEEPTECH" class="logo" />
                 <h2>Welcome to BEEPTECH</h2>
                 <p>Track your health & wellness in one place</p>
                 <form id="loginForm">
                     <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Enter Username" required>
+                    <input type="text" id="username" placeholder="Enter Username" required />
 
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter Password" required>
+                    <input type="password" id="password" placeholder="Enter Password" required />
 
                     <div class="remember">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" id="remember" />
                         <label for="remember">Remember Me</label>
                     </div>
                     <button type="submit" class="btn">Sign In</button>
@@ -37,6 +36,7 @@
             </div>
         </div>
 
+<<<<<<< HEAD
         <!-- gender page -->
         <div class="gender-body hidden">
             <div class="container">
@@ -47,6 +47,16 @@
                     <div class="gender" data-gender="male" onclick="selectGender('male')">
                         <img src="male .png" alt="Male" />
 
+=======
+        <!-- Gender Page -->
+        <div class="gender-body hidden">
+            <div class="container">
+                <h2>Let us know more about you.</h2>
+                <p>This helps us curate personalized data for you.</p>
+                <div class="gender-selection">
+                    <div class="gender" data-gender="male" onclick="selectGender('male')">
+                        <img src="male.png" alt="Male" />
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
                         <p>Male</p>
                     </div>
                     <div class="gender" data-gender="female" onclick="selectGender('female')">
@@ -56,13 +66,20 @@
                 </div>
 
                 <label for="birthday">Birthday:</label><br />
+<<<<<<< HEAD
                 <input type="date" id="birthday"><br />
 
+=======
+                <input type="date" id="birthday" /><br />
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
                 <button onclick="submitForm()">Continue</button>
                 <p class="skip" onclick="skip()">Skip</p>
             </div>
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
 
         <!-- Dashboard -->
         <div class="dashboard-container" id="dashboardPage" style="display: none;">
@@ -99,21 +116,22 @@
             <main class="dashboard-content">
                 <header class="dashboard-header">
                     <h1>Welcome to Your Health Dashboard</h1>
+<<<<<<< HEAD
                     <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
+=======
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
                 </header>
 
                 <section class="activity-section">
                     <h2>Find Your Activity</h2>
                     <div class="activity-cards">
                         <div class="activity-card">
-                            <img src="yoga-placeholder.png" alt="Yoga" />
                             <h3>🧘 Yoga</h3>
                             <p>60 minutes - 430 kcal/hour</p>
                             <a href="https://www.youtube.com/watch?v=1-lO2U7mxIY" target="_blank"><button>Try It
                                     Now</button></a>
                         </div>
                         <div class="activity-card">
-                            <img src="cardio-placeholder.png" alt="Cardio" />
                             <h3>🏃‍♂️ Cardio</h3>
                             <p>60 minutes - 500 kcal/hour</p>
                             <a href="https://www.youtube.com/watch?v=pB4Zr9ECN1g" target="_blank"><button>Try It
@@ -179,7 +197,15 @@
                 </section>
 
                 <section class="settings-section" id="settingsSection" style="display: none;">
+<<<<<<< HEAD
                     <button id="open-feedback-btn">📝 Give Feedback</button>
+=======
+                    <div class="settings-buttons">
+                        <button id="contributors-btn">👥 Contributors</button>
+                        <button id="open-feedback-btn">📝 Give Feedback</button>
+                    </div>
+
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
                     <div id="feedback-modal" class="feedback-modal" style="display: none;">
                         <div class="feedback-container">
                             <button class="close-btn">❌</button>
@@ -210,6 +236,7 @@
             </main>
         </div>
     </div>
+<<<<<<< HEAD
 
    
   
@@ -222,6 +249,8 @@
         <ul id="contributorList"></ul>
     </div>
 
+=======
+>>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
 
     <script src="script.js"></script>
 </body>
