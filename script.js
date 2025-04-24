@@ -1,5 +1,5 @@
 // ---------------- Login Handling ----------------
-document.getElementById("loginForm").addEventListener("submit", function (event) {
+document.getElementById("loginForm")?.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const username = document.getElementById("username").value.trim();
@@ -26,15 +26,8 @@ function selectGender(gender) {
 function submitForm() {
     const birthday = document.getElementById("birthday").value;
 
-    if (!selectedGender) {
-        alert("Please select your gender.");
-        return;
-    }
-
-    if (!birthday) {
-        alert("Please enter your birthday.");
-        return;
-    }
+    if (!selectedGender) return alert("Please select your gender.");
+    if (!birthday) return alert("Please enter your birthday.");
 
     console.log("Gender:", selectedGender);
     console.log("Birthday:", birthday);
@@ -50,12 +43,13 @@ function skip() {
 
 // ---------------- Header Animation on Load ----------------
 window.addEventListener("load", () => {
-    document.querySelector(".dashboard-content header h1").style.animationDelay = "0.3s";
+    const heading = document.querySelector(".dashboard-content header h1");
+    if (heading) heading.style.animationDelay = "0.3s";
 });
 
 // ---------------- Mobile Sidebar Toggle ----------------
 function toggleSidebar() {
-    document.getElementById("mobileSidebar").classList.toggle("active");
+    document.getElementById("mobileSidebar")?.classList.toggle("active");
 }
 
 // ---------------- Section Navigation ----------------
@@ -64,9 +58,7 @@ function showSection(event, sectionId) {
 
     document.querySelectorAll(
         ".stats-section, .appointment-section, .settings-section, .activity-section"
-    ).forEach(section => {
-        section.style.display = "none";
-    });
+    ).forEach(section => section.style.display = "none");
 
     const sectionMap = {
         home: ".activity-section",
@@ -76,9 +68,7 @@ function showSection(event, sectionId) {
     };
 
     const target = sectionMap[sectionId];
-    if (target) {
-        document.querySelector(target).style.display = "block";
-    }
+    if (target) document.querySelector(target).style.display = "block";
 }
 
 // ---------------- Stats Update Function ----------------
@@ -96,40 +86,36 @@ function updateStats() {
 document.addEventListener("DOMContentLoaded", function () {
     // -------- Medicine Form --------
     const medicineForm = document.querySelector("#medicine-form");
-    if (medicineForm) {
-        medicineForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+    medicineForm?.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-            const name = document.querySelector("#medicine-name").value.trim();
-            const time = document.querySelector("#medicine-time").value.trim();
+        const name = document.querySelector("#medicine-name").value.trim();
+        const time = document.querySelector("#medicine-time").value.trim();
 
-            if (name && time) {
-                alert(`Medicine Reminder Set: ${name} at ${time}`);
-                medicineForm.reset();
-            } else {
-                alert("Please fill in all fields.");
-            }
-        });
-    }
+        if (name && time) {
+            alert(`Medicine Reminder Set: ${name} at ${time}`);
+            medicineForm.reset();
+        } else {
+            alert("Please fill in all fields.");
+        }
+    });
 
     // -------- Appointment Form --------
     const appointmentForm = document.querySelector("#appointment-form");
-    if (appointmentForm) {
-        appointmentForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+    appointmentForm?.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-            const doctor = document.querySelector("#doctor-name").value.trim();
-            const date = document.querySelector("#appointment-date").value.trim();
-            const time = document.querySelector("#appointment-time").value.trim();
+        const doctor = document.querySelector("#doctor-name").value.trim();
+        const date = document.querySelector("#appointment-date").value.trim();
+        const time = document.querySelector("#appointment-time").value.trim();
 
-            if (doctor && date && time) {
-                alert(`Appointment Set: Dr. ${doctor} on ${date} at ${time}`);
-                appointmentForm.reset();
-            } else {
-                alert("Please fill in all fields.");
-            }
-        });
-    }
+        if (doctor && date && time) {
+            alert(`Appointment Set: Dr. ${doctor} on ${date} at ${time}`);
+            appointmentForm.reset();
+        } else {
+            alert("Please fill in all fields.");
+        }
+    });
 
     // -------- Inline Styling (Input/Button) --------
     const styleInputsAndButtons = () => {
@@ -175,9 +161,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200);
     }
 
-    if (openBtn) openBtn.addEventListener("click", showModal);
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-    if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+    openBtn?.addEventListener("click", showModal);
+    closeBtn?.addEventListener("click", closeModal);
+    cancelBtn?.addEventListener("click", closeModal);
 
     // -------- Emoji Rating --------
     document.querySelectorAll(".emoji").forEach(emoji => {
@@ -188,27 +174,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // -------- Feedback Submission --------
-    if (sendBtn) {
-        sendBtn.addEventListener("click", function () {
-            const feedback = document.querySelector("#feedback-text").value.trim();
-            const warning = document.getElementById("warningMessage");
+    sendBtn?.addEventListener("click", function () {
+        const feedback = document.querySelector("#feedback-text").value.trim();
+        const warning = document.getElementById("warningMessage");
 
-            if (feedback === "") {
-                warning.innerText = "Please write some feedback before submitting.";
-            } else {
-                alert("Thanks for your feedback!");
-                closeModal();
-                warning.innerText = "";
-                document.getElementById("feedback-text").value = "";
-            }
-        });
-    }
+        if (feedback === "") {
+            warning.innerText = "Please write some feedback before submitting.";
+        } else {
+            alert("Thanks for your feedback!");
+            closeModal();
+            warning.innerText = "";
+            document.getElementById("feedback-text").value = "";
+        }
+    });
 
     // -------- Contributors Button --------
     const contributorsBtn = document.getElementById("contributors-btn");
-    if (contributorsBtn) {
-        contributorsBtn.addEventListener("click", function () {
-            alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
-        });
-    }
+    contributorsBtn?.addEventListener("click", function () {
+        alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
+    });
 });
