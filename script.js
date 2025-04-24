@@ -80,7 +80,7 @@ function showSection(event, sectionId) {
 
     // Hide all sections
     document.querySelectorAll(
-        ".stats-section, .appointment-section, .settings-section, .activity-section"
+        ".stats-section, .appointment-section, .settings-section, .activity-section, .nutrition-section"
     ).forEach(section => {
         section.style.display = "none";
     });
@@ -102,7 +102,8 @@ function showSection(event, sectionId) {
         home: ".activity-section",
         stats: ".stats-section",
         appointments: ".appointment-section",
-        settings: ".settings-section"
+        settings: ".settings-section",
+        nutrition: ".nutrition-section"
     };
 
     const target = sectionMap[sectionId];
@@ -339,6 +340,536 @@ function initFeedbackForm() {
     }
 }
 
+// ---------------- Nutrition Tracker Functionality ----------------
+function initNutritionTracker() {
+    // Sample food database (in a real app, this would come from an API or larger database)
+    const foodDatabase = [
+        { name: 'Apple', calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
+        { name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+        { name: 'Brown Rice', calories: 215, protein: 5, carbs: 45, fat: 1.8 },
+        { name: 'Salmon', calories: 206, protein: 22, carbs: 0, fat: 13 },
+        { name: 'Broccoli', calories: 55, protein: 3.7, carbs: 11, fat: 0.6 },
+        { name: 'Egg', calories: 78, protein: 6, carbs: 0.6, fat: 5 },
+        { name: 'Greek Yogurt', calories: 100, protein: 10, carbs: 3.6, fat: 5 },
+        { name: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
+        { name: 'Avocado', calories: 234, protein: 2.9, carbs: 12, fat: 21 },
+        { name: 'Spinach', calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4 }
+    ];
+    
+    // Track daily nutrition totals
+    let dailyNutrition = {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0
+    };
+    
+    // Track meals
+    let meals = {
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+        snacks: []
+    };
+    
+    // Target calories (could be customized based on user goals)
+    const targetCalories = 2000;
+    
+    // Meal plan data structure
+    let mealPlans = {
+        monday: { breakfast: '', lunch: '', dinner: '' },
+        tuesday: { breakfast: '', lunch: '', dinner: '' },
+        wednesday: { breakfast: '', lunch: '', dinner: '' },
+        thursday: { breakfast: '', lunch: '', dinner: '' },
+        friday: { breakfast: '', lunch: '', dinner: '' },
+        saturday: { breakfast: '', lunch: '', dinner: '' },
+        sunday: { breakfast: '', lunch: '', dinner: '' }
+    };
+    
+    // Initialize meal tabs
+    initMealTabs();
+    
+    // Initialize meal plan tabs
+    initMealPlanTabs();
+    
+    // Setup water reminder settings
+    setupWaterReminder();
+    
+    // Initialize food tracking forms
+    initFoodForms();
+    
+    // Initialize visual elements like progress indicators and charts
+    initVisualElements();
+    
+    // Try to load saved data from localStorage
+    loadSavedData();
+    
+    function initMealTabs() {
+        const mealTabs = document.querySelectorAll('.meal-tab');
+        const mealContents = document.querySelectorAll('.meal-content');
+        
+        mealTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetMeal = tab.getAttribute('data-meal');
+                
+                // Remove active class from all tabs and contents
+                mealTabs.forEach(t => t.classList.remove('active'));
+                mealContents.forEach(c => c.classList.add('hidden'));
+                
+                // Add active class to selected tab and content
+                tab.classList.add('active');
+                document.getElementById(`${targetMeal}-content`).classList.remove('hidden');
+            });
+        });
+    }
+    
+    function initMealPlanTabs() {
+        // View/Create plan toggle
+        const viewPlanBtn = document.getElementById('view-plan-btn');
+        const createPlanBtn = document.getElementById('create-plan-btn');
+        const viewPlanContent = document.getElementById('view-plan-content');
+        const createPlanContent = document.getElementById('create-plan-content');
+        
+        if (viewPlanBtn && createPlanBtn) {
+            viewPlanBtn.addEventListener('click', () => {
+                viewPlanBtn.classList.add('active');
+                createPlanBtn.classList.remove('active');
+                viewPlanContent.classList.remove('hidden');
+                createPlanContent.classList.add('hidden');
+            });
+            
+            createPlanBtn.addEventListener('click', () => {
+                createPlanBtn.classList.add('active');
+                viewPlanBtn.classList.remove('active');
+                createPlanContent.classList.remove('hidden');
+                viewPlanContent.classList.add('hidden');
+            });
+        }
+        
+        // Day selector buttons
+        const dayBtns = document.querySelectorAll('.day-btn');
+        if (dayBtns.length) {
+            let currentDay = 'monday';
+            
+            dayBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    dayBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDay = btn.getAttribute('data-day');
+                    updateMealPlanDisplay(currentDay);
+                });
+            });
+        }
+        
+        // Save meal plan button
+        const savePlanBtn = document.getElementById('save-meal-plan');
+        if (savePlanBtn) {
+            savePlanBtn.addEventListener('click', () => {
+                const day = document.getElementById('plan-day').value;
+                const meal = document.getElementById('plan-meal').value;
+                const description = document.getElementById('meal-description').value;
+                
+                if (description.trim()) {
+                    mealPlans[day][meal] = description;
+                    saveMealPlansToLocalStorage();
+                    
+                    // Show confirmation and reset form
+                    alert(`Meal plan for ${meal} on ${day.charAt(0).toUpperCase() + day.slice(1)} has been saved!`);
+                    document.getElementById('meal-description').value = '';
+                    
+                    // Switch back to view mode and show the updated plan
+                    if (viewPlanBtn) {
+                        viewPlanBtn.click();
+                    }
+                    
+                    // Update the current day display
+                    updateMealPlanDisplay(day);
+                    
+                    // Activate the day button for the selected day
+                    dayBtns.forEach(btn => {
+                        if (btn.getAttribute('data-day') === day) {
+                            btn.click();
+                        }
+                    });
+                } else {
+                    alert('Please enter a meal description before saving.');
+                }
+            });
+        }
+    }
+
+    function updateMealPlanDisplay(day) {
+        const dayPlan = mealPlans[day] || { breakfast: '', lunch: '', dinner: '' };
+        
+        // Update breakfast
+        const breakfastContainer = document.getElementById('plan-breakfast');
+        if (breakfastContainer) {
+            if (dayPlan.breakfast) {
+                breakfastContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.breakfast}</div>`;
+            } else {
+                breakfastContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
+            }
+        }
+        
+        // Update lunch
+        const lunchContainer = document.getElementById('plan-lunch');
+        if (lunchContainer) {
+            if (dayPlan.lunch) {
+                lunchContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.lunch}</div>`;
+            } else {
+                lunchContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
+            }
+        }
+        
+        // Update dinner
+        const dinnerContainer = document.getElementById('plan-dinner');
+        if (dinnerContainer) {
+            if (dayPlan.dinner) {
+                dinnerContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.dinner}</div>`;
+            } else {
+                dinnerContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
+            }
+        }
+    }
+    
+    function setupWaterReminder() {
+        const setWaterReminderBtn = document.getElementById('set-water-reminder');
+        
+        if (setWaterReminderBtn) {
+            setWaterReminderBtn.addEventListener('click', () => {
+                const waterTarget = document.getElementById('water-target').value;
+                const reminderInterval = document.getElementById('water-interval').value;
+                
+                // Save water reminder settings to localStorage
+                localStorage.setItem('waterTarget', waterTarget);
+                localStorage.setItem('waterReminderInterval', reminderInterval);
+                
+                // Set water reminder (in a real app, this would use the Notifications API)
+                alert(`Water reminder set! Target: ${waterTarget}ml, Reminder interval: Every ${reminderInterval} minutes.`);
+            });
+        }
+    }
+    
+    function initFoodForms() {
+        // Add event listeners to forms
+        ['breakfast', 'lunch', 'dinner', 'snacks'].forEach(mealType => {
+            const form = document.getElementById(`add-${mealType}`);
+            
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const foodInput = document.getElementById(`${mealType}-food-search`);
+                    const amountInput = document.getElementById(`${mealType}-amount`);
+                    
+                    const foodName = foodInput.value.trim();
+                    const amount = parseInt(amountInput.value);
+                    
+                    if (foodName && !isNaN(amount) && amount > 0) {
+                        addFoodToMeal(foodName, amount, mealType);
+                        foodInput.value = '';
+                        amountInput.value = '';
+                    } else {
+                        alert('Please enter a valid food name and amount.');
+                    }
+                });
+                
+                // Add autocomplete for food search
+                const foodInput = document.getElementById(`${mealType}-food-search`);
+                if (foodInput) {
+                    foodInput.addEventListener('input', (e) => {
+                        const searchTerm = e.target.value.toLowerCase();
+                        
+                        if (searchTerm.length >= 2) {
+                            const matches = foodDatabase.filter(food => 
+                                food.name.toLowerCase().includes(searchTerm)
+                            );
+                            
+                            if (matches.length && matches.length <= 5) {
+                                // In a real app, show autocomplete dropdown here
+                                console.log(`Matches for ${searchTerm}:`, matches.map(m => m.name));
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+    
+    function addFoodToMeal(foodName, amount, mealType) {
+        // Find the food in database
+        const food = foodDatabase.find(f => f.name.toLowerCase() === foodName.toLowerCase());
+        
+        if (!food) {
+            // For demo purposes, add a custom food with basic calorie estimate
+            const customCalories = Math.round(amount * 1.5); // Simple approximation
+            const customProtein = Math.round(amount * 0.05);
+            const customCarbs = Math.round(amount * 0.1);
+            const customFat = Math.round(amount * 0.08);
+            
+            const customFood = {
+                name: foodName,
+                calories: customCalories,
+                protein: customProtein,
+                carbs: customCarbs,
+                fat: customFat,
+                amount: amount,
+                custom: true
+            };
+            
+            meals[mealType].push(customFood);
+        } else {
+            // Calculate nutrition based on amount
+            const ratio = amount / 100; // Assuming database values are per 100g
+            const mealItem = {
+                name: food.name,
+                calories: Math.round(food.calories * ratio),
+                protein: Math.round(food.protein * ratio * 10) / 10,
+                carbs: Math.round(food.carbs * ratio * 10) / 10,
+                fat: Math.round(food.fat * ratio * 10) / 10,
+                amount: amount
+            };
+            
+            meals[mealType].push(mealItem);
+        }
+        
+        // Update display
+        updateMealDisplay(mealType);
+        updateTotalNutrition();
+        
+        // Save to localStorage
+        saveNutritionDataToLocalStorage();
+        
+        // Show confirmation
+        const message = food ? 
+            `Added ${amount}g of ${foodName} (${Math.round(food.calories * amount / 100)} calories)` : 
+            `Added ${amount}g of ${foodName} (estimated ${Math.round(amount * 1.5)} calories)`;
+        
+        // Display a temporary message (in a real app, this would be a nicer toast notification)
+        alert(message);
+    }
+    
+    function updateMealDisplay(mealType) {
+        const container = document.getElementById(`${mealType}-items`);
+        
+        if (container) {
+            if (meals[mealType].length === 0) {
+                container.innerHTML = '<p class="empty-meal-message">No items added yet</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            meals[mealType].forEach((item, index) => {
+                const foodItem = document.createElement('div');
+                foodItem.className = 'food-item';
+                
+                foodItem.innerHTML = `
+                    <div class="food-info">
+                        <div class="food-name">${item.name} (${item.amount}g)</div>
+                        <div class="food-details">
+                            ${item.calories} kcal | P: ${item.protein}g | C: ${item.carbs}g | F: ${item.fat}g
+                        </div>
+                    </div>
+                    <button class="food-delete" data-meal="${mealType}" data-index="${index}">×</button>
+                `;
+                
+                container.appendChild(foodItem);
+            });
+            
+            // Add event listeners to delete buttons
+            const deleteButtons = container.querySelectorAll('.food-delete');
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const meal = btn.getAttribute('data-meal');
+                    const index = parseInt(btn.getAttribute('data-index'));
+                    
+                    // Remove item from meals
+                    meals[meal].splice(index, 1);
+                    
+                    // Update displays
+                    updateMealDisplay(meal);
+                    updateTotalNutrition();
+                    
+                    // Save to localStorage
+                    saveNutritionDataToLocalStorage();
+                });
+            });
+        }
+    }
+    
+    function updateTotalNutrition() {
+        // Reset daily totals
+        dailyNutrition = {
+            calories: 0,
+            protein: 0,
+            carbs: 0,
+            fat: 0
+        };
+        
+        // Calculate totals from all meals
+        Object.keys(meals).forEach(mealType => {
+            meals[mealType].forEach(item => {
+                dailyNutrition.calories += item.calories;
+                dailyNutrition.protein += item.protein;
+                dailyNutrition.carbs += item.carbs;
+                dailyNutrition.fat += item.fat;
+            });
+        });
+        
+        // Round values
+        dailyNutrition.protein = Math.round(dailyNutrition.protein * 10) / 10;
+        dailyNutrition.carbs = Math.round(dailyNutrition.carbs * 10) / 10;
+        dailyNutrition.fat = Math.round(dailyNutrition.fat * 10) / 10;
+        
+        // Update display
+        updateNutritionDisplay();
+    }
+    
+    function updateNutritionDisplay() {
+        // Update calorie progress
+        const calorieProgressElem = document.getElementById('calorie-progress');
+        const calorieConsumedElem = document.getElementById('calorie-consumed');
+        const calorieTargetElem = document.getElementById('calorie-target');
+        
+        if (calorieProgressElem) calorieProgressElem.textContent = dailyNutrition.calories;
+        if (calorieConsumedElem) calorieConsumedElem.textContent = dailyNutrition.calories;
+        if (calorieTargetElem) calorieTargetElem.textContent = targetCalories;
+        
+        // Update progress ring
+        const progressPercentage = Math.min(100, (dailyNutrition.calories / targetCalories) * 100);
+        const progressRing = document.querySelector('.progress-ring');
+        if (progressRing) {
+            progressRing.style.background = `conic-gradient(#4CAF50 ${progressPercentage}%, #E0E0E0 0%)`;
+        }
+        
+        // Update macronutrient values
+        const proteinElem = document.getElementById('protein-value');
+        const carbsElem = document.getElementById('carbs-value');
+        const fatElem = document.getElementById('fat-value');
+        
+        if (proteinElem) proteinElem.textContent = dailyNutrition.protein;
+        if (carbsElem) carbsElem.textContent = dailyNutrition.carbs;
+        if (fatElem) fatElem.textContent = dailyNutrition.fat;
+        
+        // Update macronutrient chart if Chart.js is available
+        updateMacroChart();
+    }
+    
+    function updateMacroChart() {
+        const chartCanvas = document.getElementById('macro-chart');
+        if (chartCanvas && window.Chart) {
+            // Destroy existing chart if any
+            if (window.macroChart) {
+                window.macroChart.destroy();
+            }
+            
+            // Create new chart
+            window.macroChart = new Chart(chartCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Protein', 'Carbs', 'Fat'],
+                    datasets: [{
+                        data: [dailyNutrition.protein * 4, dailyNutrition.carbs * 4, dailyNutrition.fat * 9],
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                        hoverBackgroundColor: ['#FF4D6D', '#2693E6', '#FFB922']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 70,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                const dataset = data.datasets[tooltipItem.datasetIndex];
+                                const total = dataset.data.reduce((acc, val) => acc + val, 0);
+                                const value = dataset.data[tooltipItem.index];
+                                const percentage = Math.round((value / total) * 100);
+                                return `${data.labels[tooltipItem.index]}: ${percentage}%`;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+    
+    function initVisualElements() {
+        // Initialize charts or visual elements here
+        updateMacroChart();
+        
+        // Initialize meal displays
+        Object.keys(meals).forEach(mealType => {
+            updateMealDisplay(mealType);
+        });
+        
+        // Initialize meal plan display
+        updateMealPlanDisplay('monday');
+    }
+    
+    function saveNutritionDataToLocalStorage() {
+        localStorage.setItem('healthTrackerMeals', JSON.stringify(meals));
+        localStorage.setItem('healthTrackerNutrition', JSON.stringify(dailyNutrition));
+    }
+    
+    function saveMealPlansToLocalStorage() {
+        localStorage.setItem('healthTrackerMealPlans', JSON.stringify(mealPlans));
+    }
+    
+    function loadSavedData() {
+        // Try to load meals
+        const savedMeals = localStorage.getItem('healthTrackerMeals');
+        if (savedMeals) {
+            try {
+                meals = JSON.parse(savedMeals);
+                Object.keys(meals).forEach(mealType => {
+                    updateMealDisplay(mealType);
+                });
+            } catch (e) {
+                console.error('Error loading saved meals', e);
+            }
+        }
+        
+        // Try to load nutrition data
+        const savedNutrition = localStorage.getItem('healthTrackerNutrition');
+        if (savedNutrition) {
+            try {
+                dailyNutrition = JSON.parse(savedNutrition);
+                updateNutritionDisplay();
+            } catch (e) {
+                console.error('Error loading saved nutrition data', e);
+            }
+        }
+        
+        // Try to load meal plans
+        const savedMealPlans = localStorage.getItem('healthTrackerMealPlans');
+        if (savedMealPlans) {
+            try {
+                mealPlans = JSON.parse(savedMealPlans);
+                updateMealPlanDisplay('monday');
+            } catch (e) {
+                console.error('Error loading saved meal plans', e);
+            }
+        }
+        
+        // Load water reminder settings
+        const waterTarget = localStorage.getItem('waterTarget');
+        const waterInterval = localStorage.getItem('waterReminderInterval');
+        
+        if (waterTarget) {
+            document.getElementById('water-target').value = waterTarget;
+        }
+        
+        if (waterInterval) {
+            document.getElementById('water-interval').value = waterInterval;
+        }
+    }
+}
+
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
     // Apply saved dark mode preference
@@ -352,6 +883,9 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Initialize the enhanced feedback form
     initFeedbackForm();
+
+    // Initialize nutrition tracker functionality
+    initNutritionTracker();
 
     // -------- Medicine Form --------
     const medicineForm = document.querySelector("#medicine-form");
