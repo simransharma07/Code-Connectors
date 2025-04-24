@@ -1,5 +1,5 @@
 // ---------------- Login Handling ----------------
-document.getElementById("loginForm")?.addEventListener("submit", function (event) {
+document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
     const username = document.getElementById("username").value.trim();
@@ -36,14 +36,23 @@ function selectGender(gender) {
     selectedGender = gender;
     document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
     const selected = document.querySelector(`.gender[data-gender="${gender}"]`);
+
+
     if (selected) selected.classList.add("selected");
 }
 
 function submitForm() {
     const birthday = document.getElementById("birthday").value;
 
-    if (!selectedGender) return alert("Please select your gender.");
-    if (!birthday) return alert("Please enter your birthday.");
+    if (!selectedGender) {
+        alert("Please select your gender.");
+        return;
+    }
+
+    if (!birthday) {
+        alert("Please enter your birthday.");
+        return;
+    }
 
     console.log("Gender:", selectedGender);
     console.log("Birthday:", birthday);
@@ -59,13 +68,12 @@ function skip() {
 
 // ---------------- Header Animation on Load ----------------
 window.addEventListener("load", () => {
-    const heading = document.querySelector(".dashboard-content header h1");
-    if (heading) heading.style.animationDelay = "0.3s";
+    document.querySelector(".dashboard-content header h1").style.animationDelay = "0.3s";
 });
 
 // ---------------- Mobile Sidebar Toggle ----------------
 function toggleSidebar() {
-    document.getElementById("mobileSidebar")?.classList.toggle("active");
+    document.getElementById("mobileSidebar").classList.toggle("active");
 }
 
 // ---------------- Section Navigation with Active State ----------------
@@ -74,15 +82,10 @@ function showSection(event, sectionId) {
 
     // Hide all sections
     document.querySelectorAll(
-<<<<<<< HEAD
-        ".stats-section, .appointment-section, .settings-section, .activity-section"
-    ).forEach(section => section.style.display = "none");
-=======
         ".stats-section, .appointment-section, .settings-section, .activity-section, .nutrition-section"
     ).forEach(section => {
         section.style.display = "none";
     });
->>>>>>> f68b9bf232c381b033dbe26d9386ac9124363506
 
     // Remove active class from all sidebar items
     document.querySelectorAll('.sidebar-item').forEach(item => {
@@ -106,7 +109,9 @@ function showSection(event, sectionId) {
     };
 
     const target = sectionMap[sectionId];
-    if (target) document.querySelector(target).style.display = "block";
+    if (target) {
+        document.querySelector(target).style.display = "block";
+    }
 }
 
 // ---------------- Stats Update Function ----------------
@@ -115,11 +120,16 @@ function updateStats() {
     const steps = document.getElementById("stepsInput").value;
     const calories = document.getElementById("caloriesInput").value;
 
-    if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
-    if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
-    if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
+    if (training) {
+        document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
+    }
+    if (steps) {
+        document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
+    }
+    if (calories) {
+        document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
+    }
 }
-
 // Function to toggle dark mode
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -314,6 +324,7 @@ function initFeedbackForm() {
             document.getElementById(`step${step}`).classList.remove("hidden");
             progressFill.style.width = `${(step / 3) * 100}%`;
             progressText.textContent = `Step ${step} of 3`;
+            
         }
         
         currentStep = step;
@@ -424,6 +435,7 @@ function initNutritionTracker() {
                 // Add active class to selected tab and content
                 tab.classList.add('active');
                 document.getElementById(`${targetMeal}-content`).classList.remove('hidden');
+
             });
         });
     }
@@ -480,6 +492,7 @@ function initNutritionTracker() {
                     
                     // Show confirmation and reset form
                     alert(`Meal plan for ${meal} on ${day.charAt(0).toUpperCase() + day.slice(1)} has been saved!`);
+
                     document.getElementById('meal-description').value = '';
                     
                     // Switch back to view mode and show the updated plan
@@ -510,7 +523,7 @@ function initNutritionTracker() {
         const breakfastContainer = document.getElementById('plan-breakfast');
         if (breakfastContainer) {
             if (dayPlan.breakfast) {
-                breakfastContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.breakfast}</div>`;
+                breakfastContainer.innerHTML = <div class="plan-meal-item">${dayPlan.breakfast}</div>;
             } else {
                 breakfastContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
             }
@@ -520,7 +533,7 @@ function initNutritionTracker() {
         const lunchContainer = document.getElementById('plan-lunch');
         if (lunchContainer) {
             if (dayPlan.lunch) {
-                lunchContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.lunch}</div>`;
+                lunchContainer.innerHTML = <div class="plan-meal-item">${dayPlan.lunch}</div>;
             } else {
                 lunchContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
             }
@@ -530,7 +543,7 @@ function initNutritionTracker() {
         const dinnerContainer = document.getElementById('plan-dinner');
         if (dinnerContainer) {
             if (dayPlan.dinner) {
-                dinnerContainer.innerHTML = `<div class="plan-meal-item">${dayPlan.dinner}</div>`;
+                dinnerContainer.innerHTML = <div class="plan-meal-item">${dayPlan.dinner}</div>;
             } else {
                 dinnerContainer.innerHTML = '<p class="empty-plan-message">No meal planned</p>';
             }
@@ -551,6 +564,7 @@ function initNutritionTracker() {
                 
                 // Set water reminder (in a real app, this would use the Notifications API)
                 alert(`Water reminder set! Target: ${waterTarget}ml, Reminder interval: Every ${reminderInterval} minutes.`);
+
             });
         }
     }
@@ -559,6 +573,7 @@ function initNutritionTracker() {
         // Add event listeners to forms
         ['breakfast', 'lunch', 'dinner', 'snacks'].forEach(mealType => {
             const form = document.getElementById(`add-${mealType}`);
+
             
             if (form) {
                 form.addEventListener('submit', (e) => {
@@ -566,7 +581,7 @@ function initNutritionTracker() {
                     
                     const foodInput = document.getElementById(`${mealType}-food-search`);
                     const amountInput = document.getElementById(`${mealType}-amount`);
-                    
+                                        
                     const foodName = foodInput.value.trim();
                     const amount = parseInt(amountInput.value);
                     
@@ -581,6 +596,7 @@ function initNutritionTracker() {
                 
                 // Add autocomplete for food search
                 const foodInput = document.getElementById(`${mealType}-food-search`);
+
                 if (foodInput) {
                     foodInput.addEventListener('input', (e) => {
                         const searchTerm = e.target.value.toLowerCase();
@@ -593,6 +609,7 @@ function initNutritionTracker() {
                             // In a real app, show autocomplete dropdown here
                             if (matches.length && matches.length <= 5) {
                                 console.log(`Matches for ${searchTerm}:`, matches.map(m => m.name));
+
                             }
                         }
                     });
@@ -644,19 +661,18 @@ function initNutritionTracker() {
         
         // Save to localStorage
         saveNutritionDataToLocalStorage();
-        
-        // Show confirmation
         const message = food ? 
-            `Added ${amount}g of ${foodName} (${Math.round(food.calories * amount / 100)} calories)` : 
-            `Added ${amount}g of ${foodName} (estimated ${Math.round(amount * 1.5)} calories)`;
-        
+        `Added ${amount}g of ${foodName} (${Math.round(food.calories * amount / 100)} calories)` : 
+        `Added ${amount}g of ${foodName} (estimated ${Math.round(amount * 1.5)} calories)`;
+    
         // Display a temporary message (in a real app, this would be a nicer toast notification)
         alert(message);
     }
     
     function updateMealDisplay(mealType) {
+
         const container = document.getElementById(`${mealType}-items`);
-        
+
         if (container) {
             if (meals[mealType].length === 0) {
                 container.innerHTML = '<p class="empty-meal-message">No items added yet</p>';
@@ -746,6 +762,7 @@ function initNutritionTracker() {
         const progressRing = document.querySelector('.progress-ring');
         if (progressRing) {
             progressRing.style.background = `conic-gradient(#4CAF50 ${progressPercentage}%, #E0E0E0 0%)`;
+
         }
         
         // Update macronutrient values
@@ -795,6 +812,7 @@ function initNutritionTracker() {
                                 const value = dataset.data[tooltipItem.index];
                                 const percentage = Math.round((value / total) * 100);
                                 return `${data.labels[tooltipItem.index]}: ${percentage}%`;
+
                             }
                         }
                     }
@@ -853,6 +871,7 @@ function initNutritionTracker() {
                 
                 // Option to update calorie target in the app
                 if (confirm(`Would you like to update your daily calorie target to ${targetCalories} calories?`)) {
+
                     document.getElementById('calorie-target').textContent = targetCalories;
                     updateNutritionDisplay();
                     localStorage.setItem('calorieTarget', targetCalories);
@@ -962,36 +981,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // -------- Medicine Form --------
     const medicineForm = document.querySelector("#medicine-form");
-    medicineForm?.addEventListener("submit", function (event) {
-        event.preventDefault();
+    if (medicineForm) {
+        medicineForm.addEventListener("submit", function (event) {
+            event.preventDefault();
 
-        const name = document.querySelector("#medicine-name").value.trim();
-        const time = document.querySelector("#medicine-time").value.trim();
+            const name = document.querySelector("#medicine-name").value.trim();
+            const time = document.querySelector("#medicine-time").value.trim();
 
-        if (name && time) {
-            alert(`Medicine Reminder Set: ${name} at ${time}`);
-            medicineForm.reset();
-        } else {
-            alert("Please fill in all fields.");
-        }
-    });
+            if (name && time) {
+                alert(`Medicine Reminder Set: ${name} at ${time}`);
+
+                medicineForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+    }
 
     // -------- Appointment Form --------
     const appointmentForm = document.querySelector("#appointment-form");
-    appointmentForm?.addEventListener("submit", function (event) {
-        event.preventDefault();
+    if (appointmentForm) {
+        appointmentForm.addEventListener("submit", function (event) {
+            event.preventDefault();
 
-        const doctor = document.querySelector("#doctor-name").value.trim();
-        const date = document.querySelector("#appointment-date").value.trim();
-        const time = document.querySelector("#appointment-time").value.trim();
+            const doctor = document.querySelector("#doctor-name").value.trim();
+            const date = document.querySelector("#appointment-date").value.trim();
+            const time = document.querySelector("#appointment-time").value.trim();
 
-        if (doctor && date && time) {
-            alert(`Appointment Set: Dr. ${doctor} on ${date} at ${time}`);
-            appointmentForm.reset();
-        } else {
-            alert("Please fill in all fields.");
-        }
-    });
+            if (doctor && date && time) {
+                alert(`Appointment Set: Dr. ${doctor} on ${date} at ${time}`);
+
+                appointmentForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+    }
 
     // -------- Inline Styling (Input/Button) --------
     const styleInputsAndButtons = () => {
@@ -1037,9 +1062,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200);
     }
 
-    openBtn?.addEventListener("click", showModal);
-    closeBtn?.addEventListener("click", closeModal);
-    cancelBtn?.addEventListener("click", closeModal);
+    if (openBtn) openBtn.addEventListener("click", showModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
 
     // -------- Emoji Rating --------
     document.querySelectorAll(".emoji").forEach(emoji => {
@@ -1050,28 +1075,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // -------- Feedback Submission --------
-    sendBtn?.addEventListener("click", function () {
-        const feedback = document.querySelector("#feedback-text").value.trim();
-        const warning = document.getElementById("warningMessage");
+    if (sendBtn) {
+        sendBtn.addEventListener("click", function () {
+            const feedback = document.querySelector("#feedback-text").value.trim();
+            const warning = document.getElementById("warningMessage");
 
-        if (feedback === "") {
-            warning.innerText = "Please write some feedback before submitting.";
-        } else {
-            alert("Thanks for your feedback!");
-            closeModal();
-            warning.innerText = "";
-            document.getElementById("feedback-text").value = "";
-        }
-    });
+            if (feedback === "") {
+                warning.innerText = "Please write some feedback before submitting.";
+            } else {
+                alert("Thanks for your feedback!");
+                closeModal();
+                warning.innerText = "";
+                document.getElementById("feedback-text").value = "";
+            }
+        });
+    }
 
     // -------- Contributors Button --------
     const contributorsBtn = document.getElementById("contributors-btn");
-<<<<<<< HEAD
-    contributorsBtn?.addEventListener("click", function () {
-        alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
-    });
-});
-=======
     if (contributorsBtn) {
         contributorsBtn.addEventListener("click", function () {
             alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
@@ -1086,4 +1107,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
->>>>>>> f68b9bf232c381b033dbe26d9386ac9124363506
