@@ -1287,3 +1287,93 @@ body.dark-mode .settings-buttons .dark-mode-btn {
   color: #121212;
 }
 
+/* ===== NUTRITION SECTION STYLES ===== */
+.nutrition-section {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.nutrition-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.nutrition-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.nutrition-card:hover {
+  transform: translateY(-5px);
+}
+
+.progress-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.progress-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(#4CAF50 0%, #E0E0E0 0%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.progress-ring::before {
+  content: '';
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+}
+
+.progress-ring span {
+  position: relative;
+  z-index: 1;
+}
+
+#calorie-progress {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.progress-unit {
+  font-size: 14px;
+  color: #757575;
+}
+
+.macro-chart {
+  height: 140px;
+  margin-bottom: 10px;
+}
+
+.macro-details {
+  display: flex;
+  justify-content: space-around;
+}
+
+.macro-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.macro-color {
+  width: 12px;}
