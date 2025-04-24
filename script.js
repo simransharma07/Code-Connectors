@@ -6,79 +6,51 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     const password = document.getElementById("password").value.trim();
 
     if (username && password) {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("genderPage").style.display = "block"; // show gender setup next
+        document.getElementById("loginPage").classList.add("hidden");
+        document.querySelector(".gender-body").classList.remove("hidden");
     } else {
         alert("Please enter valid credentials.");
     }
 });
 
-let isPanelOpen = false;
-
-function toggleContributors() {
-  const panel = document.getElementById('contributorsPanel');
-  isPanelOpen = !isPanelOpen;
-  panel.classList.toggle('open', isPanelOpen);
-}
-
-function addContributor() {
-  const list = document.getElementById('contributorList');
-  const newItem = document.createElement('li');
-  newItem.innerText = 'new_contributor_' + (list.children.length + 1);
-  list.appendChild(newItem);
-}
-
-  
 // ---------------- Gender Page Handling ----------------
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Hide login page
-    document.getElementById("loginPage").classList.add("hidden");
-
-    // Show gender page
-    document.querySelector(".gender-body").classList.remove("hidden");
-});
-
 let selectedGender = "";
 
 function selectGender(gender) {
-  selectedGender = gender;
-  document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
-  const selected = document.querySelector(`.gender[data-gender="${gender}"]`);
-  if (selected) selected.classList.add("selected");
+    selectedGender = gender;
+    document.querySelectorAll(".gender").forEach(el => el.classList.remove("selected"));
+    const selected = document.querySelector(`.gender[data-gender="${gender}"]`);
+    if (selected) selected.classList.add("selected");
 }
 
 function submitForm() {
-  const birthday = document.getElementById("birthday").value;
+    const birthday = document.getElementById("birthday").value;
 
-  if (!selectedGender) {
-    alert("Please select your gender.");
-    return;
-  }
+    if (!selectedGender) {
+        alert("Please select your gender.");
+        return;
+    }
 
-  if (!birthday) {
-    alert("Please enter your birthday.");
-    return;
-  }
+    if (!birthday) {
+        alert("Please enter your birthday.");
+        return;
+    }
 
-  // Log the selected values (or save them)
-  console.log("Gender:", selectedGender);
-  console.log("Birthday:", birthday);
+    console.log("Gender:", selectedGender);
+    console.log("Birthday:", birthday);
 
-  // Move to the dashboard
-  document.querySelector(".gender-body").classList.add("hidden");
-  document.getElementById("dashboardPage").style.display = "block";
+    document.querySelector(".gender-body").classList.add("hidden");
+    document.getElementById("dashboardPage").style.display = "block";
 }
 
 function skip() {
-  document.querySelector(".gender-body").classList.add("hidden");
-  document.getElementById("dashboardPage").style.display = "block";
+    document.querySelector(".gender-body").classList.add("hidden");
+    document.getElementById("dashboardPage").style.display = "block";
 }
 
 // ---------------- Header Animation on Load ----------------
-window.addEventListener('load', () => {
-    document.querySelector('.dashboard-content header h1').style.animationDelay = '0.3s';
+window.addEventListener("load", () => {
+    document.querySelector(".dashboard-content header h1").style.animationDelay = "0.3s";
 });
 
 // ---------------- Mobile Sidebar Toggle ----------------
@@ -90,19 +62,34 @@ function toggleSidebar() {
 function showSection(event, sectionId) {
     event.preventDefault();
 
-    document.querySelectorAll('.stats-section, .appointment-section, .settings-section, .activity-section')
-        .forEach(sec => sec.style.display = 'none');
+    document.querySelectorAll(
+        ".stats-section, .appointment-section, .settings-section, .activity-section"
+    ).forEach(section => {
+        section.style.display = "none";
+    });
 
     const sectionMap = {
-        home: '.activity-section',
-        stats: '.stats-section',
-        appointments: '.appointment-section',
-        settings: '.settings-section'
+        home: ".activity-section",
+        stats: ".stats-section",
+        appointments: ".appointment-section",
+        settings: ".settings-section"
     };
 
-    if (sectionMap[sectionId]) {
-        document.querySelector(sectionMap[sectionId]).style.display = 'block';
+    const target = sectionMap[sectionId];
+    if (target) {
+        document.querySelector(target).style.display = "block";
     }
+}
+
+// ---------------- Stats Update Function ----------------
+function updateStats() {
+    const training = document.getElementById("trainingInput").value;
+    const steps = document.getElementById("stepsInput").value;
+    const calories = document.getElementById("caloriesInput").value;
+
+    if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
+    if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
+    if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
 }
 
 // ---------------- DOM Content Loaded ----------------
@@ -112,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (medicineForm) {
         medicineForm.addEventListener("submit", function (event) {
             event.preventDefault();
+
             const name = document.querySelector("#medicine-name").value.trim();
             const time = document.querySelector("#medicine-time").value.trim();
 
@@ -129,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (appointmentForm) {
         appointmentForm.addEventListener("submit", function (event) {
             event.preventDefault();
+
             const doctor = document.querySelector("#doctor-name").value.trim();
             const date = document.querySelector("#appointment-date").value.trim();
             const time = document.querySelector("#appointment-time").value.trim();
@@ -142,29 +131,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // -------- Input and Button Styling --------
-    document.querySelectorAll("#medicine-form input, #appointment-form input").forEach(input => {
-        Object.assign(input.style, {
-            display: "block",
-            width: "100%",
-            maxWidth: "400px",
-            margin: "5px 0",
-            padding: "8px",
-            textAlign: "left"
+    // -------- Inline Styling (Input/Button) --------
+    const styleInputsAndButtons = () => {
+        document.querySelectorAll("#medicine-form input, #appointment-form input").forEach(input => {
+            Object.assign(input.style, {
+                display: "block",
+                width: "100%",
+                maxWidth: "400px",
+                margin: "5px 0",
+                padding: "8px",
+                textAlign: "left"
+            });
         });
-    });
 
-    document.querySelectorAll("#medicine-form button, #appointment-form button").forEach(button => {
-        Object.assign(button.style, {
-            display: "block",
-            margin: "10px auto",
-            width: "180px",
-            padding: "10px 15px",
-            textAlign: "center"
+        document.querySelectorAll("#medicine-form button, #appointment-form button").forEach(button => {
+            Object.assign(button.style, {
+                display: "block",
+                margin: "10px auto",
+                width: "180px",
+                padding: "10px 15px",
+                textAlign: "center"
+            });
         });
-    });
+    };
+    styleInputsAndButtons();
 
-    // -------- Feedback Modal Handling --------
+    // -------- Feedback Modal --------
     const feedbackModal = document.getElementById("feedback-modal");
     const openBtn = document.getElementById("open-feedback-btn");
     const closeBtn = document.querySelector(".close-btn");
@@ -211,63 +203,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-});
-// -------- Track Water --------
-document.querySelector(".activity-card.water button").addEventListener("click", function() {
-    const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
-    if (waterIntake && !isNaN(waterIntake)) {
-        alert(`Water Intake Recorded: ${waterIntake} liters`);
-        // You can save this data to local storage or a server if needed
-    } else {
-        alert("Please enter a valid number for water intake.");
+
+    // -------- Contributors Button --------
+    const contributorsBtn = document.getElementById("contributors-btn");
+    if (contributorsBtn) {
+        contributorsBtn.addEventListener("click", function () {
+            alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
+        });
     }
 });
-
-// -------- Track Sleep --------
-document.querySelector(".activity-card.sleep button").addEventListener("click", function() {
-    const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
-    if (sleepDuration && !isNaN(sleepDuration)) {
-        alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
-        // You can save this data to local storage or a server if needed
-    } else {
-        alert("Please enter a valid number for sleep duration.");
-    }
-});
-
-
-// ---------------- Stats Update Function ----------------
-function updateStats() {
-    const training = document.getElementById('trainingInput').value;
-    const steps = document.getElementById('stepsInput').value;
-    const calories = document.getElementById('caloriesInput').value;
-
-    if (training) document.getElementById('trainingDisplay').textContent = `${training} hours/week`;
-    if (steps) document.getElementById('stepsDisplay').textContent = `${steps} km/week`;
-    if (calories) document.getElementById('caloriesDisplay').textContent = `${calories} kcal/week`;
-}
-
-
-// Function to toggle the visibility of the contributors panel
-function toggleContributors() {
-    const contributorsPanel = document.getElementById("contributorsPanel");
-    contributorsPanel.style.display = contributorsPanel.style.display === "none" || contributorsPanel.style.display === "" ? "block" : "none";
-}
-
-// Function to add a new contributor
-function addContributor() {
-
-    const contributorName = prompt("Enter contributor name:");
-    if (contributorName) {
-        const contributorList = document.getElementById("contributorList");
-
-        // Create a new list item for the contributor
-        const newContributor = document.createElement("li");
-        newContributor.textContent = contributorName;
-
-        // Add the new contributor to the list
-        contributorList.appendChild(newContributor);
-    } else {
-        alert("Please enter a valid contributor name.");
-    }
-}
-

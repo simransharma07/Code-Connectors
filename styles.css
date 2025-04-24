@@ -222,7 +222,7 @@ button {
 
 /* Login Styles */
 .login-container {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(232, 224, 224, 0.896);
   /* Transparent white for sky-blue visibility */
   padding: 20px;
   border-radius: 12px;
@@ -313,6 +313,9 @@ button {
   display: none !important;
 }
 
+
+  
+
   .welcome-wrapper {
     display: flex;
     justify-content: center;
@@ -322,9 +325,8 @@ button {
   .dashboard-header {
     text-align: center;
     width: 100%;
-    flex-direction: column;
-    align-items:center;
-    display: flex;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .dashboard-header h1 {
@@ -517,10 +519,11 @@ header {
 /* Activity Cards */
 .activity-cards {
   display: flex;
-  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
+
+
 
 .activity-card {
   background: white;
@@ -530,7 +533,6 @@ header {
   width: 150px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  justify-content:center;
 }
 
 .activity-card:hover {
@@ -581,11 +583,23 @@ header {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 5px;
-  
+  justify-content: space-between;
+  margin-bottom: 20px;
+  /* Added margin to create space between activity cards and analytics */
 }
 
+.analytics-space {
+  height: 30px;
+  /* Space between activity cards and analytics section */
+}
+
+.analytics-box {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
 
 .toggle-btn {
   background-color: #4CAF50;
@@ -953,37 +967,7 @@ button:hover {
   background-color: darkorange;
 
 }
-/* Contributors Button */
 
-.contributors-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-
-  }
-  
-  .send-btn {
-    background: #28a745;
-    color: white;
-  }
-  
-  .cancel-btn {
-    background: #dc3545;
-    color: white;
-  }
-  
-  .send-btn:hover {
-    background: #218838;
-  }
-  
-  .cancel-btn:hover {
-    background: #c82333;
-  }
-  
   /* Utility */
   .hidden {
     display: none !important;
@@ -1013,35 +997,23 @@ button:hover {
    
 
 
-
-/* Contributors Panel */
-.contributors-panel {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    background: white;
-    border: 2px solid #007bff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 999;
-    max-width: 250px;
-    font-size: 14px;
-}
-
-.contributors-panel h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #007bff;
-}
-
-.contributors-panel ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.contributors-panel li {
-    margin-bottom: 6px;
-}
-
+  .settings-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  #contributors-btn {
+    background-color: orange;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  #contributors-btn:hover {
+    background-color: darkorange;
+  }
+  
