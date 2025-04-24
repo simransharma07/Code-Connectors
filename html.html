@@ -99,6 +99,12 @@
                                 </a>
                             </li>
                             <li class="sidebar-item">
+                                <a href="#" onclick="showSection(event, 'nutrition')">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Nutrition</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
                                 <a href="#" onclick="showSection(event, 'appointments')">
                                     <i class="fas fa-calendar-alt"></i>
                                     <span>Appointments</span>
@@ -214,6 +220,201 @@
                         <input type="time" id="medicine-time" required />
                         <button type="submit">Set Medicine Reminder</button>
                     </form>
+                </section>
+
+                <section class="nutrition-section" style="display: none;">
+                    <h2>🍎 Nutrition Tracker</h2>
+                    
+                    <div class="nutrition-summary">
+                        <div class="nutrition-card">
+                            <h3>Daily Calories</h3>
+                            <div class="progress-container">
+                                <div class="progress-ring">
+                                    <span id="calorie-progress">0</span>
+                                    <span class="progress-unit">kcal</span>
+                                </div>
+                            </div>
+                            <p><span id="calorie-consumed">0</span>/<span id="calorie-target">2000</span> kcal</p>
+                        </div>
+                        
+                        <div class="nutrition-card">
+                            <h3>Macronutrients</h3>
+                            <div class="macro-chart">
+                                <canvas id="macro-chart"></canvas>
+                            </div>
+                            <div class="macro-details">
+                                <div class="macro-item">
+                                    <span class="macro-color protein"></span>
+                                    <span class="macro-text">Protein: <span id="protein-value">0</span>g</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-color carbs"></span>
+                                    <span class="macro-text">Carbs: <span id="carbs-value">0</span>g</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-color fat"></span>
+                                    <span class="macro-text">Fat: <span id="fat-value">0</span>g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-section">
+                        <h3>Meal Tracking</h3>
+                        <div class="meal-tabs">
+                            <button class="meal-tab active" data-meal="breakfast">Breakfast</button>
+                            <button class="meal-tab" data-meal="lunch">Lunch</button>
+                            <button class="meal-tab" data-meal="dinner">Dinner</button>
+                            <button class="meal-tab" data-meal="snacks">Snacks</button>
+                        </div>
+                        
+                        <div class="meal-content" id="breakfast-content">
+                            <div class="food-list" id="breakfast-items">
+                                <!-- Food items will be added here dynamically -->
+                                <p class="empty-meal-message">No items added yet</p>
+                            </div>
+                            
+                            <form class="add-food-form" id="add-breakfast">
+                                <div class="food-input-container">
+                                    <input type="text" placeholder="Search for food..." id="breakfast-food-search" required />
+                                    <input type="number" placeholder="Amount (g)" id="breakfast-amount" min="1" required />
+                                </div>
+                                <button type="submit" class="add-food-btn">Add Food</button>
+                            </form>
+                        </div>
+                        
+                        <div class="meal-content hidden" id="lunch-content">
+                            <div class="food-list" id="lunch-items">
+                                <p class="empty-meal-message">No items added yet</p>
+                            </div>
+                            
+                            <form class="add-food-form" id="add-lunch">
+                                <div class="food-input-container">
+                                    <input type="text" placeholder="Search for food..." id="lunch-food-search" required />
+                                    <input type="number" placeholder="Amount (g)" id="lunch-amount" min="1" required />
+                                </div>
+                                <button type="submit" class="add-food-btn">Add Food</button>
+                            </form>
+                        </div>
+                        
+                        <div class="meal-content hidden" id="dinner-content">
+                            <div class="food-list" id="dinner-items">
+                                <p class="empty-meal-message">No items added yet</p>
+                            </div>
+                            
+                            <form class="add-food-form" id="add-dinner">
+                                <div class="food-input-container">
+                                    <input type="text" placeholder="Search for food..." id="dinner-food-search" required />
+                                    <input type="number" placeholder="Amount (g)" id="dinner-amount" min="1" required />
+                                </div>
+                                <button type="submit" class="add-food-btn">Add Food</button>
+                            </form>
+                        </div>
+                        
+                        <div class="meal-content hidden" id="snacks-content">
+                            <div class="food-list" id="snacks-items">
+                                <p class="empty-meal-message">No items added yet</p>
+                            </div>
+                            
+                            <form class="add-food-form" id="add-snacks">
+                                <div class="food-input-container">
+                                    <input type="text" placeholder="Search for food..." id="snacks-food-search" required />
+                                    <input type="number" placeholder="Amount (g)" id="snacks-amount" min="1" required />
+                                </div>
+                                <button type="submit" class="add-food-btn">Add Food</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-plan-section">
+                        <h3>Meal Planner</h3>
+                        <div class="meal-plan-toggle">
+                            <button id="view-plan-btn" class="active">View Plan</button>
+                            <button id="create-plan-btn">Create New Plan</button>
+                        </div>
+                        
+                        <div id="view-plan-content">
+                            <div class="day-selector">
+                                <button class="day-btn active" data-day="monday">Mon</button>
+                                <button class="day-btn" data-day="tuesday">Tue</button>
+                                <button class="day-btn" data-day="wednesday">Wed</button>
+                                <button class="day-btn" data-day="thursday">Thu</button>
+                                <button class="day-btn" data-day="friday">Fri</button>
+                                <button class="day-btn" data-day="saturday">Sat</button>
+                                <button class="day-btn" data-day="sunday">Sun</button>
+                            </div>
+                            
+                            <div class="meal-plan-content">
+                                <div class="meal-plan-card">
+                                    <h4>Breakfast</h4>
+                                    <div id="plan-breakfast" class="plan-meal-items">
+                                        <p class="empty-plan-message">No meal planned</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="meal-plan-card">
+                                    <h4>Lunch</h4>
+                                    <div id="plan-lunch" class="plan-meal-items">
+                                        <p class="empty-plan-message">No meal planned</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="meal-plan-card">
+                                    <h4>Dinner</h4>
+                                    <div id="plan-dinner" class="plan-meal-items">
+                                        <p class="empty-plan-message">No meal planned</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="create-plan-content" class="hidden">
+                            <div class="meal-plan-form">
+                                <div class="form-row">
+                                    <select id="plan-day">
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    </select>
+                                    
+                                    <select id="plan-meal">
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch">Lunch</option>
+                                        <option value="dinner">Dinner</option>
+                                    </select>
+                                </div>
+                                
+                                <textarea id="meal-description" placeholder="Enter meal description or recipe..."></textarea>
+                                
+                                <button id="save-meal-plan" class="save-plan-btn">Save Meal Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="water-reminder">
+                        <h3>💧 Water Intake Reminder</h3>
+                        <p>Staying hydrated is essential for your health. Set reminders to drink water throughout the day.</p>
+                        <div class="water-settings">
+                            <div class="water-goal">
+                                <label for="water-target">Daily Goal (ml)</label>
+                                <input type="number" id="water-target" value="2000" min="500" step="100" />
+                            </div>
+                            <div class="reminder-interval">
+                                <label for="water-interval">Reminder Interval</label>
+                                <select id="water-interval">
+                                    <option value="30">Every 30 minutes</option>
+                                    <option value="60" selected>Every 1 hour</option>
+                                    <option value="90">Every 1.5 hours</option>
+                                    <option value="120">Every 2 hours</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="set-water-reminder" class="water-reminder-btn">Set Water Reminders</button>
+                    </div>
                 </section>
 
                 <section class="settings-section" id="settingsSection" style="display: none;">
