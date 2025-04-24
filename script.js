@@ -30,19 +30,6 @@ function addContributor() {
 
   
 // ---------------- Gender Page Handling ----------------
-<<<<<<< HEAD
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Hide login page
-    document.getElementById("loginPage").classList.add("hidden");
-
-    // Show gender page
-    document.querySelector(".gender-body").classList.remove("hidden");
-});
-
-=======
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
 let selectedGender = "";
 
 function selectGender(gender) {
@@ -240,42 +227,35 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
         });
     }
-});
-<<<<<<< HEAD
-// -------- Track Water --------
-document.querySelector(".activity-card.water button").addEventListener("click", function() {
-    const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
-    if (waterIntake && !isNaN(waterIntake)) {
-        alert(`Water Intake Recorded: ${waterIntake} liters`);
-        // You can save this data to local storage or a server if needed
-    } else {
-        alert("Please enter a valid number for water intake.");
+    
+    // -------- Track Water --------
+    const waterButton = document.querySelector(".activity-card.water button");
+    if (waterButton) {
+        waterButton.addEventListener("click", function() {
+            const waterIntake = prompt("Enter your water intake in liters (e.g., 2.5L):");
+            if (waterIntake && !isNaN(waterIntake)) {
+                alert(`Water Intake Recorded: ${waterIntake} liters`);
+                // You can save this data to local storage or a server if needed
+            } else {
+                alert("Please enter a valid number for water intake.");
+            }
+        });
+    }
+
+    // -------- Track Sleep --------
+    const sleepButton = document.querySelector(".activity-card.sleep button");
+    if (sleepButton) {
+        sleepButton.addEventListener("click", function() {
+            const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
+            if (sleepDuration && !isNaN(sleepDuration)) {
+                alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
+                // You can save this data to local storage or a server if needed
+            } else {
+                alert("Please enter a valid number for sleep duration.");
+            }
+        });
     }
 });
-
-// -------- Track Sleep --------
-document.querySelector(".activity-card.sleep button").addEventListener("click", function() {
-    const sleepDuration = prompt("Enter your sleep duration in hours (e.g., 8):");
-    if (sleepDuration && !isNaN(sleepDuration)) {
-        alert(`Sleep Duration Recorded: ${sleepDuration} hours`);
-        // You can save this data to local storage or a server if needed
-    } else {
-        alert("Please enter a valid number for sleep duration.");
-    }
-});
-
-
-// ---------------- Stats Update Function ----------------
-function updateStats() {
-    const training = document.getElementById('trainingInput').value;
-    const steps = document.getElementById('stepsInput').value;
-    const calories = document.getElementById('caloriesInput').value;
-
-    if (training) document.getElementById('trainingDisplay').textContent = `${training} hours/week`;
-    if (steps) document.getElementById('stepsDisplay').textContent = `${steps} km/week`;
-    if (calories) document.getElementById('caloriesDisplay').textContent = `${calories} kcal/week`;
-}
-
 
 // Function to toggle the visibility of the contributors panel
 function toggleContributors() {
@@ -285,7 +265,6 @@ function toggleContributors() {
 
 // Function to add a new contributor
 function addContributor() {
-
     const contributorName = prompt("Enter contributor name:");
     if (contributorName) {
         const contributorList = document.getElementById("contributorList");
@@ -300,6 +279,3 @@ function addContributor() {
         alert("Please enter a valid contributor name.");
     }
 }
-
-=======
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9

@@ -222,11 +222,7 @@ button {
 
 /* Login Styles */
 .login-container {
-<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.92);
-=======
-  background: rgba(232, 224, 224, 0.896);
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
   /* Transparent white for sky-blue visibility */
   padding: 20px;
   border-radius: 12px;
@@ -317,18 +313,11 @@ button {
   display: none !important;
 }
 
-<<<<<<< HEAD
-=======
-
-  
-
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
   .welcome-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100px; /* Adjust height as needed */
-<<<<<<< HEAD
   }
   .dashboard-header {
     text-align: center;
@@ -360,38 +349,6 @@ button {
   .mobile-sidebar.active {
     left: 0;
   }
-=======
-  }
-  .dashboard-header {
-    text-align: center;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .dashboard-header h1 {
-    color: orangered;
-    font-size: 2.5rem;
-  }
-  
-  /* Sidebar Styles */
-  .mobile-sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background: orangered;
-    color: white;
-    padding-top: 20px;
-    transition: 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .mobile-sidebar.active {
-    left: 0;
-  }
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
   /* Sidebar Styles */
 
 
@@ -554,7 +511,6 @@ header {
   100% {
     opacity: 1;
     transform: translateY(0);
-<<<<<<< HEAD
   }
 }
 
@@ -1008,10 +964,8 @@ button:hover {
     cursor: pointer;
     font-size: 14px;
 
-=======
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
   }
-}
+
 
 /* Activity Cards */
 .activity-cards {
@@ -1494,7 +1448,6 @@ button:hover {
    
 
 
-<<<<<<< HEAD
 
 /* Contributors Panel */
 .contributors-panel {
@@ -1527,25 +1480,3 @@ button:hover {
     margin-bottom: 6px;
 }
 
-=======
-  .settings-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  #contributors-btn {
-    background-color: orange;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  #contributors-btn:hover {
-    background-color: darkorange;
-  }
-  
->>>>>>> 1542539c805a2a6653e0d3c82d9b49fc71b9dca9
