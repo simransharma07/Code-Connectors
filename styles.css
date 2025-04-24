@@ -1480,3 +1480,142 @@ button:hover {
     margin-bottom: 6px;
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .dashboard-content {
+  background: #121212;
+}
+
+body.dark-mode .activity-card, 
+body.dark-mode .stat-card, 
+body.dark-mode .medicine-section, 
+body.dark-mode .appointment-section {
+  background: #1f1f1f;
+  color: #e0e0e0;
+  border-color: #333;
+}
+
+body.dark-mode .activity-card h3,
+body.dark-mode .stat-card h3 {
+  color: #f0f0f0;
+}
+
+body.dark-mode .dashboard-header h1 {
+  color: #ff7043;
+}
+
+body.dark-mode .contributors-panel {
+  background: #1f1f1f;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.dark-mode-btn {
+  background-color: #2d2d2d;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Dark Mode Enhanced Styles */
+body.dark-mode {
+  background: linear-gradient(to right, #1a1a1a, #2d3436) !important;
+  color: #e0e0e0;
+}
+
+/* Login page in dark mode */
+body.dark-mode .login-container {
+  background: rgba(31, 31, 31, 0.9);
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .login-container h2,
+body.dark-mode .login-container h3,
+body.dark-mode .login-container label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .login-container a {
+  color: #4fc3f7;
+}
+
+body.dark-mode .login-container input:-webkit-autofill,
+body.dark-mode .login-container input:-webkit-autofill:hover,
+body.dark-mode .login-container input:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px #2d2d2d inset !important;
+  -webkit-text-fill-color: #e0e0e0 !important;
+}
+
+/* Mobile sidebar in dark mode */
+body.dark-mode .mobile-sidebar {
+  background: #c23616;
+}
+
+body.dark-mode .sidebar-toggle {
+  background: #c23616;
+}
+
+/* Feedback modal in dark mode */
+body.dark-mode #feedback-modal {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .feedback-container {
+  background: #1f1f1f;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode textarea {
+  background: #2d2d2d;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+/* Dark mode toggle button styles */
+body.dark-mode .dark-mode-btn {
+  background-color: #f0f0f0;
+  color: #121212;
+}
+
+body.dark-mode .dark-mode-btn:hover {
+  background-color: #ffffff;
+}
+
+/* Activity cards in dark mode */
+body.dark-mode .activity-card.sleep,
+body.dark-mode .activity-card.water {
+  background: #203d4d;
+  border-color: #006086;
+}
+
+/* Analytics section in dark mode */
+body.dark-mode .analytics-card {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+body.dark-mode .analytics-box {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+/* Transitions for smooth theme switching */
+body, .dashboard-content, .activity-card, .stat-card, .contributors-panel,
+.medicine-section, .appointment-section, .feedback-container, button, input {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+

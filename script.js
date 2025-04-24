@@ -108,8 +108,45 @@ function updateStats() {
     if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
 }
 
+// Function to toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    
+    // Update button text/icon based on current mode
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (document.body.classList.contains('dark-mode')) {
+        darkModeToggle.textContent = '☀️ Light Mode';
+        // Save dark mode preference
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        darkModeToggle.textContent = '🌙 Dark Mode';
+        // Save light mode preference
+        localStorage.setItem('darkMode', 'disabled');
+    }
+}
+
+// Function to check for saved theme preference
+function checkDarkModePreference() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.textContent = '☀️ Light Mode';
+        }
+    }
+}
+
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
+    // Apply saved dark mode preference
+    checkDarkModePreference();
+    
+    // Add event listener to dark mode toggle button
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+
     // -------- Medicine Form --------
     const medicineForm = document.querySelector("#medicine-form");
     if (medicineForm) {
