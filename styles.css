@@ -1542,7 +1542,7 @@ body.dark-mode .settings-buttons .dark-mode-btn {
   margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
+
   .settings-buttons {
     display: flex;
     justify-content: center;
@@ -1571,7 +1571,7 @@ body.dark-mode .settings-buttons .dark-mode-btn {
   }
   
   
-=======
+
 .meal-plan-toggle button {
   flex: 1;
   padding: 10px;
@@ -1956,4 +1956,4 @@ body.dark-mode .result-item-value {
 body.dark-mode .result-item-label {
   color: #bbb;
 }
->>>>>>> f68b9bf232c381b033dbe26d9386ac9124363506
+
