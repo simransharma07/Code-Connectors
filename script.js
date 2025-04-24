@@ -74,15 +74,29 @@ function toggleSidebar() {
     document.getElementById("mobileSidebar").classList.toggle("active");
 }
 
-// ---------------- Section Navigation ----------------
+// ---------------- Section Navigation with Active State ----------------
 function showSection(event, sectionId) {
     event.preventDefault();
 
+    // Hide all sections
     document.querySelectorAll(
         ".stats-section, .appointment-section, .settings-section, .activity-section"
     ).forEach(section => {
         section.style.display = "none";
     });
+
+    // Remove active class from all sidebar items
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Add active class to clicked item
+    if (event.currentTarget) {
+        const parentLi = event.currentTarget.closest('.sidebar-item');
+        if (parentLi) {
+            parentLi.classList.add('active');
+        }
+    }
 
     const sectionMap = {
         home: ".activity-section",
