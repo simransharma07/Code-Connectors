@@ -176,55 +176,8 @@
 
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                    <div class="stat-card">
-                        <i class="fas fa-dumbbell icon"></i>
-                        <h3>Training</h3>
-                        <p id="trainingDisplay">0 hours/week</p>
-                        <input type="number" id="trainingInput" placeholder="Enter hours/week" />
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-shoe-prints icon"></i>
-                        <h3>Steps</h3>
-                        <p id="stepsDisplay">0 km/week</p>
-                        <input type="number" id="stepsInput" placeholder="Enter km/week" />
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-fire icon"></i>
-                        <h3>Calories</h3>
-                        <p id="caloriesDisplay">0 kcal/week</p>
-                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
-                    </div>
-                    <div class="update-button">
-                        <button onclick="updateStats(event)">Update Stats</button>
-                    </div>
-                </section>
-
-                <section class="appointment-section" id="appointmentsection" style="display: none;">
-                    <h2>🩺 Doctor's Appointment</h2>
-                    <form id="appointment-form">
-                        <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
-                        <input type="date" id="appointment-date" required />
-                        <input type="time" id="appointment-time" required />
-                        <button type="submit">Set Reminder</button>
-                    </form>
-
-                    <h2>💊 Medicine Intake</h2>
-                    <form id="medicine-form">
-                        <label for="medicine-name">Medicine Name</label>
-                        <input type="text" id="medicine-name" placeholder="Enter Medicine Name" required />
-
-                        <label for="medicine-dose">Dose</label>
-                        <input type="text" id="medicine-dose" placeholder="Enter Dose (e.g., 500mg)" required />
-
-                        <label for="medicine-time">Time</label>
-                        <input type="time" id="medicine-time" required />
-                        <button type="submit">Set Medicine Reminder</button>
-                    </form>
-                </section>
-
-                <section class="nutrition-section" style="display: none;">
-                    <h2>🍎 Nutrition Tracker</h2>
                     
+                    <!-- Added nutrition summary to statistics section -->
                     <div class="nutrition-summary">
                         <div class="nutrition-card">
                             <h3>Daily Calories</h3>
@@ -258,6 +211,129 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="stat-card">
+                        <i class="fas fa-dumbbell icon"></i>
+                        <h3>Training</h3>
+                        <p id="trainingDisplay">0 hours/week</p>
+                        <input type="number" id="trainingInput" placeholder="Enter hours/week" />
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shoe-prints icon"></i>
+                        <h3>Steps</h3>
+                        <p id="stepsDisplay">0 km/week</p>
+                        <input type="number" id="stepsInput" placeholder="Enter km/week" />
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire icon"></i>
+                        <h3>Calories Burned</h3>
+                        <p id="caloriesDisplay">0 kcal/week</p>
+                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
+                    </div>
+                    <div class="update-button">
+                        <button onclick="updateStats(event)">Update Stats</button>
+                    </div>
+                    
+                    <!-- Added calorie calculator to statistics section -->
+                    <div class="nutrition-calculator">
+                        <h3>🧮 Daily Calorie Calculator</h3>
+                        <p>Calculate your daily calorie needs based on your personal information:</p>
+                        
+                        <form id="calorie-calculator" class="calculator-form">
+                            <div>
+                                <label for="calc-age">Age</label>
+                                <input type="number" id="calc-age" min="15" max="100" placeholder="Years" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-gender">Gender</label>
+                                <select id="calc-gender" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-weight">Weight</label>
+                                <input type="number" id="calc-weight" min="30" max="300" placeholder="kg" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-height">Height</label>
+                                <input type="number" id="calc-height" min="100" max="250" placeholder="cm" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-activity">Activity Level</label>
+                                <select id="calc-activity" required>
+                                    <option value="" disabled selected>Select activity level</option>
+                                    <option value="1.2">Sedentary (little or no exercise)</option>
+                                    <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                                    <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                                    <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                                    <option value="1.9">Extra active (very hard exercise & physical job)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-goal">Goal</label>
+                                <select id="calc-goal" required>
+                                    <option value="" disabled selected>Select goal</option>
+                                    <option value="lose">Lose weight</option>
+                                    <option value="maintain">Maintain weight</option>
+                                    <option value="gain">Gain weight</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="calculate-btn">Calculate</button>
+                        </form>
+                        
+                        <div id="calculator-result" class="calculator-result">
+                            <div class="result-title">Your Daily Calorie Requirements</div>
+                            <div class="result-values">
+                                <div class="result-item">
+                                    <div class="result-item-value" id="bmr-result">0</div>
+                                    <div class="result-item-label">BMR (calories)</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-item-value" id="maintenance-result">0</div>
+                                    <div class="result-item-label">Maintenance</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-item-value" id="target-result">0</div>
+                                    <div class="result-item-label">Target Calories</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="appointment-section" id="appointmentsection" style="display: none;">
+                    <h2>🩺 Doctor's Appointment</h2>
+                    <form id="appointment-form">
+                        <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
+                        <input type="date" id="appointment-date" required />
+                        <input type="time" id="appointment-time" required />
+                        <button type="submit">Set Reminder</button>
+                    </form>
+
+                    <h2>💊 Medicine Intake</h2>
+                    <form id="medicine-form">
+                        <label for="medicine-name">Medicine Name</label>
+                        <input type="text" id="medicine-name" placeholder="Enter Medicine Name" required />
+
+                        <label for="medicine-dose">Dose</label>
+                        <input type="text" id="medicine-dose" placeholder="Enter Dose (e.g., 500mg)" required />
+
+                        <label for="medicine-time">Time</label>
+                        <input type="time" id="medicine-time" required />
+                        <button type="submit">Set Medicine Reminder</button>
+                    </form>
+                </section>
+
+                <section class="nutrition-section" style="display: none;">
+                    <h2>🍎 Nutrition Tracker</h2>
                     
                     <div class="nutritional-tips-section">
                         <h3>💡 Nutritional Tips</h3>
@@ -402,79 +478,6 @@
                                 <textarea id="meal-description" placeholder="Enter meal description or recipe..."></textarea>
                                 
                                 <button id="save-meal-plan" class="save-plan-btn">Save Meal Plan</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="nutrition-calculator">
-                        <h3>🧮 Daily Calorie Calculator</h3>
-                        <p>Calculate your daily calorie needs based on your personal information:</p>
-                        
-                        <form id="calorie-calculator" class="calculator-form">
-                            <div>
-                                <label for="calc-age">Age</label>
-                                <input type="number" id="calc-age" min="15" max="100" placeholder="Years" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-gender">Gender</label>
-                                <select id="calc-gender" required>
-                                    <option value="" disabled selected>Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-weight">Weight</label>
-                                <input type="number" id="calc-weight" min="30" max="300" placeholder="kg" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-height">Height</label>
-                                <input type="number" id="calc-height" min="100" max="250" placeholder="cm" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-activity">Activity Level</label>
-                                <select id="calc-activity" required>
-                                    <option value="" disabled selected>Select activity level</option>
-                                    <option value="1.2">Sedentary (little or no exercise)</option>
-                                    <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
-                                    <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
-                                    <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
-                                    <option value="1.9">Extra active (very hard exercise & physical job)</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-goal">Goal</label>
-                                <select id="calc-goal" required>
-                                    <option value="" disabled selected>Select goal</option>
-                                    <option value="lose">Lose weight</option>
-                                    <option value="maintain">Maintain weight</option>
-                                    <option value="gain">Gain weight</option>
-                                </select>
-                            </div>
-                            
-                            <button type="submit" class="calculate-btn">Calculate</button>
-                        </form>
-                        
-                        <div id="calculator-result" class="calculator-result">
-                            <div class="result-title">Your Daily Calorie Requirements</div>
-                            <div class="result-values">
-                                <div class="result-item">
-                                    <div class="result-item-value" id="bmr-result">0</div>
-                                    <div class="result-item-label">BMR (calories)</div>
-                                </div>
-                                <div class="result-item">
-                                    <div class="result-item-value" id="maintenance-result">0</div>
-                                    <div class="result-item-label">Maintenance</div>
-                                </div>
-                                <div class="result-item">
-                                    <div class="result-item-value" id="target-result">0</div>
-                                    <div class="result-item-label">Target Calories</div>
-                                </div>
                             </div>
                         </div>
                     </div>
