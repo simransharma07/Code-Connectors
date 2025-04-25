@@ -1,3 +1,146 @@
+// Global variables for nutrition tracking
+const foodDatabase = [
+    { name: 'Apple', calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
+    { name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+    { name: 'Brown Rice', calories: 215, protein: 5, carbs: 45, fat: 1.8 },
+    { name: 'Salmon', calories: 206, protein: 22, carbs: 0, fat: 13 },
+    { name: 'Broccoli', calories: 55, protein: 3.7, carbs: 11, fat: 0.6 },
+    { name: 'Egg', calories: 68, protein: 5.5, carbs: 0.5, fat: 4.8 },
+    { name: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
+    { name: 'Greek Yogurt', calories: 133, protein: 10, carbs: 6, fat: 6 },
+    { name: 'Avocado', calories: 234, protein: 2.9, carbs: 12, fat: 21 },
+    { name: 'Quinoa', calories: 222, protein: 8, carbs: 39, fat: 3.6 },
+    { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fat: 50 },
+    { name: 'Milk', calories: 61, protein: 3.2, carbs: 4.8, fat: 3.3 }
+];
+
+// Track daily nutrition totals
+let dailyNutrition = {
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0
+};
+
+// Track meals
+let meals = {
+    breakfast: [],
+    lunch: [],
+    dinner: [],
+    snacks: []
+};
+
+// Target calories (could be customized based on user goals)
+let targetCalories = 2000;
+
+// Meal plan data structure
+let mealPlans = {
+    monday: { breakfast: '', lunch: '', dinner: '' },
+    tuesday: { breakfast: '', lunch: '', dinner: '' },
+    wednesday: { breakfast: '', lunch: '', dinner: '' },
+    thursday: { breakfast: '', lunch: '', dinner: '' },
+    friday: { breakfast: '', lunch: '', dinner: '' },
+    saturday: { breakfast: '', lunch: '', dinner: '' },
+    sunday: { breakfast: '', lunch: '', dinner: '' }
+};
+
+// Function to toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    
+    // Update button text/icon based on current mode
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        if (document.body.classList.contains('dark-mode')) {
+            darkModeToggle.textContent = '☀️ Light Mode';
+            // Save dark mode preference
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            darkModeToggle.textContent = '🌙 Dark Mode';
+            // Save light mode preference
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    }
+}
+
+// Function to check for saved theme preference
+function checkDarkModePreference() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.textContent = '☀️ Light Mode';
+        }
+    }
+}
+
+// Function to toggle mobile sidebar
+function toggleSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('active');
+        console.log('Toggling sidebar:', sidebar.classList.contains('active'));
+    }
+}
+
+// Function to close mobile sidebar
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    if (sidebar && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+    }
+}
+
+// Function to show sections/tabs in the dashboard
+function showSection(event, sectionId) {
+    if (event) {
+        event.preventDefault();
+    }
+
+    console.log(`Showing section: ${sectionId}`);
+
+    // Hide all sections
+    const sections = {
+        'home': '.activity-section',
+        'stats': '#statssection',
+        'nutrition': '.nutrition-section',
+        'appointments': '#appointmentsection',
+        'settings': '#settingsSection'
+    };
+    
+    Object.values(sections).forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.style.display = 'none';
+        }
+    });
+
+    // Show the selected section
+    const currentSection = sections[sectionId];
+    if (currentSection) {
+        const sectionElement = document.querySelector(currentSection);
+        if (sectionElement) {
+            sectionElement.style.display = 'block';
+        }
+    }
+
+    // Update active menu item
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // If the event comes from a menu item, set it as active
+    if (event && event.currentTarget) {
+        const parentItem = event.currentTarget.closest('.sidebar-item');
+        if (parentItem) {
+            parentItem.classList.add('active');
+        }
+    }
+
+    // For mobile, close sidebar after selection
+    closeMobileSidebar();
+}
+
 // Global variable to store selected gender
 let selectedGender = '';
 
@@ -94,6 +237,219 @@ function styleInputsAndButtons() {
             textAlign: "center"
         });
     });
+}
+
+// Enhanced feedback form initialization
+function initFeedbackForm() {
+    const feedbackModal = document.getElementById("feedback-modal");
+    const openBtn = document.getElementById("open-feedback-btn");
+    const closeBtn = document.querySelector(".close-btn");
+    const steps = document.querySelectorAll(".feedback-step");
+    const progressFill = document.querySelector(".progress-fill");
+    const progressText = document.querySelector(".progress-text");
+    const emojis = document.querySelectorAll(".emoji");
+    const nextStep1 = document.getElementById("next-step1");
+    const nextStep2 = document.getElementById("next-step2");
+    const prevStep2 = document.getElementById("prev-step2");
+    const submitBtn = document.querySelector(".submit-btn");
+    const prevStep3 = document.querySelector("#step3 .prev-btn");
+    const closeThankYou = document.querySelector(".close-thank-you");
+    
+    // Open feedback modal
+    if (openBtn) {
+        openBtn.addEventListener("click", () => {
+            feedbackModal.style.display = "flex";
+            resetForm();
+        });
+    }
+    
+    // Close feedback modal
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            feedbackModal.style.display = "none";
+        });
+    }
+    
+    // Close on thank you button
+    if (closeThankYou) {
+        closeThankYou.addEventListener("click", () => {
+            feedbackModal.style.display = "none";
+        });
+    }
+    
+    // ESC key to close modal
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && feedbackModal.style.display === "flex") {
+            feedbackModal.style.display = "none";
+        }
+    });
+    
+    // Click outside to close
+    if (feedbackModal) {
+        feedbackModal.addEventListener("click", (e) => {
+            if (e.target === feedbackModal) {
+                feedbackModal.style.display = "none";
+            }
+        });
+    }
+    
+    // Emoji rating selection
+    emojis.forEach(emoji => {
+        emoji.addEventListener("click", () => {
+            emojis.forEach(e => e.classList.remove("selected"));
+            emoji.classList.add("selected");
+            
+            const ratings = [
+                "Very Dissatisfied", 
+                "Dissatisfied", 
+                "Neutral", 
+                "Satisfied", 
+                "Very Satisfied"
+            ];
+            
+            const rating = parseInt(emoji.dataset.rating);
+            document.querySelector(".rating-text").textContent = ratings[rating - 1];
+            
+            // Enable next button once a rating is selected
+            if (nextStep1) {
+                nextStep1.disabled = false;
+            }
+        });
+    });
+    
+    // Navigate to step 2
+    if (nextStep1) {
+        nextStep1.addEventListener("click", () => {
+            document.getElementById("step1").classList.add("hidden");
+            document.getElementById("step2").classList.remove("hidden");
+            progressFill.style.width = "66.66%";
+            progressText.textContent = "Step 2 of 3";
+        });
+    }
+    
+    // Navigate back to step 1
+    if (prevStep2) {
+        prevStep2.addEventListener("click", () => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("step1").classList.remove("hidden");
+            progressFill.style.width = "33.33%";
+            progressText.textContent = "Step 1 of 3";
+        });
+    }
+    
+    // Navigate to step 3
+    if (nextStep2) {
+        nextStep2.addEventListener("click", () => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("step3").classList.remove("hidden");
+            progressFill.style.width = "100%";
+            progressText.textContent = "Step 3 of 3";
+        });
+    }
+    
+    // Navigate back to step 2
+    if (prevStep3) {
+        prevStep3.addEventListener("click", () => {
+            document.getElementById("step3").classList.add("hidden");
+            document.getElementById("step2").classList.remove("hidden");
+            progressFill.style.width = "66.66%";
+            progressText.textContent = "Step 2 of 3";
+        });
+    }
+    
+    // Toggle contact details
+    const contactToggle = document.getElementById("contact-toggle");
+    const contactDetails = document.getElementById("contact-details");
+    const toggleLabel = document.getElementById("toggle-label");
+    
+    if (contactToggle && toggleLabel && contactDetails) {
+        contactToggle.addEventListener("change", () => {
+            if (contactToggle.checked) {
+                contactDetails.classList.remove("hidden");
+                toggleLabel.textContent = "Yes";
+            } else {
+                contactDetails.classList.add("hidden");
+                toggleLabel.textContent = "No";
+            }
+        });
+    }
+    
+    // Submit feedback
+    if (submitBtn) {
+        submitBtn.addEventListener("click", () => {
+            const feedbackText = document.getElementById("feedback-text").value.trim();
+            const warningMessage = document.getElementById("warningMessage");
+            
+            if (feedbackText.length < 5) {
+                warningMessage.textContent = "Please provide more detailed feedback (at least 5 characters).";
+                return;
+            }
+            
+            // In a real app, you would send this data to a server
+            console.log("Feedback submitted:", {
+                rating: document.querySelector(".emoji.selected")?.getAttribute("data-rating"),
+                categories: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value),
+                feedback: feedbackText,
+                contactRequested: contactToggle.checked,
+                email: contactToggle.checked ? document.getElementById("contact-email").value : ""
+            });
+            
+            // Show thank you message
+            document.getElementById("step3").classList.add("hidden");
+            document.getElementById("thank-you").classList.remove("hidden");
+        });
+    }
+    
+    // Function to reset form to initial state
+    function resetForm() {
+        // Reset to step 1
+        steps.forEach(step => {
+            if (step.id === "step1") {
+                step.classList.remove("hidden");
+            } else {
+                step.classList.add("hidden");
+            }
+        });
+        
+        // Reset progress bar
+        progressFill.style.width = "33.33%";
+        progressText.textContent = "Step 1 of 3";
+        
+        // Reset emoji selection
+        emojis.forEach(e => e.classList.remove("selected"));
+        document.querySelector(".rating-text").textContent = "Select your rating";
+        
+        // Disable next button
+        if (nextStep1) {
+            nextStep1.disabled = true;
+        }
+        
+        // Uncheck all categories
+        document.querySelectorAll('input[name="category"]').forEach(cb => cb.checked = false);
+        
+        // Clear text input
+        if (document.getElementById("feedback-text")) {
+            document.getElementById("feedback-text").value = "";
+        }
+        
+        // Reset contact toggle
+        if (contactToggle) {
+            contactToggle.checked = false;
+        }
+        
+        if (contactDetails) {
+            contactDetails.classList.add("hidden");
+        }
+        
+        if (toggleLabel) {
+            toggleLabel.textContent = "No";
+        }
+        
+        // Clear warning messages
+        if (warningMessage) {
+            warningMessage.textContent = "";
+        }
+    }
 }
 
 function updateMealPlanDisplay(day) {
@@ -347,6 +703,402 @@ function updateNutritionDisplay() {
         // Update macronutrient chart if Chart.js is available
         updateMacroChart();
     }
+
+function updateMacroChart() {
+    const chartCanvas = document.getElementById('macro-chart');
+    if (chartCanvas && window.Chart) {
+        // Destroy existing chart if any
+        if (window.macroChart) {
+            window.macroChart.destroy();
+        }
+        
+        // Calculate calorie values from macronutrients
+        const proteinCals = dailyNutrition.protein * 4; // 4 calories per gram of protein
+        const carbsCals = dailyNutrition.carbs * 4;    // 4 calories per gram of carbs
+        const fatCals = dailyNutrition.fat * 9;        // 9 calories per gram of fat
+        
+        // Create new chart
+        window.macroChart = new Chart(chartCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Protein', 'Carbs', 'Fat'],
+                datasets: [{
+                    data: [proteinCals, carbsCals, fatCals],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    hoverBackgroundColor: ['#FF4D6D', '#2693E6', '#FFB922']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((sum, value) => sum + value, 0);
+                                const value = context.raw;
+                                const percentage = Math.round((value / total) * 100);
+                                return `${context.label}: ${percentage}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+function updateTotalNutrition() {
+    // Reset daily totals
+    dailyNutrition = {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0
+    };
+    
+    // Calculate totals from all meals
+    Object.keys(meals).forEach(mealType => {
+        meals[mealType].forEach(item => {
+            dailyNutrition.calories += item.calories;
+            dailyNutrition.protein += item.protein;
+            dailyNutrition.carbs += item.carbs;
+            dailyNutrition.fat += item.fat;
+        });
+    });
+    
+    // Round values
+    dailyNutrition.protein = Math.round(dailyNutrition.protein * 10) / 10;
+    dailyNutrition.carbs = Math.round(dailyNutrition.carbs * 10) / 10;
+    dailyNutrition.fat = Math.round(dailyNutrition.fat * 10) / 10;
+    
+    // Update display
+    updateNutritionDisplay();
+    
+    // Save to localStorage
+    saveNutritionDataToLocalStorage();
+}
+
+function saveNutritionDataToLocalStorage() {
+    localStorage.setItem('meals', JSON.stringify(meals));
+    localStorage.setItem('dailyNutrition', JSON.stringify(dailyNutrition));
+    localStorage.setItem('targetCalories', targetCalories.toString());
+}
+
+function loadContributors() {
+    const savedContributors = localStorage.getItem('contributors');
+    if (savedContributors) {
+        try {
+            const contributors = JSON.parse(savedContributors);
+            const contributorList = document.getElementById('contributorList');
+            if (contributorList) {
+                contributorList.innerHTML = '';
+                contributors.forEach(contributor => {
+                    const li = document.createElement('li');
+                    li.textContent = contributor;
+                    contributorList.appendChild(li);
+                });
+            }
+        } catch (e) {
+            console.error('Error loading contributors:', e);
+        }
+    }
+}
+
+function toggleContributors() {
+    const panel = document.getElementById('contributorsPanel');
+    if (panel) {
+        panel.classList.toggle('open');
+    }
+}
+
+function addContributor() {
+    const name = prompt('Enter contributor name:');
+    if (name) {
+        const contributorList = document.getElementById('contributorList');
+        if (contributorList) {
+            const li = document.createElement('li');
+            li.textContent = name;
+            contributorList.appendChild(li);
+            
+            // Save to localStorage
+            const savedContributors = localStorage.getItem('contributors');
+            let contributors = [];
+            if (savedContributors) {
+                try {
+                    contributors = JSON.parse(savedContributors);
+                } catch (e) {
+                    console.error('Error parsing contributors:', e);
+                }
+            }
+            contributors.push(name);
+            localStorage.setItem('contributors', JSON.stringify(contributors));
+        }
+    }
+}
+
+function initNutritionTracker() {
+    // Load saved nutrition data
+    const savedNutrition = localStorage.getItem('dailyNutrition');
+    if (savedNutrition) {
+        dailyNutrition = JSON.parse(savedNutrition);
+    }
+
+    const savedMeals = localStorage.getItem('meals');
+    if (savedMeals) {
+        meals = JSON.parse(savedMeals);
+    }
+
+    const savedTargetCalories = localStorage.getItem('targetCalories');
+    if (savedTargetCalories) {
+        targetCalories = parseInt(savedTargetCalories);
+    }
+    
+    // Load saved meal plans
+    loadSavedMealPlans();
+
+    // Update displays
+    updateNutritionDisplay();
+    ['breakfast', 'lunch', 'dinner', 'snacks'].forEach(updateMealDisplay);
+    
+    // Display Monday's meal plan by default
+    updateMealPlanDisplay('monday');
+
+    // Initialize food forms
+    initFoodForms();
+
+    // Initialize meal tabs
+    initMealTabs();
+    
+    // Initialize meal plan tabs
+    initMealPlanTabs();
+
+    // Set up water reminder
+    setupWaterReminder();
+    
+    // Initialize calorie calculator
+    initCalorieCalculator();
+}
+
+function initMealPlanTabs() {
+    // Handle day selection in meal planner
+    const dayButtons = document.querySelectorAll('.day-btn');
+    let currentActiveDay = 'monday'; // Default active day
+    
+    dayButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const day = btn.getAttribute('data-day');
+            
+            // Update active button styling
+            dayButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update the displayed meal plan
+            currentActiveDay = day;
+            updateMealPlanDisplay(day);
+        });
+    });
+    
+    // Handle toggle between view and create mode
+    const viewPlanBtn = document.getElementById('view-plan-btn');
+    const createPlanBtn = document.getElementById('create-plan-btn');
+    const viewPlanContent = document.getElementById('view-plan-content');
+    const createPlanContent = document.getElementById('create-plan-content');
+    
+    if (viewPlanBtn && createPlanBtn && viewPlanContent && createPlanContent) {
+        viewPlanBtn.addEventListener('click', () => {
+            viewPlanBtn.classList.add('active');
+            createPlanBtn.classList.remove('active');
+            viewPlanContent.classList.remove('hidden');
+            createPlanContent.classList.add('hidden');
+        });
+        
+        createPlanBtn.addEventListener('click', () => {
+            createPlanBtn.classList.add('active');
+            viewPlanBtn.classList.remove('active');
+            createPlanContent.classList.remove('hidden');
+            viewPlanContent.classList.add('hidden');
+        });
+    }
+    
+    // Handle saving meal plans
+    const saveMealPlanBtn = document.getElementById('save-meal-plan');
+    if (saveMealPlanBtn) {
+        saveMealPlanBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent form submission/page refresh
+            
+            const day = document.getElementById('plan-day').value;
+            const mealType = document.getElementById('plan-meal').value;
+            const description = document.getElementById('meal-description').value.trim();
+            
+            if (!description) {
+                alert('Please enter a meal description.');
+                return;
+            }
+            
+            // Save to mealPlans object
+            if (!mealPlans[day]) {
+                mealPlans[day] = { breakfast: '', lunch: '', dinner: '' };
+            }
+            
+            mealPlans[day][mealType] = description;
+            
+            // Save to localStorage
+            saveMealPlansToLocalStorage();
+            
+            // Show success message
+            alert(`Meal plan for ${mealType} on ${day} has been saved.`);
+            
+            // Switch back to view mode and show the updated plan
+            if (viewPlanBtn && viewPlanContent && createPlanContent) {
+                viewPlanBtn.classList.add('active');
+                createPlanBtn.classList.remove('active');
+                viewPlanContent.classList.remove('hidden');
+                createPlanContent.classList.add('hidden');
+                
+                // Update day buttons to reflect the day we just edited
+                dayButtons.forEach(btn => {
+                    if (btn.getAttribute('data-day') === day) {
+                        btn.click();
+                    }
+                });
+            }
+            
+            // Clear the form
+            document.getElementById('meal-description').value = '';
+        });
+    }
+}
+
+function saveMealPlansToLocalStorage() {
+    localStorage.setItem('mealPlans', JSON.stringify(mealPlans));
+}
+
+function loadSavedMealPlans() {
+    const savedMealPlans = localStorage.getItem('mealPlans');
+    if (savedMealPlans) {
+        try {
+            mealPlans = JSON.parse(savedMealPlans);
+        } catch (e) {
+            console.error('Error loading saved meal plans:', e);
+        }
+    }
+}
+
+// Function to update statistics without page refresh
+function updateStats(event) {
+    // Prevent default form submission if this was triggered by a form
+    if (event) {
+        event.preventDefault();
+    }
+    
+    const training = document.getElementById("trainingInput").value;
+    const steps = document.getElementById("stepsInput").value;
+    const calories = document.getElementById("caloriesInput").value;
+    
+    // Update display values with proper formatting
+    if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
+    if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
+    if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
+    
+    // Save to localStorage for persistence
+    localStorage.setItem("healthStats", JSON.stringify({ training, steps, calories }));
+    
+    // Show success message
+    alert("Statistics updated successfully!");
+}
+
+// Function to load saved statistics
+function loadSavedStats() {
+    const savedStats = localStorage.getItem("healthStats");
+    if (savedStats) {
+        const { training, steps, calories } = JSON.parse(savedStats);
+        
+        // Update input fields
+        if (training) document.getElementById("trainingInput").value = training;
+        if (steps) document.getElementById("stepsInput").value = steps;
+        if (calories) document.getElementById("caloriesInput").value = calories;
+        
+        // Update display
+        if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
+        if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
+        if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
+    }
+}
+
+function initCalorieCalculator() {
+    const calculatorForm = document.getElementById('calorie-calculator');
+    
+    if (calculatorForm) {
+        calculatorForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent page refresh
+            
+            // Get form values
+            const age = parseInt(document.getElementById('calc-age').value);
+            const gender = document.getElementById('calc-gender').value;
+            const weight = parseFloat(document.getElementById('calc-weight').value);
+            const height = parseFloat(document.getElementById('calc-height').value);
+            const activityLevel = parseFloat(document.getElementById('calc-activity').value);
+            const goal = document.getElementById('calc-goal').value;
+            
+            // Validate inputs
+            if (isNaN(age) || isNaN(weight) || isNaN(height) || isNaN(activityLevel) || !gender || !goal) {
+                alert('Please fill in all fields correctly.');
+                return;
+            }
+            
+            // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            
+            // Calculate maintenance calories
+            const maintenance = Math.round(bmr * activityLevel);
+            
+            // Calculate target calories based on goal
+            let calculatedTarget;
+            if (goal === 'lose') {
+                calculatedTarget = Math.round(maintenance - 500); // 500 calorie deficit
+            } else if (goal === 'gain') {
+                calculatedTarget = Math.round(maintenance + 500); // 500 calorie surplus
+            } else {
+                calculatedTarget = maintenance;
+            }
+            
+            // Display results
+            document.getElementById('bmr-result').textContent = Math.round(bmr);
+            document.getElementById('maintenance-result').textContent = maintenance;
+            document.getElementById('target-result').textContent = calculatedTarget;
+            
+            // Make the result section visible
+            const resultSection = document.getElementById('calculator-result');
+            if (resultSection) {
+                resultSection.style.display = 'block';
+                resultSection.classList.add('show');
+            }
+            
+            // Ask if user wants to update their calorie target
+            const updateTarget = confirm('Would you like to update your daily calorie target to ' + calculatedTarget + ' calories?');
+            if (updateTarget) {
+                targetCalories = calculatedTarget;
+                document.getElementById('calorie-target').textContent = calculatedTarget;
+                
+                // Save to localStorage
+                localStorage.setItem('targetCalories', calculatedTarget.toString());
+                
+                // Update nutrition display to reflect the new target
+                updateNutritionDisplay();
+            }
+        });
+    }
+}
 
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
