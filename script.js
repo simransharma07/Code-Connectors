@@ -217,15 +217,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("password").value.trim();
 
             if (username && password) {
-                document.getElementById("loginPage").classList.add("hidden");
-                document.getElementById("loginPage").style.display = "none"; // Add inline style
-                const genderBody = document.querySelector(".gender-body");
-                genderBody.classList.remove("hidden");
-                genderBody.style.display = "flex"; // Add inline style
-                genderBody.style.justifyContent = "center";
-                genderBody.style.alignItems = "center";
-                genderBody.style.height = "100vh";
-                genderBody.style.backgroundColor = "rgba(255, 255, 255, 1)";
+                // Hide background image and login container
+                document.getElementById("login-page-background").style.opacity = "0";
+                
+                setTimeout(() => {
+                    // Hide the entire login page after fade out animation completes
+                    document.getElementById("loginPage").classList.add("hidden");
+                    document.getElementById("loginPage").style.display = "none";
+                    
+                    // Show gender selection page
+                    const genderBody = document.querySelector(".gender-body");
+                    genderBody.classList.remove("hidden");
+                    genderBody.style.display = "flex";
+                    genderBody.style.justifyContent = "center";
+                    genderBody.style.alignItems = "center";
+                    genderBody.style.height = "100vh";
+                    genderBody.style.backgroundColor = "rgba(255, 255, 255, 1)";
+                }, 500); // Matches the transition duration
             } else {
                 alert("Please enter valid credentials.");
             }
