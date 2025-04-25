@@ -177,7 +177,7 @@
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
                     
-                    <!-- Added nutrition summary to statistics section -->
+                    <!-- Nutrition summary stays in statistics section -->
                     <div class="nutrition-summary">
                         <div class="nutrition-card">
                             <h3>Daily Calories</h3>
@@ -232,80 +232,6 @@
                     </div>
                     <div class="update-button">
                         <button onclick="updateStats(event)">Update Stats</button>
-                    </div>
-                    
-                    <!-- Added calorie calculator to statistics section -->
-                    <div class="nutrition-calculator">
-                        <h3>🧮 Daily Calorie Calculator</h3>
-                        <p>Calculate your daily calorie needs based on your personal information:</p>
-                        
-                        <form id="calorie-calculator" class="calculator-form">
-                            <div>
-                                <label for="calc-age">Age</label>
-                                <input type="number" id="calc-age" min="15" max="100" placeholder="Years" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-gender">Gender</label>
-                                <select id="calc-gender" required>
-                                    <option value="" disabled selected>Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-weight">Weight</label>
-                                <input type="number" id="calc-weight" min="30" max="300" placeholder="kg" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-height">Height</label>
-                                <input type="number" id="calc-height" min="100" max="250" placeholder="cm" required>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-activity">Activity Level</label>
-                                <select id="calc-activity" required>
-                                    <option value="" disabled selected>Select activity level</option>
-                                    <option value="1.2">Sedentary (little or no exercise)</option>
-                                    <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
-                                    <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
-                                    <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
-                                    <option value="1.9">Extra active (very hard exercise & physical job)</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="calc-goal">Goal</label>
-                                <select id="calc-goal" required>
-                                    <option value="" disabled selected>Select goal</option>
-                                    <option value="lose">Lose weight</option>
-                                    <option value="maintain">Maintain weight</option>
-                                    <option value="gain">Gain weight</option>
-                                </select>
-                            </div>
-                            
-                            <button type="submit" class="calculate-btn">Calculate</button>
-                        </form>
-                        
-                        <div id="calculator-result" class="calculator-result">
-                            <div class="result-title">Your Daily Calorie Requirements</div>
-                            <div class="result-values">
-                                <div class="result-item">
-                                    <div class="result-item-value" id="bmr-result">0</div>
-                                    <div class="result-item-label">BMR (calories)</div>
-                                </div>
-                                <div class="result-item">
-                                    <div class="result-item-value" id="maintenance-result">0</div>
-                                    <div class="result-item-label">Maintenance</div>
-                                </div>
-                                <div class="result-item">
-                                    <div class="result-item-value" id="target-result">0</div>
-                                    <div class="result-item-label">Target Calories</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
 
@@ -478,6 +404,80 @@
                                 <textarea id="meal-description" placeholder="Enter meal description or recipe..."></textarea>
                                 
                                 <button id="save-meal-plan" class="save-plan-btn">Save Meal Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Added calorie calculator to nutrition section -->
+                    <div class="nutrition-calculator">
+                        <h3>🧮 Daily Calorie Calculator</h3>
+                        <p>Calculate your daily calorie needs based on your personal information:</p>
+                        
+                        <form id="calorie-calculator" class="calculator-form">
+                            <div>
+                                <label for="calc-age">Age</label>
+                                <input type="number" id="calc-age" min="15" max="100" placeholder="Years" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-gender">Gender</label>
+                                <select id="calc-gender" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-weight">Weight</label>
+                                <input type="number" id="calc-weight" min="30" max="300" placeholder="kg" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-height">Height</label>
+                                <input type="number" id="calc-height" min="100" max="250" placeholder="cm" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-activity">Activity Level</label>
+                                <select id="calc-activity" required>
+                                    <option value="" disabled selected>Select activity level</option>
+                                    <option value="1.2">Sedentary (little or no exercise)</option>
+                                    <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                                    <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                                    <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                                    <option value="1.9">Extra active (very hard exercise & physical job)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="calc-goal">Goal</label>
+                                <select id="calc-goal" required>
+                                    <option value="" disabled selected>Select goal</option>
+                                    <option value="lose">Lose weight</option>
+                                    <option value="maintain">Maintain weight</option>
+                                    <option value="gain">Gain weight</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="calculate-btn">Calculate</button>
+                        </form>
+                        
+                        <div id="calculator-result" class="calculator-result">
+                            <div class="result-title">Your Daily Calorie Requirements</div>
+                            <div class="result-values">
+                                <div class="result-item">
+                                    <div class="result-item-value" id="bmr-result">0</div>
+                                    <div class="result-item-label">BMR (calories)</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-item-value" id="maintenance-result">0</div>
+                                    <div class="result-item-label">Maintenance</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-item-value" id="target-result">0</div>
+                                    <div class="result-item-label">Target Calories</div>
+                                </div>
                             </div>
                         </div>
                     </div>
