@@ -195,7 +195,7 @@
                         <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
                     </div>
                     <div class="update-button">
-                        <button onclick="updateStats()">Update Stats</button>
+                        <button onclick="updateStats(event)">Update Stats</button>
                     </div>
                 </section>
 
@@ -526,16 +526,16 @@
                                 <h3>How would you rate your overall experience?</h3>
                                 <div class="rating-container">
                                     <div class="emoji-rating">
-                                        <span class="emoji" data-value="1" title="Very Dissatisfied">😠</span>
-                                        <span class="emoji" data-value="2" title="Dissatisfied">🙁</span>
-                                        <span class="emoji" data-value="3" title="Neutral">😐</span>
-                                        <span class="emoji" data-value="4" title="Satisfied">🙂</span>
-                                        <span class="emoji" data-value="5" title="Very Satisfied">😀</span>
+                                        <div class="emoji" data-rating="1">😞</div>
+                                        <div class="emoji" data-rating="2">😕</div>
+                                        <div class="emoji" data-rating="3">😐</div>
+                                        <div class="emoji" data-rating="4">🙂</div>
+                                        <div class="emoji" data-rating="5">😃</div>
                                     </div>
-                                    <div class="rating-text">Select a rating</div>
+                                    <div class="rating-text">Select your rating</div>
                                 </div>
                                 <div class="feedback-nav">
-                                    <button class="step-btn next-btn" disabled>Next</button>
+                                    <button class="step-btn next-btn" id="next-step1" disabled>Next</button>
                                 </div>
                             </div>
 
@@ -551,21 +551,17 @@
                                         <label for="cat-features">Features</label>
                                     </div>
                                     <div class="category-option">
-                                        <input type="checkbox" id="cat-design" name="category" value="design">
-                                        <label for="cat-design">Design</label>
-                                    </div>
-                                    <div class="category-option">
                                         <input type="checkbox" id="cat-performance" name="category" value="performance">
                                         <label for="cat-performance">Performance</label>
                                     </div>
                                     <div class="category-option">
-                                        <input type="checkbox" id="cat-other" name="category" value="other">
-                                        <label for="cat-other">Other</label>
+                                        <input type="checkbox" id="cat-design" name="category" value="design">
+                                        <label for="cat-design">Design</label>
                                     </div>
                                 </div>
                                 <div class="feedback-nav">
-                                    <button class="step-btn prev-btn">Back</button>
-                                    <button class="step-btn next-btn">Next</button>
+                                    <button class="step-btn prev-btn" id="prev-step2">Previous</button>
+                                    <button class="step-btn next-btn" id="next-step2">Next</button>
                                 </div>
                             </div>
 
