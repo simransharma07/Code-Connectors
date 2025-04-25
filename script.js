@@ -537,18 +537,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
-    
-    // Save water reminder settings without page refresh
-    const waterReminderBtn = document.getElementById("set-water-reminder");
-    if (waterReminderBtn) {
-        waterReminderBtn.addEventListener("click", function(event) {
-            event.preventDefault();
-            const waterTarget = document.getElementById("water-target").value;
-            const waterInterval = document.getElementById("water-interval").value;
-            console.log("Water reminder set:", { target: waterTarget, interval: waterInterval });
-            alert("Water reminder settings saved successfully!");
-        });
-    }
 
     // Handle meal plan save button without page refresh
     const saveMealPlanBtn = document.getElementById("save-meal-plan");
