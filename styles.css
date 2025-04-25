@@ -1591,8 +1591,7 @@ body.dark-mode .settings-buttons .dark-mode-btn {
 }
 
 .add-food-btn, 
-.save-plan-btn, 
-.water-reminder-btn {
+.save-plan-btn {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -1606,8 +1605,7 @@ body.dark-mode .settings-buttons .dark-mode-btn {
 }
 
 .add-food-btn:hover, 
-.save-plan-btn:hover, 
-.water-reminder-btn:hover {
+.save-plan-btn:hover {
   background-color: #388E3C;
 }
 
@@ -1619,6 +1617,7 @@ body.dark-mode .settings-buttons .dark-mode-btn {
   margin-bottom: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 
 .meal-plan-toggle {
   display: flex;
@@ -1762,71 +1761,6 @@ body.dark-mode .settings-buttons .dark-mode-btn {
 
 .tips-list li strong {
   color: #2196F3;
-}
-
-/* Water Reminder */
-.water-reminder {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  color: white;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.2);
-}
-
-.water-reminder h3 {
-  margin-top: 0;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-}
-
-.water-settings {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.water-goal, 
-.reminder-interval {
-  flex: 1;
-  min-width: 200px;
-}
-
-.water-settings label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.water-settings input, 
-.water-settings select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.water-settings option {
-  color: #333;
-}
-
-.water-reminder-btn {
-  background-color: white;
-  color: #0072ff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  margin-top: 15px;
-}
-
-.water-reminder-btn:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-2px);
 }
 
 /* Nutrition Calculator */
