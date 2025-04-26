@@ -1131,19 +1131,20 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("password").value.trim();
 
             if (username && password) {
-                // Show loading indicator or animation if needed
                 document.body.style.cursor = 'wait';
                 
-                // Hide login page with proper transition
-                const loginPage = document.getElementById("loginPage");
+                // Hide login page background with transition
                 const loginBackground = document.getElementById("login-page-background");
-                
                 if (loginBackground) {
                     loginBackground.style.opacity = "0";
+                    setTimeout(() => {
+                        loginBackground.remove(); // Remove the background element completely
+                    }, 500);
                 }
                 
                 setTimeout(() => {
                     // Hide the entire login page
+                    const loginPage = document.getElementById("loginPage");
                     if (loginPage) {
                         loginPage.classList.add("hidden");
                         loginPage.style.display = "none";
@@ -1161,9 +1162,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     // Reset cursor
                     document.body.style.cursor = 'default';
-                    
-                }, 500); // Match the transition duration
-                
+                }, 500);
             } else {
                 // Show error message for empty fields
                 const errorMessage = document.getElementById("login-error");
