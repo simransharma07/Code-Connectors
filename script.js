@@ -1223,6 +1223,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Sign out functionality
+    const signOutBtn = document.getElementById('signOutBtn');
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to sign out?')) {
+                document.getElementById("dashboardPage").style.display = "none";
+                document.getElementById("loginPage").style.display = "block";
+                document.getElementById("loginPage").classList.remove("hidden");
+                document.getElementById("login-page-background").style.opacity = "1";
+                
+                // Clear any sensitive user data from localStorage if needed
+                // localStorage.clear(); // Uncomment if you want to clear all stored data
+                
+                // Reset form fields
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+            }
+        });
+    }
+
     // About Us Modal functionality
     const aboutUsBtn = document.getElementById('aboutUsBtn');
     const aboutUsModal = document.getElementById('aboutUsModal');
