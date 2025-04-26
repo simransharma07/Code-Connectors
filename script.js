@@ -1056,6 +1056,43 @@ function initCalorieCalculator() {
     }
 }
 
+// Function to show Terms & Conditions modal
+function showTermsModal(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    const termsModal = document.getElementById('termsModal');
+    if (termsModal) {
+        termsModal.style.display = 'flex';
+        
+        // Add event listener to close button
+        const closeBtn = termsModal.querySelector('.close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                termsModal.style.display = 'none';
+            });
+        }
+        
+        // Click outside to close
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                termsModal.style.display = 'none';
+            }
+        });
+        
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && termsModal.style.display === 'flex') {
+                termsModal.style.display = 'none';
+            }
+        });
+    }
+    
+    // For mobile, close sidebar after selection
+    closeMobileSidebar();
+}
+
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
     // Initially hide gender and dashboard pages
