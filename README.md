@@ -1,16 +1,16 @@
-# BEEPTECH Health Tracker
+ BEEPTECH Health Tracker
 
 ![BEEPTECH Logo](Screenshot%202025-03-10%20210211.png)
 
-## Overview
+ Overview
 BEEPTECH Health Tracker is a comprehensive web application designed to help users track their health and wellness in one place. The application provides an intuitive dashboard for monitoring various health metrics, planning meals, setting reminders, and more.
 
-## Contributors
+ Contributors
 - Nandini sharma
 - Shweta jha
 - Simran sharma
 
-## Features
+ Features
 
 ### User Experience
 - **Personalized Dashboard**: Customized health information based on user profile
@@ -18,13 +18,13 @@ BEEPTECH Health Tracker is a comprehensive web application designed to help user
 - **Responsive Design**: Works seamlessly across desktop and mobile devices
 
 ### Health Monitoring
-- **Activity Tracking**: Log yoga, cardio, and other physical activities
+- **Activity Tracking**:  yoga, cardio, and other physical activities
 - **Sleep Monitoring**: Track sleep patterns and quality
 - **Water Intake**: Set daily water intake goals and reminders
 - **Statistics Dashboard**: Visual representation of health data over time
 
 ### Nutrition Management
-- **Meal Tracking**: Log meals with nutritional information
+- **Meal Tracking**:  meals with nutritional information
 - **Macro Calculator**: Track protein, carbs, and fat intake
 - **Meal Planner**: Plan meals for the entire week
 - **Calorie Calculator**: Calculate daily calorie needs based on personal information
@@ -39,11 +39,10 @@ BEEPTECH Health Tracker is a comprehensive web application designed to help user
 
 ## Getting Started
 1. Open the `html.html` file in a web browser
-2. Log in with any username and password (demo mode)
+2. Log in with any username and password
 3. Complete the optional gender and birthday information
 4. Navigate through the dashboard using the sidebar menu
-
-## Usage Guide
+usage guide
 
 ### Dashboard Navigation
 - Use the sidebar to navigate between different sections:
