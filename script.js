@@ -1348,4 +1348,120 @@ document.addEventListener("DOMContentLoaded", function () {
             aboutUsModal.style.display = 'none';
         });
     }
+
+    // Chatbot functionality
+    const chatbot = {
+        toggle: document.querySelector('.chatbot-toggle'),
+        container: document.querySelector('.chatbot-container'),
+        closeBtn: document.querySelector('.chatbot-close'),
+        messages: document.querySelector('.chatbot-messages'),
+        input: document.querySelector('.chatbot-input input'),
+        sendBtn: document.querySelector('.chatbot-send'),
+        notification: document.querySelector('.chatbot-notification'),
+
+        init() {
+            if (!this.toggle || !this.container) return;
+
+            // Show welcome message after 3 seconds
+            setTimeout(() => {
+                this.notification.classList.add('active');
+                this.notification.textContent = '1';
+            }, 3000);
+
+            // Toggle chatbot
+            this.toggle.addEventListener('click', () => {
+                this.container.classList.add('active');
+                this.notification.classList.remove('active');
+                if (!this.messages.hasChildNodes()) {
+                    this.addBotMessage("Hello! I'm your AI Health Assistant. I can help you with:");
+                    this.addBotMessage("• Nutrition advice\n• Exercise recommendations\n• Health tips\n• Wellness guidance");
+                }
+            });
+
+            // Close chatbot
+            this.closeBtn?.addEventListener('click', () => {
+                this.container.classList.remove('active');
+            });
+
+            // Send message
+            const sendMessage = () => {
+                const message = this.input.value.trim();
+                if (message) {
+                    this.addUserMessage(message);
+                    this.generateResponse(message);
+                    this.input.value = '';
+                }
+            };
+
+            this.sendBtn?.addEventListener('click', sendMessage);
+            this.input?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+        },
+
+        addUserMessage(message) {
+            const div = document.createElement('div');
+            div.className = 'message user-message';
+            div.textContent = message;
+            this.messages.appendChild(div);
+            this.scrollToBottom();
+        },
+
+        addBotMessage(message) {
+            const div = document.createElement('div');
+            div.className = 'message bot-message';
+            div.textContent = message;
+            this.messages.appendChild(div);
+            this.scrollToBottom();
+        },
+
+        showTyping() {
+            const div = document.createElement('div');
+            div.className = 'bot-typing';
+            div.textContent = 'AI is typing';
+            this.messages.appendChild(div);
+            this.scrollToBottom();
+            return div;
+        },
+
+        scrollToBottom() {
+            this.messages.scrollTop = this.messages.scrollHeight;
+        },
+
+        generateResponse(userMessage) {
+            const responses = {
+                hello: "Hi! How can I help you with your health today?",
+                nutrition: "I can provide nutrition advice and healthy eating tips. What specific information are you looking for?",
+                exercise: "Regular exercise is crucial for health. I can suggest workouts based on your goals. What type of exercise interests you?",
+                sleep: "Good sleep is essential! The recommended sleep duration is 7-9 hours per night. Would you like some tips for better sleep?",
+                stress: "I can suggest stress management techniques like meditation, deep breathing, or mindfulness exercises. Would you like to learn more?",
+                water: "Staying hydrated is important! You should aim to drink 8 glasses of water daily. Would you like me to set up water intake reminders?",
+                diet: "A balanced diet is key to good health. I can help you plan healthy meals. Are you interested in specific dietary advice?",
+                workout: "I can recommend workouts based on your fitness level and goals. What type of workout are you looking for?",
+                meditation: "Meditation can help reduce stress and improve mental clarity. Would you like to learn some meditation techniques?",
+                vitamins: "Vitamins and minerals are essential for health. The best sources are varied, whole foods. Would you like specific nutrition recommendations?",
+                default: "I can help you with nutrition, exercise, sleep, and general health advice. What would you like to know more about?"
+            };
+
+            const typing = this.showTyping();
+            
+            setTimeout(() => {
+                typing.remove();
+                const message = userMessage.toLowerCase();
+                let response = responses.default;
+
+                for (let key in responses) {
+                    if (message.includes(key)) {
+                        response = responses[key];
+                        break;
+                    }
+                }
+
+                this.addBotMessage(response);
+            }, 1500);
+        }
+    };
+
+    // Initialize chatbot
+    chatbot.init();
 });
