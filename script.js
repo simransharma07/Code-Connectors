@@ -243,7 +243,7 @@ function styleInputsAndButtons() {
 function initFeedbackForm() {
     const feedbackModal = document.getElementById("feedback-modal");
     const openBtn = document.getElementById("open-feedback-btn");
-    const closeBtn = document.querySelector(".close-btn");
+    const closeBtn = feedbackModal?.querySelector(".close-btn");
     const steps = document.querySelectorAll(".feedback-step");
     const progressFill = document.querySelector(".progress-fill");
     const progressText = document.querySelector(".progress-text");
@@ -251,9 +251,10 @@ function initFeedbackForm() {
     const nextStep1 = document.getElementById("next-step1");
     const nextStep2 = document.getElementById("next-step2");
     const prevStep2 = document.getElementById("prev-step2");
-    const submitBtn = document.querySelector(".submit-btn");
-    const prevStep3 = document.querySelector("#step3 .prev-btn");
+    const prevStep3 = document.getElementById("prev-step3");
+    const submitBtn = document.getElementById("submit-feedback");
     const closeThankYou = document.querySelector(".close-thank-you");
+    const warningMessage = document.getElementById("warningMessage");
     
     // Open feedback modal
     if (openBtn) {
@@ -274,12 +275,13 @@ function initFeedbackForm() {
     if (closeThankYou) {
         closeThankYou.addEventListener("click", () => {
             feedbackModal.style.display = "none";
+            resetForm();
         });
     }
     
     // ESC key to close modal
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && feedbackModal.style.display === "flex") {
+        if (e.key === "Escape" && feedbackModal && feedbackModal.style.display === "flex") {
             feedbackModal.style.display = "none";
         }
     });
@@ -296,7 +298,9 @@ function initFeedbackForm() {
     // Emoji rating selection
     emojis.forEach(emoji => {
         emoji.addEventListener("click", () => {
+            // Remove selected class from all emojis
             emojis.forEach(e => e.classList.remove("selected"));
+            // Add selected class to clicked emoji
             emoji.classList.add("selected");
             
             const ratings = [
@@ -308,7 +312,10 @@ function initFeedbackForm() {
             ];
             
             const rating = parseInt(emoji.dataset.rating);
-            document.querySelector(".rating-text").textContent = ratings[rating - 1];
+            const ratingTextElement = document.querySelector(".rating-text");
+            if (ratingTextElement) {
+                ratingTextElement.textContent = ratings[rating - 1];
+            }
             
             // Enable next button once a rating is selected
             if (nextStep1) {
@@ -322,8 +329,8 @@ function initFeedbackForm() {
         nextStep1.addEventListener("click", () => {
             document.getElementById("step1").classList.add("hidden");
             document.getElementById("step2").classList.remove("hidden");
-            progressFill.style.width = "66.66%";
-            progressText.textContent = "Step 2 of 3";
+            if (progressFill) progressFill.style.width = "66.66%";
+            if (progressText) progressText.textContent = "Step 2 of 3";
         });
     }
     
@@ -332,8 +339,8 @@ function initFeedbackForm() {
         prevStep2.addEventListener("click", () => {
             document.getElementById("step2").classList.add("hidden");
             document.getElementById("step1").classList.remove("hidden");
-            progressFill.style.width = "33.33%";
-            progressText.textContent = "Step 1 of 3";
+            if (progressFill) progressFill.style.width = "33.33%";
+            if (progressText) progressText.textContent = "Step 1 of 3";
         });
     }
     
@@ -342,8 +349,8 @@ function initFeedbackForm() {
         nextStep2.addEventListener("click", () => {
             document.getElementById("step2").classList.add("hidden");
             document.getElementById("step3").classList.remove("hidden");
-            progressFill.style.width = "100%";
-            progressText.textContent = "Step 3 of 3";
+            if (progressFill) progressFill.style.width = "100%";
+            if (progressText) progressText.textContent = "Step 3 of 3";
         });
     }
     
@@ -352,8 +359,8 @@ function initFeedbackForm() {
         prevStep3.addEventListener("click", () => {
             document.getElementById("step3").classList.add("hidden");
             document.getElementById("step2").classList.remove("hidden");
-            progressFill.style.width = "66.66%";
-            progressText.textContent = "Step 2 of 3";
+            if (progressFill) progressFill.style.width = "66.66%";
+            if (progressText) progressText.textContent = "Step 2 of 3";
         });
     }
     
@@ -378,10 +385,11 @@ function initFeedbackForm() {
     if (submitBtn) {
         submitBtn.addEventListener("click", () => {
             const feedbackText = document.getElementById("feedback-text").value.trim();
-            const warningMessage = document.getElementById("warningMessage");
             
             if (feedbackText.length < 5) {
-                warningMessage.textContent = "Please provide more detailed feedback (at least 5 characters).";
+                if (warningMessage) {
+                    warningMessage.textContent = "Please provide more detailed feedback (at least 5 characters).";
+                }
                 return;
             }
             
@@ -390,8 +398,9 @@ function initFeedbackForm() {
                 rating: document.querySelector(".emoji.selected")?.getAttribute("data-rating"),
                 categories: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value),
                 feedback: feedbackText,
-                contactRequested: contactToggle.checked,
-                email: contactToggle.checked ? document.getElementById("contact-email").value : ""
+                contactRequested: contactToggle ? contactToggle.checked : false,
+                email: contactToggle && contactToggle.checked && document.getElementById("contact-email") ? 
+                       document.getElementById("contact-email").value : ""
             });
             
             // Show thank you message
@@ -412,12 +421,15 @@ function initFeedbackForm() {
         });
         
         // Reset progress bar
-        progressFill.style.width = "33.33%";
-        progressText.textContent = "Step 1 of 3";
+        if (progressFill) progressFill.style.width = "33.33%";
+        if (progressText) progressText.textContent = "Step 1 of 3";
         
         // Reset emoji selection
         emojis.forEach(e => e.classList.remove("selected"));
-        document.querySelector(".rating-text").textContent = "Select your rating";
+        const ratingTextElement = document.querySelector(".rating-text");
+        if (ratingTextElement) {
+            ratingTextElement.textContent = "Select your rating";
+        }
         
         // Disable next button
         if (nextStep1) {
@@ -428,8 +440,9 @@ function initFeedbackForm() {
         document.querySelectorAll('input[name="category"]').forEach(cb => cb.checked = false);
         
         // Clear text input
-        if (document.getElementById("feedback-text")) {
-            document.getElementById("feedback-text").value = "";
+        const feedbackTextElement = document.getElementById("feedback-text");
+        if (feedbackTextElement) {
+            feedbackTextElement.value = "";
         }
         
         // Reset contact toggle
