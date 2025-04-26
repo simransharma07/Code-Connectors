@@ -47,7 +47,7 @@
                         <p>Male</p>
                     </div>
                     <div class="gender" data-gender="female" onclick="selectGender('female')">
-                        <img src="femae.png" alt="Female" />
+                        <img src="female.png" alt="Female" />
                         <p>Female</p>
                     </div>
                 </div>
@@ -186,33 +186,9 @@
                     <div class="update-button">
                         <button onclick="updateStats(event)">Update Stats</button>
                     </div>
-                </section>
-
-                <section class="appointment-section" id="appointmentsection" style="display: none;">
-                    <h2>🩺 Doctor's Appointment</h2>
-                    <form id="appointment-form">
-                        <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
-                        <input type="date" id="appointment-date" required />
-                        <input type="time" id="appointment-time" required />
-                        <button type="submit">Set Reminder</button>
-                    </form>
-
-                    <h2>💊 Medicine Intake</h2>
-                    <form id="medicine-form">
-                        <label for="medicine-name">Medicine Name</label>
-                        <input type="text" id="medicine-name" placeholder="Enter Medicine Name" required />
-
-                        <label for="medicine-dose">Dose</label>
-                        <input type="text" id="medicine-dose" placeholder="Enter Dose (e.g., 500mg)" required />
-
-                        <label for="medicine-time">Time</label>
-                        <input type="time" id="medicine-time" required />
-                        <button type="submit">Set Medicine Reminder</button>
-                    </form>
-                </section>
-
-                <section class="nutrition-section" style="display: none;">
-                    <h2>🍎 Nutrition Tracker</h2>
+                    
+                    <!-- Nutrition Tracker Cards -->
+                    <h3 class="section-divider">Nutrition Statistics</h3>
                     
                     <div class="nutrition-summary">
                         <div class="nutrition-card">
@@ -247,6 +223,33 @@
                             </div>
                         </div>
                     </div>
+                </section>
+
+                <section class="appointment-section" id="appointmentsection" style="display: none;">
+                    <h2>🩺 Doctor's Appointment</h2>
+                    <form id="appointment-form">
+                        <input type="text" id="doctor-name" placeholder="Doctor's Name" required />
+                        <input type="date" id="appointment-date" required />
+                        <input type="time" id="appointment-time" required />
+                        <button type="submit">Set Reminder</button>
+                    </form>
+
+                    <h2>💊 Medicine Intake</h2>
+                    <form id="medicine-form">
+                        <label for="medicine-name">Medicine Name</label>
+                        <input type="text" id="medicine-name" placeholder="Enter Medicine Name" required />
+
+                        <label for="medicine-dose">Dose</label>
+                        <input type="text" id="medicine-dose" placeholder="Enter Dose (e.g., 500mg)" required />
+
+                        <label for="medicine-time">Time</label>
+                        <input type="time" id="medicine-time" required />
+                        <button type="submit">Set Medicine Reminder</button>
+                    </form>
+                </section>
+
+                <section class="nutrition-section" id="nutritionsection" style="display: none;">
+                    <h2>🍎 Nutrition Tracker</h2>
                     
                     <div class="nutritional-tips-section">
                         <h3>💡 Nutritional Tips</h3>
