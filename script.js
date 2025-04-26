@@ -187,10 +187,28 @@ function submitForm() {
     initNutritionTracker();
 }
 
-// Function to skip gender selection
 function skip() {
+    // Hide gender page
     document.querySelector(".gender-body").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "block";
+    
+    // Show dashboard
+    const dashboard = document.getElementById("dashboardPage");
+    dashboard.style.display = "block";
+    
+    // Show home section by default
+    const homeSection = document.querySelector(".activity-section");
+    if (homeSection) {
+        homeSection.style.display = "block";
+    }
+    
+    // Highlight home menu item
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    const homeMenuItem = document.querySelector('.sidebar-item');
+    if (homeMenuItem) {
+        homeMenuItem.classList.add('active');
+    }
     
     // Initialize dashboard components
     initNutritionTracker();
