@@ -492,54 +492,6 @@ body.dark-mode .sidebar-item.active a {
   background-color: #212121;
 }
 
-/* ===== CONTRIBUTORS PANEL ===== */
-.contributors-panel {
-  position: fixed;
-  top: 100px;
-  right: -400px;
-  width: 300px;
-  background: white;
-  border: 2px solid #007bff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: right 0.3s ease-in-out;
-  z-index: 999;
-  max-width: 250px;
-  font-size: 14px;
-}
-
-.contributors-panel.open {
-  right: 0;
-}
-
-.contributors-panel h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #007bff;
-}
-
-.contributors-panel ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.contributors-panel li {
-  margin-bottom: 6px;
-}
-
-.contributors-btn {
-  margin-top: 10px;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
 /* ===== BUTTON STYLES ===== */
 button {
   margin-top: 20px;
@@ -1227,13 +1179,6 @@ body.dark-mode .dashboard-header h1 {
 body.dark-mode .mobile-sidebar,
 body.dark-mode .sidebar-toggle {
   background: #c23616;
-}
-
-/* Contributors panel in dark mode */
-body.dark-mode .contributors-panel {
-  background: #1f1f1f;
-  border-color: #444;
-  color: #e0e0e0;
 }
 
 /* Inputs in dark mode */

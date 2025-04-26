@@ -789,55 +789,11 @@ function saveNutritionDataToLocalStorage() {
     localStorage.setItem('targetCalories', targetCalories.toString());
 }
 
-function loadContributors() {
-    const savedContributors = localStorage.getItem('contributors');
-    if (savedContributors) {
-        try {
-            const contributors = JSON.parse(savedContributors);
-            const contributorList = document.getElementById('contributorList');
-            if (contributorList) {
-                contributorList.innerHTML = '';
-                contributors.forEach(contributor => {
-                    const li = document.createElement('li');
-                    li.textContent = contributor;
-                    contributorList.appendChild(li);
-                });
-            }
-        } catch (e) {
-            console.error('Error loading contributors:', e);
-        }
-    }
-}
 
 function toggleContributors() {
     const panel = document.getElementById('contributorsPanel');
     if (panel) {
         panel.classList.toggle('open');
-    }
-}
-
-function addContributor() {
-    const name = prompt('Enter contributor name:');
-    if (name) {
-        const contributorList = document.getElementById('contributorList');
-        if (contributorList) {
-            const li = document.createElement('li');
-            li.textContent = name;
-            contributorList.appendChild(li);
-            
-            // Save to localStorage
-            const savedContributors = localStorage.getItem('contributors');
-            let contributors = [];
-            if (savedContributors) {
-                try {
-                    contributors = JSON.parse(savedContributors);
-                } catch (e) {
-                    console.error('Error parsing contributors:', e);
-                }
-            }
-            contributors.push(name);
-            localStorage.setItem('contributors', JSON.stringify(contributors));
-        }
     }
 }
 
@@ -1240,14 +1196,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Set up contributors button
-    const contributorsBtn = document.getElementById("contributors-btn");
-    if (contributorsBtn) {
-        contributorsBtn.addEventListener("click", function () {
-            alert("Contributors:\n1. Alice\n2. Bob\n3. Charlie");
-        });
-    }
-
     // Set up water tracking
     const waterButton = document.querySelector(".activity-card.water button");
     if (waterButton) {
@@ -1275,6 +1223,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Load saved contributors
-    loadContributors();
 });

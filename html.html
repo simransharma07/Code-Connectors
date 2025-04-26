@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html 3rlang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -47,7 +47,7 @@
                         <p>Male</p>
                     </div>
                     <div class="gender" data-gender="female" onclick="selectGender('female')">
-                        <img src="female.png" alt="Female" />
+                        <img src="femae.png" alt="Female" />
                         <p>Female</p>
                     </div>
                 </div>
@@ -130,22 +130,11 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </aside>
-            <div id="contributorsPanel" class="contributors-panel">
-              <h3>Manage Contributors</h3>
-              <button onclick="addContributor()">Add Contributor</button>
-              <div><strong>Contributors:</strong></div>
-              <ul id="contributorList">
-              
-              </ul>
-            </div>
             
             <!-- Main Content -->
             <main class="dashboard-content">
                 <header class="dashboard-header">
                     <h1>Welcome to Your Health Dashboard</h1>
-                    <div class="header-buttons">
-                        <button class="contributors-btn" onclick="toggleContributors()">👥 Contributors</button>
-                    </div>
                 </header>
 
                 <section class="activity-section">
@@ -176,42 +165,6 @@
 
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                    
-                    <!-- Nutrition summary stays in statistics section -->
-                    <div class="nutrition-summary">
-                        <div class="nutrition-card">
-                            <h3>Daily Calories</h3>
-                            <div class="progress-container">
-                                <div class="progress-ring">
-                                    <span id="calorie-progress">0</span>
-                                    <span class="progress-unit">kcal</span>
-                                </div>
-                            </div>
-                            <p><span id="calorie-consumed">0</span>/<span id="calorie-target">2000</span> kcal</p>
-                        </div>
-                        
-                        <div class="nutrition-card">
-                            <h3>Macronutrients</h3>
-                            <div class="macro-chart">
-                                <canvas id="macro-chart"></canvas>
-                            </div>
-                            <div class="macro-details">
-                                <div class="macro-item">
-                                    <span class="macro-color protein"></span>
-                                    <span class="macro-text">Protein: <span id="protein-value">0</span>g</span>
-                                </div>
-                                <div class="macro-item">
-                                    <span class="macro-color carbs"></span>
-                                    <span class="macro-text">Carbs: <span id="carbs-value">0</span>g</span>
-                                </div>
-                                <div class="macro-item">
-                                    <span class="macro-color fat"></span>
-                                    <span class="macro-text">Fat: <span id="fat-value">0</span>g</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="stat-card">
                         <i class="fas fa-dumbbell icon"></i>
                         <h3>Training</h3>
@@ -226,7 +179,7 @@
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-fire icon"></i>
-                        <h3>Calories Burned</h3>
+                        <h3>Calories</h3>
                         <p id="caloriesDisplay">0 kcal/week</p>
                         <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
                     </div>
@@ -260,6 +213,40 @@
 
                 <section class="nutrition-section" style="display: none;">
                     <h2>🍎 Nutrition Tracker</h2>
+                    
+                    <div class="nutrition-summary">
+                        <div class="nutrition-card">
+                            <h3>Daily Calories</h3>
+                            <div class="progress-container">
+                                <div class="progress-ring">
+                                    <span id="calorie-progress">0</span>
+                                    <span class="progress-unit">kcal</span>
+                                </div>
+                            </div>
+                            <p><span id="calorie-consumed">0</span>/<span id="calorie-target">2000</span> kcal</p>
+                        </div>
+                        
+                        <div class="nutrition-card">
+                            <h3>Macronutrients</h3>
+                            <div class="macro-chart">
+                                <canvas id="macro-chart"></canvas>
+                            </div>
+                            <div class="macro-details">
+                                <div class="macro-item">
+                                    <span class="macro-color protein"></span>
+                                    <span class="macro-text">Protein: <span id="protein-value">0</span>g</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-color carbs"></span>
+                                    <span class="macro-text">Carbs: <span id="carbs-value">0</span>g</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-color fat"></span>
+                                    <span class="macro-text">Fat: <span id="fat-value">0</span>g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="nutritional-tips-section">
                         <h3>💡 Nutritional Tips</h3>
@@ -408,7 +395,6 @@
                         </div>
                     </div>
                     
-                    <!-- Added calorie calculator to nutrition section -->
                     <div class="nutrition-calculator">
                         <h3>🧮 Daily Calorie Calculator</h3>
                         <p>Calculate your daily calorie needs based on your personal information:</p>
@@ -485,7 +471,6 @@
 
                 <section class="settings-section" id="settingsSection" style="display: none;">
                     <div class="settings-buttons">
-                        <button id="contributors-btn">👥 Contributors</button>
                         <button id="open-feedback-btn">📝 Give Feedback</button>
                         <button id="darkModeToggle" class="dark-mode-btn">🌙 Dark Mode</button>
                     </div>
@@ -504,7 +489,7 @@
                                 <p class="progress-text">Step 1 of 3</p>
                             </div>
 
-                            <div class="feedback-step" id="step1">
+                            <div class="feedback-step" id="step1"></div>
                                 <h3>How would you rate your overall experience?</h3>
                                 <div class="rating-container">
                                     <div class="emoji-rating">
@@ -521,6 +506,7 @@
                                 </div>
                             </div>
 
+                            <div class="feedback-step hidden" id="step2">
                             <div class="feedback-step hidden" id="step2">
                                 <h3>What aspects would you like to tell us about?</h3>
                                 <div class="category-selection">
