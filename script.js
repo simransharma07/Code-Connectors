@@ -103,7 +103,7 @@ function showSection(event, sectionId) {
     const sections = {
         'home': '.activity-section',
         'stats': '#statssection',
-        'nutrition': '.nutrition-section',
+        'nutrition': '#nutritionsection',
         'appointments': '#appointmentsection',
         'settings': '#settingsSection'
     };
