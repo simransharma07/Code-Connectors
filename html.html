@@ -31,6 +31,7 @@
                         <label for="remember">Remember Me</label>
                     </div>
                     <button type="submit" class="btn">Sign In</button>
+                    <div id="login-message"></div>
                     <p><a href="#">Forgot Password?</a></p>
                 </form>
             </div>
@@ -171,60 +172,93 @@
 
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                    <div class="stat-card">
-                        <i class="fas fa-dumbbell icon"></i>
-                        <h3>Training</h3>
-                        <p id="trainingDisplay">0 hours/week</p>
-                        <input type="number" id="trainingInput" placeholder="Enter hours/week" />
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-shoe-prints icon"></i>
-                        <h3>Steps</h3>
-                        <p id="stepsDisplay">0 km/week</p>
-                        <input type="number" id="stepsInput" placeholder="Enter km/week" />
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-fire icon"></i>
-                        <h3>Calories</h3>
-                        <p id="caloriesDisplay">0 kcal/week</p>
-                        <input type="number" id="caloriesInput" placeholder="Enter kcal/week" />
-                    </div>
-                    <div class="update-button">
-                        <button onclick="updateStats(event)">Update Stats</button>
-                    </div>
                     
-                    <!-- Nutrition Tracker Cards -->
-                    <h3 class="section-divider">Nutrition Statistics</h3>
-                    
-                    <div class="nutrition-summary">
-                        <div class="nutrition-card">
-                            <h3>Daily Calories</h3>
-                            <div class="progress-container">
-                                <div class="progress-ring">
-                                    <span id="calorie-progress">0</span>
-                                    <span class="progress-unit">kcal</span>
+                    <!-- Nutrition Statistics Dashboard -->
+                    <div class="stats-dashboard">
+                        <div class="stats-card main-stats">
+                            <h3>Daily Calorie Overview</h3>
+                            <div class="calorie-progress-container">
+                                <div class="calorie-progress-ring">
+                                    <div class="progress-circle">
+                                        <div class="progress-circle-inner">
+                                            <span id="calorie-progress">0</span>
+                                            <span class="progress-unit">kcal</span>
+                                        </div>
+                                    </div>
+                                    <div class="calorie-target-info">
+                                        <div class="calorie-info-item">
+                                            <span class="info-label">Consumed</span>
+                                            <span class="info-value" id="calorie-consumed">0</span>
+                                        </div>
+                                        <div class="calorie-info-item">
+                                            <span class="info-label">Target</span>
+                                            <span class="info-value" id="calorie-target">2000</span>
+                                        </div>
+                                        <div class="calorie-info-item">
+                                            <span class="info-label">Remaining</span>
+                                            <span class="info-value" id="calorie-remaining">2000</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <p><span id="calorie-consumed">0</span>/<span id="calorie-target">2000</span> kcal</p>
                         </div>
                         
-                        <div class="nutrition-card">
-                            <h3>Macronutrients</h3>
-                            <div class="macro-chart">
+                        <div class="stats-card macro-stats">
+                            <h3>Macronutrients Breakdown</h3>
+                            <div class="macro-chart-container">
                                 <canvas id="macro-chart"></canvas>
+                                <div class="macro-legend">
+                                    <div class="macro-legend-item">
+                                        <span class="macro-color protein"></span>
+                                        <div class="macro-legend-text">
+                                            <span class="macro-name">Protein</span>
+                                            <span class="macro-value" id="protein-value">0</span>g
+                                            <span class="macro-percent" id="protein-percent">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="macro-legend-item">
+                                        <span class="macro-color carbs"></span>
+                                        <div class="macro-legend-text">
+                                            <span class="macro-name">Carbs</span>
+                                            <span class="macro-value" id="carbs-value">0</span>g
+                                            <span class="macro-percent" id="carbs-percent">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="macro-legend-item">
+                                        <span class="macro-color fat"></span>
+                                        <div class="macro-legend-text">
+                                            <span class="macro-name">Fat</span>
+                                            <span class="macro-value" id="fat-value">0</span>g
+                                            <span class="macro-percent" id="fat-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="macro-details">
-                                <div class="macro-item">
-                                    <span class="macro-color protein"></span>
-                                    <span class="macro-text">Protein: <span id="protein-value">0</span>g</span>
+                        </div>
+                        
+                        <div class="stats-card daily-summary">
+                            <h3>Nutritional Summary</h3>
+                            <div class="summary-metrics">
+                                <div class="summary-metric">
+                                    <div class="metric-icon">🍽️</div>
+                                    <div class="metric-data">
+                                        <h4>Meals Logged</h4>
+                                        <div class="metric-value" id="meals-logged">0</div>
+                                    </div>
                                 </div>
-                                <div class="macro-item">
-                                    <span class="macro-color carbs"></span>
-                                    <span class="macro-text">Carbs: <span id="carbs-value">0</span>g</span>
+                                <div class="summary-metric">
+                                    <div class="metric-icon">🔥</div>
+                                    <div class="metric-data">
+                                        <h4>Avg. Daily Calories</h4>
+                                        <div class="metric-value" id="avg-calories">0 kcal</div>
+                                    </div>
                                 </div>
-                                <div class="macro-item">
-                                    <span class="macro-color fat"></span>
-                                    <span class="macro-text">Fat: <span id="fat-value">0</span>g</span>
+                                <div class="summary-metric">
+                                    <div class="metric-icon">📊</div>
+                                    <div class="metric-data">
+                                        <h4>Goal Progress</h4>
+                                        <div class="metric-value" id="goal-progress">0%</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
