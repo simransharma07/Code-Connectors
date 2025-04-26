@@ -764,6 +764,24 @@ form button {
   color: white;
 }
 
+.settings-buttons .sign-out-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.settings-buttons .sign-out-btn:hover {
+  background-color: #c82333;
+}
+
+/* Dark mode */
+body.dark-mode .settings-buttons .sign-out-btn {
+  background-color: #b02a37;
+}
+
+body.dark-mode .settings-buttons .sign-out-btn:hover {
+  background-color: #a52834;
+}
+
 /* ===== MODAL STYLES ===== */
 .modal {
   position: absolute;
