@@ -38,6 +38,12 @@ body {
   to { transform: scale(1); }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ===== LOGIN PAGE ===== */
 #login-page-background {
   position: fixed;
@@ -62,6 +68,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease;
 }
 
 .login-box {
@@ -156,6 +163,32 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* Login Error Message */
+.login-error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Login Message Container */
+#login-message {
+  height: 20px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Login Loading Indicator */
+.login-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 123, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #007bff;
+  animation: spin 1s ease-in-out infinite;
 }
 
 /* Dark mode for login page */
@@ -630,57 +663,329 @@ button:hover {
 /* ===== STATS SECTION ===== */
 .stats-section {
   padding: 20px;
-  max-width: 700px;
+  max-width: 1000px;
   margin: auto;
 }
 
-.stat-card {
-  background-color: #fff;
+/* New Stats Dashboard Layout */
+.stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.stats-card {
+  background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card h3 {
+  margin-top: 0;
   margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #333;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.stats-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(to right, #FF8C42, #FF5722);
+  border-radius: 3px;
+}
+
+/* Main Stats Card - Calorie Progress */
+.main-stats {
+  grid-column: 1 / -1;
+}
+
+.calorie-progress-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.calorie-progress-ring {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  gap: 30px;
+}
+
+.progress-circle {
+  width: 180px;
+  height: 180px;
+  position: relative;
+}
+
+.progress-circle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#4CAF50 var(--progress, 0%), #E0E0E0 0%);
+  transition: background 0.3s ease;
+}
+
+.progress-circle-inner {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#calorie-progress {
+  font-size: 36px;
+  font-weight: 700;
+  color: #4CAF50;
+}
+
+.progress-unit {
+  font-size: 16px;
+  color: #757575;
+}
+
+.calorie-target-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.calorie-info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+  background: #f8f8f8;
+  border-radius: 10px;
   transition: transform 0.2s ease;
 }
 
-.stat-card:hover {
-  transform: scale(1.02);
+.calorie-info-item:hover {
+  transform: translateX(5px);
 }
 
-.stat-card h3 {
-  margin-bottom: 8px;
-  font-size: 1.2rem;
+.info-label {
+  color: #757575;
+  font-weight: 500;
 }
 
-.stat-card p {
-  font-weight: bold;
-  margin: 5px 0 10px;
+.info-value {
+  font-weight: 700;
+  color: #333;
 }
 
-.stat-card input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
+/* Macro Stats Card */
+.macro-chart-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.update-stats-btn,
-.update-button button {
-  background-color: #ffa500;
-  color: white;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: none;
+.macro-chart {
+  height: 220px;
+  position: relative;
+}
+
+.macro-legend {
+  margin-top: 20px;
+}
+
+.macro-legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.macro-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.macro-color.protein {
+  background-color: #FF6384;
+}
+
+.macro-color.carbs {
+  background-color: #36A2EB;
+}
+
+.macro-color.fat {
+  background-color: #FFCE56;
+}
+
+.macro-legend-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.macro-name {
+  font-weight: 600;
+  min-width: 60px;
+}
+
+.macro-value {
+  font-weight: 700;
+}
+
+.macro-percent {
+  color: #757575;
+  margin-left: auto;
+  background: #f0f0f0;
+  padding: 3px 8px;
   border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
+  font-size: 12px;
 }
 
-.update-stats-btn:hover {
-  background-color: #ff8700;
+/* Daily Summary Card */
+.daily-summary {
+  margin-top: 20px;
+}
+
+.summary-metrics {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.summary-metric {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.summary-metric:hover {
+  transform: translateY(-5px);
+}
+
+.metric-icon {
+  font-size: 26px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.metric-data {
+  flex: 1;
+}
+
+.metric-data h4 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #757575;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Dark Mode for Stats */
+body.dark-mode .stats-card {
+  background: #1f1f1f;
+  color: #e0e0e0;
+}
+
+body.dark-mode .stats-card h3 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .progress-circle-inner {
+  background: #1f1f1f;
+}
+
+body.dark-mode #calorie-progress {
+  color: #81c784;
+}
+
+body.dark-mode .calorie-info-item {
+  background: #2a2a2a;
+}
+
+body.dark-mode .info-label {
+  color: #b0b0b0;
+}
+
+body.dark-mode .info-value {
+  color: #e0e0e0;
+}
+
+body.dark-mode .macro-percent {
+  background: #333;
+  color: #b0b0b0;
+}
+
+body.dark-mode .summary-metric {
+  background: #2a2a2a;
+}
+
+body.dark-mode .metric-data h4 {
+  color: #b0b0b0;
+}
+
+body.dark-mode .metric-value {
+  color: #e0e0e0;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .calorie-progress-ring {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .calorie-target-info {
+    width: 100%;
+  }
+  
+  .summary-metrics {
+    flex-direction: column;
+  }
+  
+  .progress-circle {
+    width: 150px;
+    height: 150px;
+  }
+  
+  #calorie-progress {
+    font-size: 30px;
+  }
 }
 
 /* ===== APPOINTMENTS & MEDICINE SECTION ===== */
