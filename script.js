@@ -688,34 +688,76 @@ function updateMealDisplay(mealType) {
     }
 
 function updateNutritionDisplay() {
-        // Update calorie progress
-        const calorieProgressElem = document.getElementById('calorie-progress');
-        const calorieConsumedElem = document.getElementById('calorie-consumed');
-        const calorieTargetElem = document.getElementById('calorie-target');
-        
-        if (calorieProgressElem) calorieProgressElem.textContent = dailyNutrition.calories;
-        if (calorieConsumedElem) calorieConsumedElem.textContent = dailyNutrition.calories;
-        if (calorieTargetElem) calorieTargetElem.textContent = targetCalories;
-        
-        // Update progress ring
-        const progressPercentage = Math.min(100, (dailyNutrition.calories / targetCalories) * 100);
-        const progressRing = document.querySelector('.progress-ring');
-        if (progressRing) {
-            progressRing.style.background = `conic-gradient(#4CAF50 ${progressPercentage}%, #E0E0E0 0%)`;
-        }
-        
-        // Update macronutrient values
-        const proteinElem = document.getElementById('protein-value');
-        const carbsElem = document.getElementById('carbs-value');
-        const fatElem = document.getElementById('fat-value');
-        
-        if (proteinElem) proteinElem.textContent = dailyNutrition.protein;
-        if (carbsElem) carbsElem.textContent = dailyNutrition.carbs;
-        if (fatElem) fatElem.textContent = dailyNutrition.fat;
-        
-        // Update macronutrient chart if Chart.js is available
-        updateMacroChart();
+    // Update calorie progress
+    const calorieProgressElem = document.getElementById('calorie-progress');
+    const calorieConsumedElem = document.getElementById('calorie-consumed');
+    const calorieTargetElem = document.getElementById('calorie-target');
+    const calorieRemainingElem = document.getElementById('calorie-remaining');
+    
+    if (calorieProgressElem) calorieProgressElem.textContent = dailyNutrition.calories;
+    if (calorieConsumedElem) calorieConsumedElem.textContent = dailyNutrition.calories;
+    if (calorieTargetElem) calorieTargetElem.textContent = targetCalories;
+    
+    // Calculate and update remaining calories
+    const remaining = Math.max(0, targetCalories - dailyNutrition.calories);
+    if (calorieRemainingElem) calorieRemainingElem.textContent = remaining;
+    
+    // Update progress ring
+    const progressPercentage = Math.min(100, (dailyNutrition.calories / targetCalories) * 100);
+    const progressCircle = document.querySelector('.progress-circle');
+    if (progressCircle) {
+        progressCircle.style.setProperty('--progress', `${progressPercentage}%`);
     }
+    
+    // Update macronutrient values
+    const proteinElem = document.getElementById('protein-value');
+    const carbsElem = document.getElementById('carbs-value');
+    const fatElem = document.getElementById('fat-value');
+    
+    if (proteinElem) proteinElem.textContent = dailyNutrition.protein;
+    if (carbsElem) carbsElem.textContent = dailyNutrition.carbs;
+    if (fatElem) fatElem.textContent = dailyNutrition.fat;
+    
+    // Calculate and update macronutrient percentages
+    const proteinPercentElem = document.getElementById('protein-percent');
+    const carbsPercentElem = document.getElementById('carbs-percent');
+    const fatPercentElem = document.getElementById('fat-percent');
+    
+    const totalMacros = dailyNutrition.protein + dailyNutrition.carbs + dailyNutrition.fat;
+    
+    if (totalMacros > 0) {
+        const proteinPercent = Math.round((dailyNutrition.protein / totalMacros) * 100);
+        const carbsPercent = Math.round((dailyNutrition.carbs / totalMacros) * 100);
+        const fatPercent = Math.round((dailyNutrition.fat / totalMacros) * 100);
+        
+        if (proteinPercentElem) proteinPercentElem.textContent = `${proteinPercent}%`;
+        if (carbsPercentElem) carbsPercentElem.textContent = `${carbsPercent}%`;
+        if (fatPercentElem) fatPercentElem.textContent = `${fatPercent}%`;
+    } else {
+        if (proteinPercentElem) proteinPercentElem.textContent = '0%';
+        if (carbsPercentElem) carbsPercentElem.textContent = '0%';
+        if (fatPercentElem) fatPercentElem.textContent = '0%';
+    }
+    
+    // Update daily summary metrics
+    const mealsLoggedElem = document.getElementById('meals-logged');
+    const avgCaloriesElem = document.getElementById('avg-calories');
+    const goalProgressElem = document.getElementById('goal-progress');
+    
+    // Count meals logged
+    const totalMealsLogged = Object.values(meals).reduce((total, mealItems) => total + mealItems.length, 0);
+    if (mealsLoggedElem) mealsLoggedElem.textContent = totalMealsLogged;
+    
+    // Set average daily calories (could be calculated from history in a real app)
+    if (avgCaloriesElem) avgCaloriesElem.textContent = `${dailyNutrition.calories} kcal`;
+    
+    // Calculate goal progress
+    const goalProgress = Math.min(100, Math.round((dailyNutrition.calories / targetCalories) * 100));
+    if (goalProgressElem) goalProgressElem.textContent = `${goalProgress}%`;
+    
+    // Update macronutrient chart if Chart.js is available
+    updateMacroChart();
+}
 
 function updateMacroChart() {
     const chartCanvas = document.getElementById('macro-chart');
@@ -738,7 +780,8 @@ function updateMacroChart() {
                 datasets: [{
                     data: [proteinCals, carbsCals, fatCals],
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    hoverBackgroundColor: ['#FF4D6D', '#2693E6', '#FFB922']
+                    hoverBackgroundColor: ['#FF4D6D', '#2693E6', '#FFB922'],
+                    borderWidth: 0
                 }]
             },
             options: {
@@ -755,7 +798,7 @@ function updateMacroChart() {
                                 const total = context.dataset.data.reduce((sum, value) => sum + value, 0);
                                 const value = context.raw;
                                 const percentage = Math.round((value / total) * 100);
-                                return `${context.label}: ${percentage}%`;
+                                return `${context.label}: ${percentage}% (${Math.round(value)} kcal)`;
                             }
                         }
                     }
@@ -958,47 +1001,6 @@ function loadSavedMealPlans() {
     }
 }
 
-// Function to update statistics without page refresh
-function updateStats(event) {
-    // Prevent default form submission if this was triggered by a form
-    if (event) {
-        event.preventDefault();
-    }
-    
-    const training = document.getElementById("trainingInput").value;
-    const steps = document.getElementById("stepsInput").value;
-    const calories = document.getElementById("caloriesInput").value;
-    
-    // Update display values with proper formatting
-    if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
-    if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
-    if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
-    
-    // Save to localStorage for persistence
-    localStorage.setItem("healthStats", JSON.stringify({ training, steps, calories }));
-    
-    // Show success message
-    alert("Statistics updated successfully!");
-}
-
-// Function to load saved statistics
-function loadSavedStats() {
-    const savedStats = localStorage.getItem("healthStats");
-    if (savedStats) {
-        const { training, steps, calories } = JSON.parse(savedStats);
-        
-        // Update input fields
-        if (training) document.getElementById("trainingInput").value = training;
-        if (steps) document.getElementById("stepsInput").value = steps;
-        if (calories) document.getElementById("caloriesInput").value = calories;
-        
-        // Update display
-        if (training) document.getElementById("trainingDisplay").textContent = `${training} hours/week`;
-        if (steps) document.getElementById("stepsDisplay").textContent = `${steps} km/week`;
-        if (calories) document.getElementById("caloriesDisplay").textContent = `${calories} kcal/week`;
-    }
-}
-
 function initCalorieCalculator() {
     const calculatorForm = document.getElementById('calorie-calculator');
     
@@ -1109,11 +1111,14 @@ function showTermsModal(event) {
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
     // Initially hide gender and dashboard pages
-    if (document.querySelector(".gender-body")) {
-        document.querySelector(".gender-body").style.display = "none";
+    const genderBody = document.querySelector(".gender-body");
+    const dashboardPage = document.getElementById("dashboardPage");
+    
+    if (genderBody) {
+        genderBody.style.display = "none";
     }
-    if (document.getElementById("dashboardPage")) {
-        document.getElementById("dashboardPage").style.display = "none";
+    if (dashboardPage) {
+        dashboardPage.style.display = "none";
     }
 
     // Set up login form handler
@@ -1126,16 +1131,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("password").value.trim();
 
             if (username && password) {
-                // Hide background image and login container
-                document.getElementById("login-page-background").style.opacity = "0";
+                // Show loading indicator or animation if needed
+                document.body.style.cursor = 'wait';
+                
+                // Hide login page with proper transition
+                const loginPage = document.getElementById("loginPage");
+                const loginBackground = document.getElementById("login-page-background");
+                
+                if (loginBackground) {
+                    loginBackground.style.opacity = "0";
+                }
                 
                 setTimeout(() => {
-                    // Hide the entire login page after fade out animation completes
-                    document.getElementById("loginPage").classList.add("hidden");
-                    document.getElementById("loginPage").style.display = "none";
+                    // Hide the entire login page
+                    if (loginPage) {
+                        loginPage.classList.add("hidden");
+                        loginPage.style.display = "none";
+                    }
                     
                     // Show gender selection page
-                    const genderBody = document.querySelector(".gender-body");
                     if (genderBody) {
                         genderBody.classList.remove("hidden");
                         genderBody.style.display = "flex";
@@ -1144,9 +1158,34 @@ document.addEventListener("DOMContentLoaded", function () {
                         genderBody.style.height = "100vh";
                         genderBody.style.backgroundColor = "rgba(255, 255, 255, 1)";
                     }
-                }, 500); // Matches the transition duration
+                    
+                    // Reset cursor
+                    document.body.style.cursor = 'default';
+                    
+                }, 500); // Match the transition duration
+                
             } else {
-                alert("Please enter valid credentials.");
+                // Show error message for empty fields
+                const errorMessage = document.getElementById("login-error");
+                if (errorMessage) {
+                    errorMessage.textContent = "Please enter valid credentials.";
+                } else {
+                    // Create error message element if it doesn't exist
+                    const error = document.createElement("p");
+                    error.id = "login-error";
+                    error.className = "login-error";
+                    error.textContent = "Please enter valid credentials.";
+                    error.style.color = "#e74c3c";
+                    error.style.marginTop = "10px";
+                    
+                    // Insert error after the login button
+                    const loginButton = loginForm.querySelector(".btn");
+                    if (loginButton) {
+                        loginButton.insertAdjacentElement('afterend', error);
+                    } else {
+                        loginForm.appendChild(error);
+                    }
+                }
             }
         });
     }
@@ -1302,17 +1341,11 @@ document.addEventListener("DOMContentLoaded", function () {
         aboutUsBtn.addEventListener('click', () => {
             aboutUsModal.style.display = 'flex';
         });
+    }
 
-        // Close button
-        aboutUsCloseBtn?.addEventListener('click', () => {
+    if (aboutUsCloseBtn) {
+        aboutUsCloseBtn.addEventListener('click', () => {
             aboutUsModal.style.display = 'none';
-        });
-
-        // Click outside to close
-        aboutUsModal.addEventListener('click', (e) => {
-            if (e.target === aboutUsModal) {
-                aboutUsModal.style.display = 'none';
-            }
         });
     }
 });
