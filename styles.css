@@ -293,6 +293,11 @@ input[type="date"] {
   color: #aaa;
   cursor: pointer;
   text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.skip:hover {
+  color: #666;
 }
 
 /* ===== DASHBOARD LAYOUT ===== */
