@@ -63,21 +63,6 @@ BEEPTECH Health Tracker is a comprehensive web application designed to help user
 - FontAwesome icons
 - Local Storage for data persistence
 
-- 
- Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/beeptech-health-tracker.git
-```
-
-2. Navigate to the project directory:
-```bash
-cd beeptech-health-tracker
-```
-
-3. Open `index.html` in your preferred browser
-
 ## USAGE
 1. Login with your credentials
 2. Complete the initial setup (gender and birthday)
