@@ -49,6 +49,16 @@ let dailySteps = 0;
 let stepGoal = 10000;
 let stepHistory = [];
 
+// User profile data
+let userProfileData = {
+    displayName: "Health User",
+    username: "healthuser123",
+    gender: "Not specified",
+    dateOfBirth: "Not specified",
+    memberSince: "April 2025",
+    accountType: "Premium Account"
+};
+
 // Function to toggle dark mode
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -1341,6 +1351,28 @@ function resetDailySteps() {
     saveStepData();
 }
 
+// Function to update user profile display
+function updateUserProfileDisplay() {
+    // Update display name in both profile and sidebar
+    document.getElementById('user-display-name').textContent = userProfileData.displayName;
+    
+    // Update sidebar username
+    const sidebarUserName = document.getElementById('sidebar-username');
+    if (sidebarUserName) {
+        sidebarUserName.textContent = userProfileData.displayName;
+    }
+    
+    // Update other profile information
+    document.getElementById('user-username').textContent = userProfileData.username;
+    document.getElementById('user-gender').textContent = userProfileData.gender;
+    document.getElementById('user-dob').textContent = userProfileData.dateOfBirth;
+    document.getElementById('user-member-since').textContent = userProfileData.memberSince;
+    document.getElementById('user-account-type').textContent = userProfileData.accountType;
+    
+    // Update user stats summaries from stored data
+    updateUserStatsDisplay();
+}
+
 // ---------------- DOM Content Loaded ----------------
 document.addEventListener("DOMContentLoaded", function () {
     // Initially hide gender and dashboard pages
@@ -1365,6 +1397,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (username && password) {
                 document.body.style.cursor = 'wait';
+                
+                // Update the user profile data with the entered username
+                userProfileData.displayName = username;
+                userProfileData.username = username;
+                
+                // Update the sidebar username
+                const sidebarUsername = document.getElementById("sidebar-username");
+                if (sidebarUsername) {
+                    sidebarUsername.textContent = username;
+                }
+                
+                // Save user profile data to localStorage for persistence
+                localStorage.setItem('userProfileData', JSON.stringify(userProfileData));
                 
                 // Hide login page background with transition
                 const loginBackground = document.getElementById("login-page-background");
