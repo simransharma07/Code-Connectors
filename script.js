@@ -44,6 +44,11 @@ let mealPlans = {
     sunday: { breakfast: '', lunch: '', dinner: '' }
 };
 
+// Global variables for step tracking
+let dailySteps = 0;
+let stepGoal = 10000;
+let stepHistory = [];
+
 // Function to toggle dark mode
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -885,7 +890,6 @@ function saveNutritionDataToLocalStorage() {
     localStorage.setItem('targetCalories', targetCalories.toString());
 }
 
-
 function toggleContributors() {
     const panel = document.getElementById('contributorsPanel');
     if (panel) {
@@ -1124,28 +1128,217 @@ function showTermsModal(event) {
         // Add event listener to close button
         const closeBtn = termsModal.querySelector('.close-btn');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                termsModal.style.display = 'none';
+            closeBtn.addEventListener("click", () => {
+                termsModal.style.display = "none";
             });
         }
         
         // Click outside to close
-        termsModal.addEventListener('click', (e) => {
+        termsModal.addEventListener("click", (e) => {
             if (e.target === termsModal) {
-                termsModal.style.display = 'none';
+                termsModal.style.display = "none";
             }
         });
         
         // ESC key to close
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && termsModal.style.display === 'flex') {
-                termsModal.style.display = 'none';
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && termsModal.style.display === "flex") {
+                termsModal.style.display = "none";
             }
         });
     }
     
     // For mobile, close sidebar after selection
     closeMobileSidebar();
+}
+
+// Function to initialize step tracker
+function initStepTracker() {
+    // Load saved step data from localStorage
+    loadStepData();
+
+    // Update the UI with current step data
+    updateStepDisplay();
+
+    // Initialize event listeners for step tracker
+    const addStepsBtn = document.getElementById('add-steps-btn');
+    if (addStepsBtn) {
+        addStepsBtn.addEventListener('click', addSteps);
+    }
+
+    // Populate step history
+    displayStepHistory();
+}
+
+// Function to add steps
+function addSteps() {
+    const stepInput = document.getElementById('step-input');
+    const stepCount = parseInt(stepInput.value);
+
+    if (isNaN(stepCount) || stepCount <= 0) {
+        alert('Please enter a valid number of steps');
+        return;
+    }
+
+    // Add steps to daily total
+    dailySteps += stepCount;
+
+    // Create a step history entry
+    const now = new Date();
+    const stepEntry = {
+        timestamp: now.toISOString(),
+        count: stepCount,
+        formattedTime: formatTime(now)
+    };
+
+    // Add to step history
+    stepHistory.unshift(stepEntry); // Add to front of array
+    
+    // Limit history to 10 items
+    if (stepHistory.length > 10) {
+        stepHistory.pop(); // Remove oldest entry
+    }
+
+    // Update the UI
+    updateStepDisplay();
+    displayStepHistory();
+
+    // Save to localStorage
+    saveStepData();
+
+    // Reset input field
+    stepInput.value = '';
+
+    // Show confirmation message
+    showStepConfirmation(stepCount);
+}
+
+// Function to update step display
+function updateStepDisplay() {
+    const stepsCount = document.getElementById('steps-count');
+    const todaySteps = document.getElementById('today-steps');
+    const stepsGoal = document.getElementById('steps-goal');
+    const stepsRemaining = document.getElementById('steps-remaining');
+    const stepProgress = document.querySelector('.step-progress-circle');
+    
+    if (stepsCount) stepsCount.textContent = dailySteps.toLocaleString();
+    if (todaySteps) todaySteps.textContent = dailySteps.toLocaleString();
+    if (stepsGoal) stepsGoal.textContent = stepGoal.toLocaleString();
+    
+    // Calculate and update remaining steps
+    const remaining = Math.max(0, stepGoal - dailySteps);
+    if (stepsRemaining) stepsRemaining.textContent = remaining.toLocaleString();
+    
+    // Update progress circle
+    if (stepProgress) {
+        const progressPercentage = Math.min(100, (dailySteps / stepGoal) * 100);
+        stepProgress.style.setProperty('--progress', `${progressPercentage}%`);
+    }
+}
+
+// Function to display step history
+function displayStepHistory() {
+    const historyList = document.getElementById('step-history-list');
+    
+    if (!historyList) return;
+    
+    if (stepHistory.length === 0) {
+        historyList.innerHTML = '<p class="empty-history">No recent step data</p>';
+        return;
+    }
+    
+    historyList.innerHTML = '';
+    
+    stepHistory.forEach(entry => {
+        const stepEntryElement = document.createElement('div');
+        stepEntryElement.className = 'step-entry';
+        
+        stepEntryElement.innerHTML = `
+            <span class="step-date">${entry.formattedTime}</span>
+            <span class="step-count">${entry.count.toLocaleString()} steps</span>
+        `;
+        
+        historyList.appendChild(stepEntryElement);
+    });
+}
+
+// Format time for display
+function formatTime(date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + 
+           ' ' + date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+}
+
+// Show step confirmation message
+function showStepConfirmation(count) {
+    // Create a temporary message element
+    const confirmationMsg = document.createElement('div');
+    confirmationMsg.className = 'step-confirmation';
+    confirmationMsg.textContent = `Added ${count.toLocaleString()} steps!`;
+    confirmationMsg.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        z-index: 1000;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.5s;
+    `;
+    
+    // Add to DOM
+    document.body.appendChild(confirmationMsg);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        confirmationMsg.style.opacity = '0';
+        setTimeout(() => {
+            if (confirmationMsg.parentNode) {
+                confirmationMsg.parentNode.removeChild(confirmationMsg);
+            }
+        }, 500);
+    }, 2500);
+}
+
+// Function to save step data to localStorage
+function saveStepData() {
+    localStorage.setItem('dailySteps', dailySteps.toString());
+    localStorage.setItem('stepHistory', JSON.stringify(stepHistory));
+    localStorage.setItem('stepGoal', stepGoal.toString());
+}
+
+// Function to load step data from localStorage
+function loadStepData() {
+    const savedSteps = localStorage.getItem('dailySteps');
+    if (savedSteps) {
+        dailySteps = parseInt(savedSteps);
+    }
+    
+    const savedHistory = localStorage.getItem('stepHistory');
+    if (savedHistory) {
+        try {
+            stepHistory = JSON.parse(savedHistory);
+        } catch (e) {
+            console.error('Error loading step history:', e);
+            stepHistory = [];
+        }
+    }
+    
+    const savedGoal = localStorage.getItem('stepGoal');
+    if (savedGoal) {
+        stepGoal = parseInt(savedGoal);
+    }
+}
+
+// Function to reset daily steps
+function resetDailySteps() {
+    // This would typically be called at midnight
+    // For demo purposes, you could add a reset button
+    dailySteps = 0;
+    updateStepDisplay();
+    saveStepData();
 }
 
 // ---------------- DOM Content Loaded ----------------
@@ -1247,6 +1440,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (dashboardVisible) {
         initNutritionTracker();
     }
+    
+    // Initialize step tracker functionality
+    initStepTracker();
     
     // Handle medicine form
     const medicineForm = document.querySelector("#medicine-form");
