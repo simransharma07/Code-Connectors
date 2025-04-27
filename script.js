@@ -743,10 +743,26 @@ function updateNutritionDisplay() {
     
     const totalMacros = dailyNutrition.protein + dailyNutrition.carbs + dailyNutrition.fat;
     
-    if (totalMacros > 0) {
-        const proteinPercent = Math.round((dailyNutrition.protein / totalMacros) * 100);
-        const carbsPercent = Math.round((dailyNutrition.carbs / totalMacros) * 100);
-        const fatPercent = Math.round((dailyNutrition.fat / totalMacros) * 100);
+    // Fix: Better handling of small or zero values to prevent NaN or incorrect percentages
+    if (totalMacros > 0.1) { // Using a small threshold instead of exactly 0
+        // Ensure percentages add up to 100% by normalizing
+        let proteinPercent = Math.round((dailyNutrition.protein / totalMacros) * 100);
+        let carbsPercent = Math.round((dailyNutrition.carbs / totalMacros) * 100);
+        let fatPercent = Math.round((dailyNutrition.fat / totalMacros) * 100);
+        
+        // Fix: Adjust percentages if they don't add up to 100%
+        const totalPercent = proteinPercent + carbsPercent + fatPercent;
+        if (totalPercent !== 100 && totalPercent > 0) {
+            // Distribute the difference proportionally
+            const diff = 100 - totalPercent;
+            if (proteinPercent >= carbsPercent && proteinPercent >= fatPercent) {
+                proteinPercent += diff;
+            } else if (carbsPercent >= proteinPercent && carbsPercent >= fatPercent) {
+                carbsPercent += diff;
+            } else {
+                fatPercent += diff;
+            }
+        }
         
         if (proteinPercentElem) proteinPercentElem.textContent = `${proteinPercent}%`;
         if (carbsPercentElem) carbsPercentElem.textContent = `${carbsPercent}%`;
@@ -780,17 +796,20 @@ function updateNutritionDisplay() {
 function updateMacroChart() {
     const chartCanvas = document.getElementById('macro-chart');
     if (chartCanvas && window.Chart) {
-        // Destroy existing chart if any
-        if (window.macroChart) {
-            window.macroChart.destroy();
-        }
-        
+        // Performance optimization: Only destroy and recreate the chart when necessary
         // Calculate calorie values from macronutrients
         const proteinCals = dailyNutrition.protein * 4; // 4 calories per gram of protein
         const carbsCals = dailyNutrition.carbs * 4;    // 4 calories per gram of carbs
         const fatCals = dailyNutrition.fat * 9;        // 9 calories per gram of fat
         
-        // Create new chart
+        // If chart already exists, update data instead of recreating
+        if (window.macroChart) {
+            window.macroChart.data.datasets[0].data = [proteinCals, carbsCals, fatCals];
+            window.macroChart.update('none'); // Use 'none' animation for better performance
+            return;
+        }
+        
+        // Create new chart only if it doesn't exist
         window.macroChart = new Chart(chartCanvas, {
             type: 'doughnut',
             data: {
@@ -806,6 +825,9 @@ function updateMacroChart() {
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: '70%',
+                animation: {
+                    duration: 500 // Reduced animation duration for better performance
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -815,7 +837,7 @@ function updateMacroChart() {
                             label: function(context) {
                                 const total = context.dataset.data.reduce((sum, value) => sum + value, 0);
                                 const value = context.raw;
-                                const percentage = Math.round((value / total) * 100);
+                                const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
                                 return `${context.label}: ${percentage}% (${Math.round(value)} kcal)`;
                             }
                         }

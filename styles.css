@@ -686,6 +686,7 @@ button:hover {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
   margin-top: 20px;
+  align-items: start;
 }
 
 .stats-card {
@@ -694,31 +695,10 @@ button:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 25px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stats-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
-
-.stats-card h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-  color: #333;
-  position: relative;
-  padding-bottom: 10px;
-}
-
-.stats-card h3::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background: linear-gradient(to right, #FF8C42, #FF5722);
-  border-radius: 3px;
+  height: auto !important;
+  min-height: auto !important;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Main Stats Card - Calorie Progress */
@@ -815,18 +795,33 @@ button:hover {
 }
 
 /* Macro Stats Card */
-.macro-chart-container {
+.macro-stats {
+  height: auto !important;
   display: flex;
   flex-direction: column;
 }
 
+.macro-chart-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 0;
+}
+
 .macro-chart {
-  height: 220px;
+  height: 180px;
   position: relative;
+  margin-bottom: 5px;
 }
 
 .macro-legend {
-  margin-top: 20px;
+  margin-top: 5px;
+}
+
+.macro-legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .macro-legend-item {
@@ -889,6 +884,7 @@ button:hover {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 15px;
+  margin-top: 15px; /* Add margin to properly position the metrics */
 }
 
 .summary-metric {
