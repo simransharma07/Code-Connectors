@@ -114,29 +114,35 @@ function showSection(event, sectionId) {
 
     console.log(`Showing section: ${sectionId}`);
 
-    // Hide all sections
-    const sections = {
-        'home': '.activity-section',
-        'stats': '#statssection',
-        'nutrition': '#nutritionsection',
-        'appointments': '#appointmentsection',
-        'settings': '#settingsSection'
-    };
-    
-    Object.values(sections).forEach(selector => {
-        const element = document.querySelector(selector);
-        if (element) {
-            element.style.display = 'none';
-        }
-    });
+    // Get the dashboard grid and all the possible sections
+    const dashboardGrid = document.querySelector('.dashboard-grid');
+    const activitySection = document.querySelector('.activity-section');
+    const statsSection = document.getElementById('statssection');
+    const nutritionSection = document.getElementById('nutritionsection');
+    const appointmentsSection = document.getElementById('appointmentsection');
+    const settingsSection = document.getElementById('settingsSection');
+
+    // First hide all sections
+    if (dashboardGrid) dashboardGrid.style.display = 'none';
+    if (activitySection) activitySection.style.display = 'none';
+    if (statsSection) statsSection.style.display = 'none';
+    if (nutritionSection) nutritionSection.style.display = 'none';
+    if (appointmentsSection) appointmentsSection.style.display = 'none';
+    if (settingsSection) settingsSection.style.display = 'none';
 
     // Show the selected section
-    const currentSection = sections[sectionId];
-    if (currentSection) {
-        const sectionElement = document.querySelector(currentSection);
-        if (sectionElement) {
-            sectionElement.style.display = 'block';
-        }
+    if (sectionId === 'home') {
+        // For home, show both the dashboard grid and the activity section
+        if (dashboardGrid) dashboardGrid.style.display = 'grid';
+        if (activitySection) activitySection.style.display = 'block';
+    } else if (sectionId === 'stats') {
+        if (statsSection) statsSection.style.display = 'block';
+    } else if (sectionId === 'nutrition') {
+        if (nutritionSection) nutritionSection.style.display = 'block';
+    } else if (sectionId === 'appointments') {
+        if (appointmentsSection) appointmentsSection.style.display = 'block';
+    } else if (sectionId === 'settings') {
+        if (settingsSection) settingsSection.style.display = 'block';
     }
 
     // Update active menu item
@@ -149,6 +155,15 @@ function showSection(event, sectionId) {
         const parentItem = event.currentTarget.closest('.sidebar-item');
         if (parentItem) {
             parentItem.classList.add('active');
+        }
+    } else if (sectionId) {
+        // If there's no event but there is a sectionId, find the corresponding menu item
+        const menuItem = document.querySelector(`.sidebar-item a[onclick*="showSection(event, '${sectionId}')"]`);
+        if (menuItem) {
+            const parentItem = menuItem.closest('.sidebar-item');
+            if (parentItem) {
+                parentItem.classList.add('active');
+            }
         }
     }
 
@@ -194,12 +209,27 @@ function submitForm() {
     localStorage.setItem('userGender', selectedGender);
     localStorage.setItem('userBirthday', birthday);
     
-    // Hide gender page and show dashboard
+    // Hide gender page 
     document.querySelector(".gender-body").style.display = "none";
-    document.getElementById("dashboardPage").style.display = "block";
+    
+    // Show dashboard
+    const dashboard = document.getElementById("dashboardPage");
+    dashboard.style.display = "block";
+    
+    // Show home section by default (explicitly call showSection)
+    showSection(null, 'home');
     
     // Initialize dashboard components
     initNutritionTracker();
+    
+    // Initialize step tracker
+    initStepTracker();
+    
+    // Initialize dashboard elements
+    initDashboard();
+    
+    // Load saved water amount
+    loadWaterAmount();
 }
 
 function skip() {
@@ -210,23 +240,20 @@ function skip() {
     const dashboard = document.getElementById("dashboardPage");
     dashboard.style.display = "block";
     
-    // Show home section by default
-    const homeSection = document.querySelector(".activity-section");
-    if (homeSection) {
-        homeSection.style.display = "block";
-    }
-    
-    // Highlight home menu item
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    const homeMenuItem = document.querySelector('.sidebar-item');
-    if (homeMenuItem) {
-        homeMenuItem.classList.add('active');
-    }
+    // Show home section by default (explicitly call showSection instead of manually setting displays)
+    showSection(null, 'home');
     
     // Initialize dashboard components
     initNutritionTracker();
+    
+    // Initialize step tracker
+    initStepTracker();
+    
+    // Initialize dashboard elements
+    initDashboard();
+    
+    // Load saved water amount
+    loadWaterAmount();
 }
 
 // Function to show/hide modal dialogs
@@ -247,6 +274,45 @@ function closeModal() {
         }, 200);
     }
 }
+
+// Terms & Conditions Modal Functionality
+function showTermsModal() {
+    const termsModal = document.getElementById('termsModal');
+    if (termsModal) {
+        termsModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+    }
+}
+
+// Initialize Terms & Conditions Modal events
+document.addEventListener('DOMContentLoaded', function() {
+    // Terms & Conditions Modal
+    const closeTermsBtn = document.getElementById('closeTermsBtn');
+    if (closeTermsBtn) {
+        closeTermsBtn.addEventListener('click', function() {
+            document.getElementById('termsModal').style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+    }
+    
+    // About Us Modal
+    const aboutUsBtn = document.getElementById('aboutUsBtn');
+    const closeAboutUsBtn = document.getElementById('closeAboutUsBtn');
+    
+    if (aboutUsBtn) {
+        aboutUsBtn.addEventListener('click', function() {
+            document.getElementById('aboutUsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        });
+    }
+    
+    if (closeAboutUsBtn) {
+        closeAboutUsBtn.addEventListener('click', function() {
+            document.getElementById('aboutUsModal').style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+    }
+});
 
 // Function for styling inputs and buttons
 function styleInputsAndButtons() {
@@ -1138,20 +1204,20 @@ function showTermsModal(event) {
         // Add event listener to close button
         const closeBtn = termsModal.querySelector('.close-btn');
         if (closeBtn) {
-            closeBtn.addEventListener("click", () => {
+            closeBtn.onclick = function() {
                 termsModal.style.display = "none";
-            });
+            };
         }
         
         // Click outside to close
-        termsModal.addEventListener("click", (e) => {
-            if (e.target === termsModal) {
+        window.onclick = function(event) {
+            if (event.target === termsModal) {
                 termsModal.style.display = "none";
             }
-        });
+        };
         
         // ESC key to close
-        document.addEventListener("keydown", (e) => {
+        document.addEventListener("keydown", function(e) {
             if (e.key === "Escape" && termsModal.style.display === "flex") {
                 termsModal.style.display = "none";
             }
@@ -1371,6 +1437,472 @@ function updateUserProfileDisplay() {
     
     // Update user stats summaries from stored data
     updateUserStatsDisplay();
+}
+
+// Health tips array
+const healthTips = [
+    "Regular health check-ups are important for preventive care and early detection of issues.",
+    "Aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity each week.",
+    "Stay hydrated by drinking at least 8 glasses of water daily.",
+    "Include a variety of fruits and vegetables in your diet for essential vitamins and minerals.",
+    "Prioritize quality sleep. Most adults need 7-9 hours of sleep per night.",
+    "Practice mindfulness or meditation to reduce stress and improve mental wellbeing.",
+    "Limit processed foods and foods high in added sugars and unhealthy fats.",
+    "Take short breaks when working at a desk for long periods to reduce eye strain and muscle stiffness.",
+    "Regular strength training helps maintain muscle mass and bone density as you age.",
+    "Don't forget to stretch before and after exercise to prevent injuries."
+];
+
+// Function to refresh health tip
+function refreshHealthTip() {
+    const tipElement = document.getElementById('health-tip-text');
+    if (tipElement) {
+        const randomIndex = Math.floor(Math.random() * healthTips.length);
+        tipElement.textContent = `"${healthTips[randomIndex]}"`;
+        
+        // Add animation effect
+        tipElement.style.opacity = '0';
+        setTimeout(() => {
+            tipElement.style.opacity = '1';
+        }, 300);
+    }
+}
+
+// Function to add reminder
+function addReminder() {
+    const reminderText = document.getElementById('reminder-text').value.trim();
+    const reminderTime = document.getElementById('reminder-time').value;
+    
+    if (!reminderText) {
+        alert('Please enter a reminder text');
+        return;
+    }
+    
+    const reminderList = document.getElementById('reminder-list');
+    const emptyMessage = reminderList.querySelector('.empty-reminder-message');
+    
+    if (emptyMessage) {
+        emptyMessage.remove();
+    }
+    
+    const reminderItem = document.createElement('div');
+    reminderItem.className = 'reminder-item';
+    
+    // Format time display
+    let timeDisplay = '';
+    if (reminderTime === 'custom') {
+        const now = new Date();
+        timeDisplay = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else {
+        const mins = parseInt(reminderTime);
+        timeDisplay = mins < 60 ? `${mins}m` : `${mins/60}h`;
+    }
+    
+    reminderItem.innerHTML = `
+        <div class="reminder-text">${reminderText}</div>
+        <span class="reminder-time">${timeDisplay}</span>
+        <button class="delete-reminder">&times;</button>
+    `;
+    
+    reminderList.appendChild(reminderItem);
+    
+    // Add event listener to delete button
+    const deleteBtn = reminderItem.querySelector('.delete-reminder');
+    deleteBtn.addEventListener('click', () => {
+        reminderList.removeChild(reminderItem);
+        
+        // Add empty message if no reminders left
+        if (reminderList.children.length === 0) {
+            reminderList.innerHTML = '<p class="empty-reminder-message">No active reminders</p>';
+        }
+    });
+    
+    // Clear input field
+    document.getElementById('reminder-text').value = '';
+}
+
+// Function to initialize dashboard elements
+function initDashboard() {
+    // Initialize health tip refresh button
+    const refreshTipBtn = document.getElementById('refresh-tip-btn');
+    if (refreshTipBtn) {
+        refreshTipBtn.addEventListener('click', refreshHealthTip);
+        // Set initial random tip
+        refreshHealthTip();
+    }
+    
+    // Initialize reminder add button
+    const addReminderBtn = document.getElementById('add-reminder-btn');
+    if (addReminderBtn) {
+        addReminderBtn.addEventListener('click', addReminder);
+    }
+    
+    // Initialize water tracking buttons
+    const waterAddBtns = document.querySelectorAll('.water-add-btn');
+    waterAddBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const amount = parseInt(btn.getAttribute('data-amount'));
+            addWater(amount);
+        });
+    });
+    
+    // Initialize custom water button
+    const customWaterBtn = document.getElementById('custom-water-btn');
+    if (customWaterBtn) {
+        customWaterBtn.addEventListener('click', () => {
+            const amount = prompt('Enter water amount in ml:', '250');
+            if (amount && !isNaN(amount) && parseInt(amount) > 0) {
+                addWater(parseInt(amount));
+            }
+        });
+    }
+    
+    // Initialize water goal update button
+    const updateWaterGoalBtn = document.getElementById('update-water-goal');
+    if (updateWaterGoalBtn) {
+        updateWaterGoalBtn.addEventListener('click', updateWaterGoal);
+    }
+    
+    // Initialize water reset button
+    const resetWaterBtn = document.getElementById('reset-water-btn');
+    if (resetWaterBtn) {
+        resetWaterBtn.addEventListener('click', resetWaterTracker);
+    }
+}
+
+// Function to add water
+function addWater(amount) {
+    const waterAmountElem = document.getElementById('water-amount');
+    const waterTargetElem = document.getElementById('water-target');
+    const waterFillElem = document.getElementById('water-fill');
+    
+    if (waterAmountElem && waterTargetElem && waterFillElem) {
+        const currentAmount = parseInt(waterAmountElem.textContent) || 0;
+        const targetAmount = parseInt(waterTargetElem.textContent) || 2000;
+        const newAmount = currentAmount + amount;
+        
+        waterAmountElem.textContent = newAmount;
+        
+        // Update water fill visualization
+        const fillPercentage = Math.min(100, (newAmount / targetAmount) * 100);
+        waterFillElem.style.height = `${fillPercentage}%`;
+        
+        // Check if goal is reached
+        if (newAmount >= targetAmount && currentAmount < targetAmount) {
+            // Show completion popup
+            showWaterCompletionPopup(targetAmount);
+        }
+        
+        // Update the progress percentage display
+        const waterProgressElem = document.getElementById('water-progress-percent');
+        if (waterProgressElem) {
+            waterProgressElem.textContent = `${Math.round(fillPercentage)}%`;
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('waterAmount', newAmount);
+    }
+}
+
+// Function to show water goal completion popup
+function showWaterCompletionPopup(goalAmount) {
+    // Create popup element
+    const popup = document.createElement('div');
+    popup.className = 'water-completion-popup';
+    popup.innerHTML = `
+        <div class="water-completion-content">
+            <div class="completion-icon">💧</div>
+            <h3>Congratulations!</h3>
+            <p>You've reached your daily water goal of ${goalAmount}ml!</p>
+            <div class="completion-buttons">
+                <button class="continue-btn">Continue Tracking</button>
+                <button class="restart-btn">Restart Goal</button>
+            </div>
+        </div>
+    `;
+    
+    // Add to body
+    document.body.appendChild(popup);
+    
+    // Animate popup
+    setTimeout(() => {
+        popup.classList.add('active');
+    }, 100);
+    
+    // Add event listeners to buttons
+    const continueBtn = popup.querySelector('.continue-btn');
+    const restartBtn = popup.querySelector('.restart-btn');
+    
+    continueBtn.addEventListener('click', () => {
+        popup.classList.remove('active');
+        setTimeout(() => {
+            popup.remove();
+        }, 300);
+    });
+    
+    restartBtn.addEventListener('click', () => {
+        // Reset water amount
+        resetWaterTracker();
+        popup.classList.remove('active');
+        setTimeout(() => {
+            popup.remove();
+        }, 300);
+    });
+}
+
+// Function to reset water tracker
+function resetWaterTracker() {
+    const waterAmountElem = document.getElementById('water-amount');
+    const waterFillElem = document.getElementById('water-fill');
+    const waterProgressElem = document.getElementById('water-progress-percent');
+    
+    if (waterAmountElem) waterAmountElem.textContent = '0';
+    if (waterFillElem) waterFillElem.style.height = '0%';
+    if (waterProgressElem) waterProgressElem.textContent = '0%';
+    
+    // Save reset state to localStorage
+    localStorage.setItem('waterAmount', '0');
+}
+
+// Function to update water goal
+function updateWaterGoal() {
+    const goalInput = document.getElementById('water-goal-input');
+    const waterTargetElem = document.getElementById('water-target');
+    
+    if (goalInput && waterTargetElem) {
+        const newGoal = parseInt(goalInput.value);
+        
+        if (!isNaN(newGoal) && newGoal > 0) {
+            waterTargetElem.textContent = newGoal;
+            localStorage.setItem('waterTargetGoal', newGoal);
+            
+            // Update the progress percentage based on new goal
+            const currentAmount = parseInt(document.getElementById('water-amount').textContent) || 0;
+            const fillPercentage = Math.min(100, (currentAmount / newGoal) * 100);
+            
+            const waterFillElem = document.getElementById('water-fill');
+            if (waterFillElem) {
+                waterFillElem.style.height = `${fillPercentage}%`;
+            }
+            
+            const waterProgressElem = document.getElementById('water-progress-percent');
+            if (waterProgressElem) {
+                waterProgressElem.textContent = `${Math.round(fillPercentage)}%`;
+            }
+            
+            // Show confirmation toast
+            showToastMessage(`Water goal updated to ${newGoal}ml`);
+        } else {
+            showToastMessage('Please enter a valid goal', 'error');
+        }
+    }
+}
+
+// Function to show toast messages
+function showToastMessage(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast-message ${type}`;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Function to load saved water amount
+function loadWaterAmount() {
+    const savedAmount = localStorage.getItem('waterAmount');
+    const savedGoal = localStorage.getItem('waterTargetGoal');
+    const waterAmountElem = document.getElementById('water-amount');
+    const waterTargetElem = document.getElementById('water-target');
+    const waterFillElem = document.getElementById('water-fill');
+    const waterProgressElem = document.getElementById('water-progress-percent');
+    
+    if (savedGoal && waterTargetElem) {
+        waterTargetElem.textContent = savedGoal;
+        
+        // Also update the goal input field
+        const goalInput = document.getElementById('water-goal-input');
+        if (goalInput) {
+            goalInput.placeholder = savedGoal;
+        }
+    }
+    
+    if (savedAmount && waterAmountElem && waterTargetElem && waterFillElem) {
+        const amount = parseInt(savedAmount);
+        const targetAmount = parseInt(waterTargetElem.textContent) || 2000;
+        
+        waterAmountElem.textContent = amount;
+        
+        // Update water fill visualization
+        const fillPercentage = Math.min(100, (amount / targetAmount) * 100);
+        waterFillElem.style.height = `${fillPercentage}%`;
+        
+        if (waterProgressElem) {
+            waterProgressElem.textContent = `${Math.round(fillPercentage)}%`;
+        }
+    }
+}
+
+// Enhanced AI Health Assistant Chatbot
+function initChatbot() {
+    const chatbotToggle = document.querySelector('.chatbot-toggle');
+    const chatbotContainer = document.querySelector('.chatbot-container');
+    const chatbotClose = document.querySelector('.chatbot-close');
+    const chatbotMessages = document.querySelector('.chatbot-messages');
+    const chatbotInput = document.querySelector('.chatbot-input input');
+    const chatbotSend = document.querySelector('.chatbot-send');
+
+    // Function to toggle chatbot visibility
+    function toggleChatbot() {
+        chatbotContainer.classList.toggle('active');
+        
+        // If opening for the first time, show welcome message
+        if (chatbotContainer.classList.contains('active') && chatbotMessages.children.length === 0) {
+            setTimeout(() => {
+                // Add welcome message
+                addBotMessage("Hello! I'm your AI Health Assistant.");
+                
+                // Add capabilities message
+                setTimeout(() => {
+                    const capabilitiesMessage = document.createElement('div');
+                    capabilitiesMessage.className = 'bot-welcome';
+                    
+                    const bulletPoints = document.createElement('div');
+                    bulletPoints.className = 'bullet-points';
+                    
+                    const capabilities = [
+                        "Nutrition advice",
+                        "Exercise recommendations",
+                        "Health tips",
+                        "Wellness guidance"
+                    ];
+                    
+                    let bulletHTML = "I can help you with:";
+                    capabilities.forEach(capability => {
+                        bulletHTML += `
+                        <div class="bullet">
+                            <span class="bullet-dot">•</span>
+                            <span>${capability}</span>
+                        </div>`;
+                    });
+                    
+                    capabilitiesMessage.innerHTML = bulletHTML;
+                    chatbotMessages.appendChild(capabilitiesMessage);
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                }, 1000);
+            }, 500);
+        }
+    }
+
+    // Function to send message
+    function sendMessage() {
+        const message = chatbotInput.value.trim();
+        if (message) {
+            // Add user message to chat
+            addUserMessage(message);
+            
+            // Clear input
+            chatbotInput.value = '';
+            
+            // Show bot is typing
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'bot-typing';
+            typingIndicator.textContent = 'AI is typing';
+            chatbotMessages.appendChild(typingIndicator);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            
+            // Generate response after a short delay
+            setTimeout(() => {
+                chatbotMessages.removeChild(typingIndicator);
+                generateResponse(message);
+            }, 1500);
+        }
+    }
+
+    // Function to add user message
+    function addUserMessage(text) {
+        const message = document.createElement('div');
+        message.className = 'message user-message';
+        message.textContent = text;
+        chatbotMessages.appendChild(message);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    // Function to add bot message
+    function addBotMessage(text) {
+        const message = document.createElement('div');
+        message.className = 'message bot-message';
+        message.textContent = text;
+        chatbotMessages.appendChild(message);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    // Function to generate response
+    function generateResponse(userMessage) {
+        // Simple keyword-based responses
+        const lowerMessage = userMessage.toLowerCase();
+        
+        if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+            addBotMessage("Hi there! How can I help with your health and wellness today?");
+        }
+        else if (lowerMessage.includes('nutrition') || lowerMessage.includes('food') || lowerMessage.includes('diet')) {
+            addBotMessage("A balanced diet is crucial for good health. Try to include proteins, carbohydrates, healthy fats, vitamins, and minerals in your meals. Would you like some specific nutrition advice?");
+        }
+        else if (lowerMessage.includes('exercise') || lowerMessage.includes('workout') || lowerMessage.includes('fitness')) {
+            addBotMessage("Regular exercise is important for physical and mental health. Aim for at least 150 minutes of moderate activity or 75 minutes of vigorous activity per week. What type of exercises do you enjoy?");
+        }
+        else if (lowerMessage.includes('sleep') || lowerMessage.includes('rest')) {
+            addBotMessage("Quality sleep is essential for health. Adults should aim for 7-9 hours of sleep per night. Creating a consistent sleep schedule and a relaxing bedtime routine can help improve sleep quality.");
+        }
+        else if (lowerMessage.includes('stress') || lowerMessage.includes('anxiety')) {
+            addBotMessage("Managing stress is important for overall wellbeing. Techniques like deep breathing, meditation, physical activity, and maintaining social connections can help reduce stress levels. Would you like to learn some specific stress management techniques?");
+        }
+        else if (lowerMessage.includes('water') || lowerMessage.includes('hydration')) {
+            addBotMessage("Staying hydrated is crucial for health. The general recommendation is to drink about 8 glasses (2 liters) of water daily, but individual needs may vary based on activity level, climate, and overall health.");
+        }
+        else if (lowerMessage.includes('vitamin') || lowerMessage.includes('mineral') || lowerMessage.includes('supplement')) {
+            addBotMessage("Vitamins and minerals are essential nutrients your body needs. While a balanced diet should provide most nutrients, supplements might be necessary in some cases. It's best to consult with a healthcare provider before starting any supplements.");
+        }
+        else if (lowerMessage.includes('thanks') || lowerMessage.includes('thank you')) {
+            addBotMessage("You're welcome! If you have any other questions about health or wellness, feel free to ask.");
+        }
+        else {
+            addBotMessage("I'm here to help with nutrition advice, exercise recommendations, and general wellness guidance. Could you provide more details about what you'd like to know?");
+        }
+    }
+
+    // Event listeners
+    if (chatbotToggle) {
+        chatbotToggle.addEventListener('click', toggleChatbot);
+    }
+    
+    if (chatbotClose) {
+        chatbotClose.addEventListener('click', () => {
+            chatbotContainer.classList.remove('active');
+        });
+    }
+    
+    if (chatbotSend) {
+        chatbotSend.addEventListener('click', sendMessage);
+    }
+    
+    if (chatbotInput) {
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
 }
 
 // ---------------- DOM Content Loaded ----------------
@@ -1629,119 +2161,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Chatbot functionality
-    const chatbot = {
-        toggle: document.querySelector('.chatbot-toggle'),
-        container: document.querySelector('.chatbot-container'),
-        closeBtn: document.querySelector('.chatbot-close'),
-        messages: document.querySelector('.chatbot-messages'),
-        input: document.querySelector('.chatbot-input input'),
-        sendBtn: document.querySelector('.chatbot-send'),
-        notification: document.querySelector('.chatbot-notification'),
-
-        init() {
-            if (!this.toggle || !this.container) return;
-
-            // Show welcome message after 3 seconds
-            setTimeout(() => {
-                this.notification.classList.add('active');
-                this.notification.textContent = '1';
-            }, 3000);
-
-            // Toggle chatbot
-            this.toggle.addEventListener('click', () => {
-                this.container.classList.add('active');
-                this.notification.classList.remove('active');
-                if (!this.messages.hasChildNodes()) {
-                    this.addBotMessage("Hello! I'm your AI Health Assistant. I can help you with:");
-                    this.addBotMessage("• Nutrition advice\n• Exercise recommendations\n• Health tips\n• Wellness guidance");
-                }
-            });
-
-            // Close chatbot
-            this.closeBtn?.addEventListener('click', () => {
-                this.container.classList.remove('active');
-            });
-
-            // Send message
-            const sendMessage = () => {
-                const message = this.input.value.trim();
-                if (message) {
-                    this.addUserMessage(message);
-                    this.generateResponse(message);
-                    this.input.value = '';
-                }
-            };
-
-            this.sendBtn?.addEventListener('click', sendMessage);
-            this.input?.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
-        },
-
-        addUserMessage(message) {
-            const div = document.createElement('div');
-            div.className = 'message user-message';
-            div.textContent = message;
-            this.messages.appendChild(div);
-            this.scrollToBottom();
-        },
-
-        addBotMessage(message) {
-            const div = document.createElement('div');
-            div.className = 'message bot-message';
-            div.textContent = message;
-            this.messages.appendChild(div);
-            this.scrollToBottom();
-        },
-
-        showTyping() {
-            const div = document.createElement('div');
-            div.className = 'bot-typing';
-            div.textContent = 'AI is typing';
-            this.messages.appendChild(div);
-            this.scrollToBottom();
-            return div;
-        },
-
-        scrollToBottom() {
-            this.messages.scrollTop = this.messages.scrollHeight;
-        },
-
-        generateResponse(userMessage) {
-            const responses = {
-                hello: "Hi! How can I help you with your health today?",
-                nutrition: "I can provide nutrition advice and healthy eating tips. What specific information are you looking for?",
-                exercise: "Regular exercise is crucial for health. I can suggest workouts based on your goals. What type of exercise interests you?",
-                sleep: "Good sleep is essential! The recommended sleep duration is 7-9 hours per night. Would you like some tips for better sleep?",
-                stress: "I can suggest stress management techniques like meditation, deep breathing, or mindfulness exercises. Would you like to learn more?",
-                water: "Staying hydrated is important! You should aim to drink 8 glasses of water daily. Would you like me to set up water intake reminders?",
-                diet: "A balanced diet is key to good health. I can help you plan healthy meals. Are you interested in specific dietary advice?",
-                workout: "I can recommend workouts based on your fitness level and goals. What type of workout are you looking for?",
-                meditation: "Meditation can help reduce stress and improve mental clarity. Would you like to learn some meditation techniques?",
-                vitamins: "Vitamins and minerals are essential for health. The best sources are varied, whole foods. Would you like specific nutrition recommendations?",
-                default: "I can help you with nutrition, exercise, sleep, and general health advice. What would you like to know more about?"
-            };
-
-            const typing = this.showTyping();
-            
-            setTimeout(() => {
-                typing.remove();
-                const message = userMessage.toLowerCase();
-                let response = responses.default;
-
-                for (let key in responses) {
-                    if (message.includes(key)) {
-                        response = responses[key];
-                        break;
-                    }
-                }
-
-                this.addBotMessage(response);
-            }, 1500);
-        }
-    };
+    // Set up Terms & Conditions link
+    const termsLink = document.getElementById('termsLink');
+    if (termsLink) {
+        termsLink.addEventListener('click', showTermsModal);
+    }
 
     // Initialize chatbot
-    chatbot.init();
+    initChatbot();
+
+    // Initialize dashboard elements
+    initDashboard();
+
+    // Load saved water amount
+    loadWaterAmount();
 });

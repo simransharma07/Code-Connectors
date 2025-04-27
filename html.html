@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html 3rlang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Health Tracker</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -74,7 +75,7 @@
                             <h3>BEEPTECH</h3>
                         </div>
                     </div>
-                    
+
                     <div class="profile-section">
                         <div class="profile-image">
                             <img src="profileicon.png" alt="Profile Picture" />
@@ -84,9 +85,9 @@
                             <p id="sidebar-username">Health User</p>
                         </div>
                     </div>
-                    
+
                     <div class="sidebar-divider"></div>
-                    
+
                     <nav class="sidebar-nav">
                         <ul class="sidebar-menu">
                             <li class="sidebar-item active">
@@ -120,16 +121,16 @@
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" onclick="showTermsModal(event)">
+                                <a href="#" onclick="showTermsModal()">
                                     <i class="fas fa-file-contract"></i>
                                     <span>Terms & Conditions</span>
                                 </a>
                             </li>
                         </ul>
                     </nav>
-                    
+
                     <div class="sidebar-divider"></div>
-                    
+
                     <div class="sidebar-footer">
                         <p>© 2025 BEEPTECH</p>
                         <p>v1.2.0</p>
@@ -139,42 +140,181 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </aside>
-            
+
             <!-- Main Content -->
             <main class="dashboard-content">
                 <header class="dashboard-header">
                     <h1>Welcome to Your Health Dashboard</h1>
+                    <h2 class="dashboard-subheading">Your Personal Wellness Hub</h2>
                 </header>
 
-                <section class="activity-section">
-                    <h2>Find Your Activity</h2>
-                    <div class="activity-cards">
-                        <div class="activity-card">
-                            <h3>🧘 Yoga</h3>
-                            <p>60 minutes - 430 kcal/hour</p>
-                            <a href="https://www.youtube.com/watch?v=1-lO2U7mxIY" target="_blank"><button>Try It
-                                    Now</button></a>
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Quick Activities Section -->
+                    <section class="quick-activities-card">
+                        <div class="section-header">
+                            <i class="fas fa-running"></i>
+                            <h2>Quick Activities</h2>
                         </div>
-                        <div class="activity-card">
-                            <h3>🏃‍♂️ Cardio</h3>
-                            <p>60 minutes - 500 kcal/hour</p>
-                            <a href="https://www.youtube.com/watch?v=pB4Zr9ECN1g" target="_blank"><button>Try It
-                                    Now</button></a>
+                        <div class="activities-grid">
+                            <div class="activity-item">
+                                <div class="activity-icon yoga-icon">
+                                    <i class="fas fa-spa"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h3>Yoga</h3>
+                                    <p>60 min · 430 kcal</p>
+                                    <button class="start-btn"
+                                        onclick="window.open('https://www.youtube.com/watch?v=1-lO2U7mxIY', '_blank')">Start</button>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon cardio-icon">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h3>Cardio</h3>
+                                    <p>45 min · 500 kcal</p>
+                                    <button class="start-btn"
+                                        onclick="window.open('https://www.youtube.com/watch?v=pB4Zr9ECN1g', '_blank')">Start</button>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon meditation-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h3>Meditation</h3>
+                                    <p>15 min · Stress relief</p>
+                                    <button class="start-btn"
+                                        onclick="window.open('https://www.youtube.com/watch?v=O-6f5wQXSu8', '_blank')">Start</button>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon stretching-icon">
+                                    <i class="fas fa-child"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h3>Stretching</h3>
+                                    <p>10 min · Flexibility</p>
+                                    <button class="start-btn"
+                                        onclick="window.open('https://www.youtube.com/watch?v=qULTwquOuT4', '_blank')">Start</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="activity-card sleep">
-                            <h3>🛏️ Sleep</h3>
-                            <button>Track Sleep</button>
+                    </section>
+
+                    <!-- Health Tip Section -->
+                    <section class="health-tip-card">
+                        <div class="section-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h2>Health Tip</h2>
+                            <button id="refresh-tip-btn" title="New health tip">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
                         </div>
-                        <div class="activity-card water">
-                            <h3>💧 Water Intake</h3>
-                            <button>Track Water</button>
+                        <div class="tip-content">
+                            <blockquote id="health-tip-text">
+                                "Regular health check-ups are important for preventive care and early detection of
+                                issues."
+                            </blockquote>
                         </div>
-                    </div>
-                </section>
+                    </section>
+
+                    <!-- Reminders Section -->
+                    <section class="reminders-card">
+                        <div class="section-header">
+                            <i class="fas fa-bell"></i>1
+                            <h2>Reminders</h2>
+                        </div>
+                        <div class="reminders-content">
+                            <div class="reminder-list" id="reminder-list">
+                                <!-- Reminders will be added dynamically -->
+                                <p class="empty-reminder-message">No active reminders</p>
+                            </div>
+                            <div class="new-reminder">
+                                <input type="text" id="reminder-text" placeholder="New reminder...">
+                                <select id="reminder-time">
+                                    <option value="30">30m</option>
+                                    <option value="60">1h</option>
+                                    <option value="120">2h</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <button id="add-reminder-btn">Add</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Water Tracker Section -->
+                    <section class="water-tracker-card">
+                        <div class="section-header">
+                            <i class="fas fa-tint"></i>
+                            <h2>Water Tracker</h2>
+                        </div>
+                        <div class="water-content">
+                            <div class="water-progress-container">
+                                <div class="water-level-container">
+                                    <div class="water-level">
+                                        <div class="water-fill" id="water-fill"></div>
+                                        <div class="water-progress-text">
+                                            <span id="water-progress-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="water-info">
+                                    <div class="water-amount-display">
+                                        <span id="water-amount">0</span>
+                                        <span class="of">/</span>
+                                        <span id="water-target">2000</span>
+                                        <span class="ml">ml</span>
+                                    </div>
+                                    <div class="water-amount-label">Daily Water Intake</div>
+                                </div>
+                                <div class="water-buttons">
+                                    <button class="water-add-btn" data-amount="200"><i class="fas fa-tint"></i>
+                                        200ml</button>
+                                    <button class="water-add-btn" data-amount="350"><i class="fas fa-tint"></i>
+                                        350ml</button>
+                                    <button class="water-add-btn" data-amount="500"><i class="fas fa-tint"></i>
+                                        500ml</button>
+                                    <button id="custom-water-btn"><i class="fas fa-plus-circle"></i> Add Custom
+                                        Amount</button>
+                                </div>
+                            </div>
+
+                            <div class="water-goal-container">
+                                <div class="water-goal-title">
+                                    <i class="fas fa-bullseye"></i> Set Water Goal
+                                </div>
+                                <div class="water-goal-form">
+                                    <input type="number" id="water-goal-input" placeholder="2000" min="500" step="100">
+                                    <button class="goal-btn" id="update-water-goal">Update</button>
+                                </div>
+                                <button class="goal-btn" id="reset-water-btn">Reset Tracking</button>
+
+                                <div class="water-benefits">
+                                    <h4>Benefits of Staying Hydrated</h4>
+                                    <ul class="benefits-list">
+                                        <li>Improves physical performance</li>
+                                        <li>Helps maintain cognitive function</li>
+                                        <li>Regulates body temperature</li>
+                                        <li>Prevents headaches and fatigue</li>
+                                        <li>Supports skin health</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
 
                 <section class="stats-section" id="statssection" style="display: none;">
                     <h2>📈 Statistics</h2>
-                    
+
                     <!-- Nutrition Statistics Dashboard -->
                     <div class="stats-dashboard">
                         <div class="stats-row main-stats-row">
@@ -217,7 +357,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Calorie Overview Card -->
                             <div class="stats-card calorie-stats">
                                 <h3>Daily Calorie Overview</h3>
@@ -247,7 +387,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="stats-row secondary-stats-row">
                             <div class="stats-card macro-stats">
                                 <h3>Macronutrients Breakdown</h3>
@@ -283,7 +423,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="stats-card daily-summary">
                                 <h3>Nutritional Summary</h3>
                                 <div class="summary-metrics">
@@ -339,18 +479,21 @@
 
                 <section class="nutrition-section" id="nutritionsection" style="display: none;">
                     <h2>🍎 Nutrition Tracker</h2>
-                    
+
                     <div class="nutritional-tips-section">
                         <h3>💡 Nutritional Tips</h3>
                         <p>Here are some health tips to help you reach your nutrition goals:</p>
                         <ul class="tips-list">
-                            <li><strong>Balanced Diet:</strong> Aim for a mix of proteins, carbs, fats, vitamins, and minerals in every meal.</li>
+                            <li><strong>Balanced Diet:</strong> Aim for a mix of proteins, carbs, fats, vitamins, and
+                                minerals in every meal.</li>
                             <li><strong>Portion Control:</strong> Be mindful of portion sizes to avoid overeating.</li>
-                            <li><strong>Hydration:</strong> Drink at least 8 glasses of water daily to stay hydrated.</li>
-                            <li><strong>Mindful Eating:</strong> Pay attention to hunger cues and eat slowly to enjoy your food.</li>
+                            <li><strong>Hydration:</strong> Drink at least 8 glasses of water daily to stay hydrated.
+                            </li>
+                            <li><strong>Mindful Eating:</strong> Pay attention to hunger cues and eat slowly to enjoy
+                                your food.</li>
                         </ul>
                     </div>
-                    
+
                     <div class="meal-section">
                         <h3>Meal Tracking</h3>
                         <div class="meal-tabs">
@@ -359,72 +502,77 @@
                             <button class="meal-tab" data-meal="dinner">Dinner</button>
                             <button class="meal-tab" data-meal="snacks">Snacks</button>
                         </div>
-                        
+
                         <div class="meal-content" id="breakfast-content">
                             <div class="food-list" id="breakfast-items">
                                 <!-- Food items will be added here dynamically -->
                                 <p class="empty-meal-message">No items added yet</p>
                             </div>
-                            
+
                             <form class="add-food-form" id="add-breakfast">
                                 <div class="food-input-container">
-                                    <input type="text" placeholder="Search for food..." id="breakfast-food-search" required />
-                                    <input type="number" placeholder="Amount (g)" id="breakfast-amount" min="1" required />
+                                    <input type="text" placeholder="Search for food..." id="breakfast-food-search"
+                                        required />
+                                    <input type="number" placeholder="Amount (g)" id="breakfast-amount" min="1"
+                                        required />
                                 </div>
                                 <button type="submit" class="add-food-btn">Add Food</button>
                             </form>
                         </div>
-                        
+
                         <div class="meal-content hidden" id="lunch-content">
                             <div class="food-list" id="lunch-items">
                                 <p class="empty-meal-message">No items added yet</p>
                             </div>
-                            
+
                             <form class="add-food-form" id="add-lunch">
                                 <div class="food-input-container">
-                                    <input type="text" placeholder="Search for food..." id="lunch-food-search" required />
+                                    <input type="text" placeholder="Search for food..." id="lunch-food-search"
+                                        required />
                                     <input type="number" placeholder="Amount (g)" id="lunch-amount" min="1" required />
                                 </div>
                                 <button type="submit" class="add-food-btn">Add Food</button>
                             </form>
                         </div>
-                        
+
                         <div class="meal-content hidden" id="dinner-content">
                             <div class="food-list" id="dinner-items">
                                 <p class="empty-meal-message">No items added yet</p>
                             </div>
-                            
+
                             <form class="add-food-form" id="add-dinner">
                                 <div class="food-input-container">
-                                    <input type="text" placeholder="Search for food..." id="dinner-food-search" required />
+                                    <input type="text" placeholder="Search for food..." id="dinner-food-search"
+                                        required />
                                     <input type="number" placeholder="Amount (g)" id="dinner-amount" min="1" required />
                                 </div>
                                 <button type="submit" class="add-food-btn">Add Food</button>
                             </form>
                         </div>
-                        
+
                         <div class="meal-content hidden" id="snacks-content">
                             <div class="food-list" id="snacks-items">
                                 <p class="empty-meal-message">No items added yet</p>
                             </div>
-                            
+
                             <form class="add-food-form" id="add-snacks">
                                 <div class="food-input-container">
-                                    <input type="text" placeholder="Search for food..." id="snacks-food-search" required />
+                                    <input type="text" placeholder="Search for food..." id="snacks-food-search"
+                                        required />
                                     <input type="number" placeholder="Amount (g)" id="snacks-amount" min="1" required />
                                 </div>
                                 <button type="submit" class="add-food-btn">Add Food</button>
                             </form>
                         </div>
                     </div>
-                    
+
                     <div class="meal-plan-section">
                         <h3>Meal Planner</h3>
                         <div class="meal-plan-toggle">
                             <button id="view-plan-btn" class="active">View Plan</button>
                             <button id="create-plan-btn">Create New Plan</button>
                         </div>
-                        
+
                         <div id="view-plan-content">
                             <div class="day-selector">
                                 <button class="day-btn active" data-day="monday">Mon</button>
@@ -435,7 +583,7 @@
                                 <button class="day-btn" data-day="saturday">Sat</button>
                                 <button class="day-btn" data-day="sunday">Sun</button>
                             </div>
-                            
+
                             <div class="meal-plan-content">
                                 <div class="meal-plan-card">
                                     <h4>Breakfast</h4>
@@ -443,14 +591,14 @@
                                         <p class="empty-plan-message">No meal planned</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="meal-plan-card">
                                     <h4>Lunch</h4>
                                     <div id="plan-lunch" class="plan-meal-items">
                                         <p class="empty-plan-message">No meal planned</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="meal-plan-card">
                                     <h4>Dinner</h4>
                                     <div id="plan-dinner" class="plan-meal-items">
@@ -459,7 +607,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div id="create-plan-content" class="hidden">
                             <div class="meal-plan-form">
                                 <div class="form-row">
@@ -472,31 +620,32 @@
                                         <option value="saturday">Saturday</option>
                                         <option value="sunday">Sunday</option>
                                     </select>
-                                    
+
                                     <select id="plan-meal">
                                         <option value="breakfast">Breakfast</option>
                                         <option value="lunch">Lunch</option>
                                         <option value="dinner">Dinner</option>
                                     </select>
                                 </div>
-                                
-                                <textarea id="meal-description" placeholder="Enter meal description or recipe..."></textarea>
-                                
+
+                                <textarea id="meal-description"
+                                    placeholder="Enter meal description or recipe..."></textarea>
+
                                 <button id="save-meal-plan" class="save-plan-btn">Save Meal Plan</button>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="nutrition-calculator">
                         <h3>🧮 Daily Calorie Calculator</h3>
                         <p>Calculate your daily calorie needs based on your personal information:</p>
-                        
+
                         <form id="calorie-calculator" class="calculator-form">
                             <div>
                                 <label for="calc-age">Age</label>
                                 <input type="number" id="calc-age" min="15" max="100" placeholder="Years" required>
                             </div>
-                            
+
                             <div>
                                 <label for="calc-gender">Gender</label>
                                 <select id="calc-gender" required>
@@ -505,17 +654,17 @@
                                     <option value="female">Female</option>
                                 </select>
                             </div>
-                            
+
                             <div>
                                 <label for="calc-weight">Weight</label>
                                 <input type="number" id="calc-weight" min="30" max="300" placeholder="kg" required>
                             </div>
-                            
+
                             <div>
                                 <label for="calc-height">Height</label>
                                 <input type="number" id="calc-height" min="100" max="250" placeholder="cm" required>
                             </div>
-                            
+
                             <div>
                                 <label for="calc-activity">Activity Level</label>
                                 <select id="calc-activity" required>
@@ -527,7 +676,7 @@
                                     <option value="1.9">Extra active (very hard exercise & physical job)</option>
                                 </select>
                             </div>
-                            
+
                             <div>
                                 <label for="calc-goal">Goal</label>
                                 <select id="calc-goal" required>
@@ -537,10 +686,10 @@
                                     <option value="gain">Gain weight</option>
                                 </select>
                             </div>
-                            
+
                             <button type="submit" class="calculate-btn">Calculate</button>
                         </form>
-                        
+
                         <div id="calculator-result" class="calculator-result">
                             <div class="result-title">Your Daily Calorie Requirements</div>
                             <div class="result-values">
@@ -575,7 +724,7 @@
                                 <h2>Help Us Improve BEEPTECH</h2>
                                 <button class="close-btn" aria-label="Close feedback form">×</button>
                             </div>
-                            
+
                             <div class="feedback-progress">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -628,9 +777,10 @@
 
                             <div class="feedback-step hidden" id="step3">
                                 <h3>Please share your thoughts</h3>
-                                <textarea id="feedback-text" placeholder="What's working well? What could be improved? Any specific suggestions?"></textarea>
+                                <textarea id="feedback-text"
+                                    placeholder="What's working well? What could be improved? Any specific suggestions?"></textarea>
                                 <p id="warningMessage" class="warning-text"></p>
-                                
+
                                 <div class="contact-preference">
                                     <h4>Would you like to be contacted about your feedback?</h4>
                                     <div class="toggle-switch-container">
@@ -641,17 +791,17 @@
                                         <span id="toggle-label">No</span>
                                     </div>
                                 </div>
-                                
+
                                 <div id="contact-details" class="hidden">
                                     <input type="email" id="contact-email" placeholder="Your email address" />
                                 </div>
-                                
+
                                 <div class="feedback-nav">
                                     <button class="step-btn prev-btn" id="prev-step3">Back</button>
                                     <button class="submit-btn" id="submit-feedback">Submit Feedback</button>
                                 </div>
                             </div>
-                            
+
                             <div class="feedback-step hidden" id="thank-you">
                                 <div class="thank-you-content">
                                     <div class="check-circle">
@@ -666,16 +816,18 @@
                     </div>
 
                     <!-- About Us Modal -->
-                    <div id="aboutUsModal" class="about-us-modal" style="display: none;">
+                    <div id="aboutUsModal" class="about-us-modal">
                         <div class="about-us-content">
                             <div class="about-us-header">
                                 <h2>About BEEPTECH</h2>
-                                <button class="close-btn" aria-label="Close about us">×</button>
+                                <button class="close-btn" id="closeAboutUsBtn" aria-label="Close about us">×</button>
                             </div>
                             <div class="about-us-body">
-                                <p>BEEPTECH is a comprehensive health tracking platform designed to help you maintain a healthy lifestyle.</p>
+                                <p>BEEPTECH is a comprehensive health tracking platform designed to help you maintain a
+                                    healthy lifestyle.</p>
                                 <h3>Our Mission</h3>
-                                <p>To provide accessible and user-friendly tools for tracking personal health and wellness goals.</p>
+                                <p>To provide accessible and user-friendly tools for tracking personal health and
+                                    wellness goals.</p>
                                 <h3>Features</h3>
                                 <ul>
                                     <li>Activity Tracking</li>
@@ -688,39 +840,49 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Terms & Conditions Modal -->
-                    <div id="termsModal" class="terms-modal" style="display: none;">
+                    <div id="termsModal" class="terms-modal">
                         <div class="terms-content">
                             <div class="terms-header">
                                 <h2>Terms & Conditions</h2>
-                                <button class="close-btn" aria-label="Close terms">×</button>
+                                <button class="close-btn" id="closeTermsBtn" aria-label="Close terms">×</button>
                             </div>
                             <div class="terms-body">
                                 <h3>Acceptance of Terms</h3>
-                                <p>By accessing and using the BEEPTECH Health Tracker application, you accept and agree to be bound by the terms and conditions set forth herein.</p>
-                                
+                                <p>By accessing and using the BEEPTECH Health Tracker application, you accept and agree
+                                    to be bound by the terms and conditions set forth herein.</p>
+
                                 <h3>Use License</h3>
-                                <p>Permission is granted to use the BEEPTECH Health Tracker application for personal, non-commercial health tracking purposes only. This license does not include permission to:</p>
+                                <p>Permission is granted to use the BEEPTECH Health Tracker application for personal,
+                                    non-commercial health tracking purposes only. This license does not include
+                                    permission to:</p>
                                 <ul>
                                     <li>Modify or copy the application materials</li>
                                     <li>Use the materials for any commercial purpose</li>
-                                    <li>Attempt to decompile or reverse engineer any software contained in the application</li>
+                                    <li>Attempt to decompile or reverse engineer any software contained in the
+                                        application</li>
                                     <li>Remove any copyright or other proprietary notations from the materials</li>
                                 </ul>
-                                
+
                                 <h3>Data Privacy</h3>
-                                <p>All health data entered into the application is stored locally on your device and is not transmitted to external servers. BEEPTECH does not collect or store your personal health information.</p>
-                                
+                                <p>All health data entered into the application is stored locally on your device and is
+                                    not transmitted to external servers. BEEPTECH does not collect or store your
+                                    personal health information.</p>
+
                                 <h3>Disclaimer</h3>
-                                <p>The information provided by BEEPTECH Health Tracker is for general informational and self-tracking purposes only and is not intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
-                                
+                                <p>The information provided by BEEPTECH Health Tracker is for general informational and
+                                    self-tracking purposes only and is not intended to be a substitute for professional
+                                    medical advice, diagnosis, or treatment.</p>
+
                                 <h3>Limitations</h3>
-                                <p>In no event shall BEEPTECH be liable for any damages arising from the use or inability to use the materials in the application.</p>
-                                
+                                <p>In no event shall BEEPTECH be liable for any damages arising from the use or
+                                    inability to use the materials in the application.</p>
+
                                 <h3>Governing Law</h3>
-                                <p>These terms are governed by and construed in accordance with the laws of the jurisdiction in which BEEPTECH operates.</p>
-                                
+                                <p>These terms are governed by and construed in accordance with the laws of the
+                                    jurisdiction in which BEEPTECH operates.</p>
+
                                 <div class="terms-footer">
                                     <p>Last Updated: April 26, 2025</p>
                                 </div>
@@ -734,14 +896,15 @@
             <div class="chatbot">
                 <button class="chatbot-toggle">
                     <i class="fas fa-robot"></i>
-                    <span class="chatbot-notification"></span>
                 </button>
                 <div class="chatbot-container">
                     <div class="chatbot-header">
                         <h3><i class="fas fa-robot"></i> AI Health Assistant</h3>
                         <button class="chatbot-close">&times;</button>
                     </div>
-                    <div class="chatbot-messages"></div>
+                    <div class="chatbot-messages">
+                        <!-- Messages will be added here dynamically -->
+                    </div>
                     <div class="chatbot-input">
                         <input type="text" placeholder="Ask me about health & wellness..." />
                         <button class="chatbot-send">
@@ -757,3 +920,4 @@
 </body>
 
 </html>
+```
