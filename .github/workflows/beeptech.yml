@@ -1,0 +1,50 @@
+name: Welcome to BEEPTECH
+
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    name: Welcome Action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          
+      - name: Install Dependencies
+        run: npm ci
+        
+      - name: Run Tests
+        run: npm test
+        
+      - name: Welcome New Contributor
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: "Thank you for opening your first issue in BEEPTECH Health Tracker! Our team will review it shortly."
+          pr-message: "Congratulations on your first pull request to BEEPTECH Health Tracker! We appreciate your contribution."
+          
+      - name: Build Application
+        run: npm run build
+        
+      - name: Deploy Application
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          echo "Deploying BEEPTECH Health Tracker application..."
+          # Add deployment commands here
+          
+      - name: Notify Team
+        run: |
+          echo "New activity detected on BEEPTECH Health Tracker repository!"
+          echo "Event: ${{ github.event_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Ref: ${{ github.ref }}"
