@@ -177,6 +177,46 @@
                     
                     <!-- Nutrition Statistics Dashboard -->
                     <div class="stats-dashboard">
+                        <!-- Step Tracker Card -->
+                        <div class="stats-card step-tracker">
+                            <h3>👣 Step Tracker</h3>
+                            <div class="step-tracker-content">
+                                <div class="step-progress-container">
+                                    <div class="step-progress-circle">
+                                        <div class="step-progress-circle-inner">
+                                            <span id="steps-count">0</span>
+                                            <span class="steps-unit">steps</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-info">
+                                        <div class="step-info-item">
+                                            <span class="info-label">Today</span>
+                                            <span class="info-value" id="today-steps">0</span>
+                                        </div>
+                                        <div class="step-info-item">
+                                            <span class="info-label">Goal</span>
+                                            <span class="info-value" id="steps-goal">10,000</span>
+                                        </div>
+                                        <div class="step-info-item">
+                                            <span class="info-label">Remaining</span>
+                                            <span class="info-value" id="steps-remaining">10,000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="steps-input-form">
+                                    <input type="number" id="step-input" placeholder="Enter steps" min="1">
+                                    <button id="add-steps-btn">Add Steps</button>
+                                </div>
+                                <div class="step-history">
+                                    <h4>Recent Activity</h4>
+                                    <div id="step-history-list" class="step-history-list">
+                                        <!-- Step history will be populated by JavaScript -->
+                                        <p class="empty-history">No recent step data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="stats-card main-stats">
                             <h3>Daily Calorie Overview</h3>
                             <div class="calorie-progress-container">
