@@ -177,131 +177,136 @@
                     
                     <!-- Nutrition Statistics Dashboard -->
                     <div class="stats-dashboard">
-                        <!-- Step Tracker Card -->
-                        <div class="stats-card step-tracker">
-                            <h3>👣 Step Tracker</h3>
-                            <div class="step-tracker-content">
-                                <div class="step-progress-container">
-                                    <div class="step-progress-circle">
-                                        <div class="step-progress-circle-inner">
-                                            <span id="steps-count">0</span>
-                                            <span class="steps-unit">steps</span>
+                        <div class="stats-row main-stats-row">
+                            <!-- Step Tracker Card -->
+                            <div class="stats-card step-tracker">
+                                <h3>👣 Step Tracker</h3>
+                                <div class="step-tracker-content">
+                                    <div class="step-progress-container">
+                                        <div class="step-progress-circle">
+                                            <div class="step-progress-circle-inner">
+                                                <span id="steps-count">0</span>
+                                                <span class="steps-unit">steps</span>
+                                            </div>
+                                        </div>
+                                        <div class="step-info">
+                                            <div class="step-info-item">
+                                                <span class="info-label">Today</span>
+                                                <span class="info-value" id="today-steps">0</span>
+                                            </div>
+                                            <div class="step-info-item">
+                                                <span class="info-label">Goal</span>
+                                                <span class="info-value" id="steps-goal">10,000</span>
+                                            </div>
+                                            <div class="step-info-item">
+                                                <span class="info-label">Remaining</span>
+                                                <span class="info-value" id="steps-remaining">10,000</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="step-info">
-                                        <div class="step-info-item">
-                                            <span class="info-label">Today</span>
-                                            <span class="info-value" id="today-steps">0</span>
-                                        </div>
-                                        <div class="step-info-item">
-                                            <span class="info-label">Goal</span>
-                                            <span class="info-value" id="steps-goal">10,000</span>
-                                        </div>
-                                        <div class="step-info-item">
-                                            <span class="info-label">Remaining</span>
-                                            <span class="info-value" id="steps-remaining">10,000</span>
-                                        </div>
+                                    <div class="steps-input-form">
+                                        <input type="number" id="step-input" placeholder="Enter steps" min="1">
+                                        <button id="add-steps-btn">Add Steps</button>
                                     </div>
-                                </div>
-                                <div class="steps-input-form">
-                                    <input type="number" id="step-input" placeholder="Enter steps" min="1">
-                                    <button id="add-steps-btn">Add Steps</button>
-                                </div>
-                                <div class="step-history">
-                                    <h4>Recent Activity</h4>
-                                    <div id="step-history-list" class="step-history-list">
-                                        <!-- Step history will be populated by JavaScript -->
-                                        <p class="empty-history">No recent step data</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="stats-card main-stats">
-                            <h3>Daily Calorie Overview</h3>
-                            <div class="calorie-progress-container">
-                                <div class="calorie-progress-ring">
-                                    <div class="progress-circle">
-                                        <div class="progress-circle-inner">
-                                            <span id="calorie-progress">0</span>
-                                            <span class="progress-unit">kcal</span>
-                                        </div>
-                                    </div>
-                                    <div class="calorie-target-info">
-                                        <div class="calorie-info-item">
-                                            <span class="info-label">Consumed</span>
-                                            <span class="info-value" id="calorie-consumed">0</span>
-                                        </div>
-                                        <div class="calorie-info-item">
-                                            <span class="info-label">Target</span>
-                                            <span class="info-value" id="calorie-target">2000</span>
-                                        </div>
-                                        <div class="calorie-info-item">
-                                            <span class="info-label">Remaining</span>
-                                            <span class="info-value" id="calorie-remaining">2000</span>
+                                    <div class="step-history">
+                                        <h4>Recent Activity</h4>
+                                        <div id="step-history-list" class="step-history-list">
+                                            <!-- Step history will be populated by JavaScript -->
+                                            <p class="empty-history">No recent step data</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="stats-card macro-stats">
-                            <h3>Macronutrients Breakdown</h3>
-                            <div class="macro-chart-container">
-                                <div style="height: 200px; position: relative;">
-                                    <canvas id="macro-chart"></canvas>
-                                </div>
-                                <div class="macro-legend">
-                                    <div class="macro-legend-item">
-                                        <span class="macro-color protein"></span>
-                                        <div class="macro-legend-text">
-                                            <span class="macro-name">Protein</span>
-                                            <span class="macro-value" id="protein-value">0</span>g
-                                            <span class="macro-percent" id="protein-percent">0%</span>
+                            
+                            <!-- Calorie Overview Card -->
+                            <div class="stats-card calorie-stats">
+                                <h3>Daily Calorie Overview</h3>
+                                <div class="calorie-progress-container">
+                                    <div class="calorie-progress-ring">
+                                        <div class="progress-circle">
+                                            <div class="progress-circle-inner">
+                                                <span id="calorie-progress">0</span>
+                                                <span class="progress-unit">kcal</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="macro-legend-item">
-                                        <span class="macro-color carbs"></span>
-                                        <div class="macro-legend-text">
-                                            <span class="macro-name">Carbs</span>
-                                            <span class="macro-value" id="carbs-value">0</span>g
-                                            <span class="macro-percent" id="carbs-percent">0%</span>
-                                        </div>
-                                    </div>
-                                    <div class="macro-legend-item">
-                                        <span class="macro-color fat"></span>
-                                        <div class="macro-legend-text">
-                                            <span class="macro-name">Fat</span>
-                                            <span class="macro-value" id="fat-value">0</span>g
-                                            <span class="macro-percent" id="fat-percent">0%</span>
+                                        <div class="calorie-target-info">
+                                            <div class="calorie-info-item">
+                                                <span class="info-label">Consumed</span>
+                                                <span class="info-value" id="calorie-consumed">0</span>
+                                            </div>
+                                            <div class="calorie-info-item">
+                                                <span class="info-label">Target</span>
+                                                <span class="info-value" id="calorie-target">2000</span>
+                                            </div>
+                                            <div class="calorie-info-item">
+                                                <span class="info-label">Remaining</span>
+                                                <span class="info-value" id="calorie-remaining">2000</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="stats-card daily-summary">
-                            <h3>Nutritional Summary</h3>
-                            <div class="summary-metrics">
-                                <div class="summary-metric">
-                                    <div class="metric-icon">🍽️</div>
-                                    <div class="metric-data">
-                                        <h4>Meals Logged</h4>
-                                        <div class="metric-value" id="meals-logged">0</div>
+                        <div class="stats-row secondary-stats-row">
+                            <div class="stats-card macro-stats">
+                                <h3>Macronutrients Breakdown</h3>
+                                <div class="macro-chart-container">
+                                    <div style="height: 200px; position: relative;">
+                                        <canvas id="macro-chart"></canvas>
+                                    </div>
+                                    <div class="macro-legend">
+                                        <div class="macro-legend-item">
+                                            <span class="macro-color protein"></span>
+                                            <div class="macro-legend-text">
+                                                <span class="macro-name">Protein</span>
+                                                <span class="macro-value" id="protein-value">0</span>g
+                                                <span class="macro-percent" id="protein-percent">0%</span>
+                                            </div>
+                                        </div>
+                                        <div class="macro-legend-item">
+                                            <span class="macro-color carbs"></span>
+                                            <div class="macro-legend-text">
+                                                <span class="macro-name">Carbs</span>
+                                                <span class="macro-value" id="carbs-value">0</span>g
+                                                <span class="macro-percent" id="carbs-percent">0%</span>
+                                            </div>
+                                        </div>
+                                        <div class="macro-legend-item">
+                                            <span class="macro-color fat"></span>
+                                            <div class="macro-legend-text">
+                                                <span class="macro-name">Fat</span>
+                                                <span class="macro-value" id="fat-value">0</span>g
+                                                <span class="macro-percent" id="fat-percent">0%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="summary-metric">
-                                    <div class="metric-icon">🔥</div>
-                                    <div class="metric-data">
-                                        <h4>Avg. Daily Calories</h4>
-                                        <div class="metric-value" id="avg-calories">0 kcal</div>
+                            </div>
+                            
+                            <div class="stats-card daily-summary">
+                                <h3>Nutritional Summary</h3>
+                                <div class="summary-metrics">
+                                    <div class="summary-metric">
+                                        <div class="metric-icon">🍽️</div>
+                                        <div class="metric-data">
+                                            <h4>Meals Logged</h4>
+                                            <div class="metric-value" id="meals-logged">0</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="summary-metric">
-                                    <div class="metric-icon">📊</div>
-                                    <div class="metric-data">
-                                        <h4>Goal Progress</h4>
-                                        <div class="metric-value" id="goal-progress">0%</div>
+                                    <div class="summary-metric">
+                                        <div class="metric-icon">🔥</div>
+                                        <div class="metric-data">
+                                            <h4>Avg. Daily Calories</h4>
+                                            <div class="metric-value" id="avg-calories">0 kcal</div>
+                                        </div>
+                                    </div>
+                                    <div class="summary-metric">
+                                        <div class="metric-icon">📊</div>
+                                        <div class="metric-data">
+                                            <h4>Goal Progress</h4>
+                                            <div class="metric-value" id="goal-progress">0%</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

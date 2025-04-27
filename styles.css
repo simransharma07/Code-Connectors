@@ -888,11 +888,28 @@ body.dark-mode .empty-history {
 
 /* New Stats Dashboard Layout */
 .stats-dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 25px;
   margin-top: 20px;
-  align-items: start;
+  align-items: stretch;
+}
+
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+}
+
+.main-stats-row {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.secondary-stats-row {
+  width: 100%;
+  justify-content: space-between;
 }
 
 .stats-card {
@@ -907,11 +924,94 @@ body.dark-mode .empty-history {
   flex-direction: column;
 }
 
-/* Main Stats Card - Calorie Progress */
-.main-stats {
-  grid-column: 1 / -1;
+.stats-card.step-tracker, 
+.stats-card.calorie-stats {
+  flex: 1;
+  min-width: 300px;
+  max-width: calc(50% - 12.5px);  /* 50% width minus half of the gap */
 }
 
+.stats-card.macro-stats,
+.stats-card.daily-summary {
+  flex: 1;
+  min-width: 300px;
+  max-width: calc(50% - 12.5px);  /* 50% width minus half of the gap */
+}
+
+.stats-card.macro-stats {
+  background: linear-gradient(145deg, #ffffff, #f0f7ff);
+  border-left: 4px solid #36A2EB;
+}
+
+.stats-card.daily-summary {
+  background: linear-gradient(145deg, #ffffff, #f7f0ff);
+  border-left: 4px solid #8e44ad;
+}
+
+.summary-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px 0;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.summary-metric {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.summary-metric:hover {
+  transform: translateX(5px);
+}
+
+.metric-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.metric-data {
+  flex: 1;
+}
+
+.metric-data h4 {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+  font-size: 14px;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Step Tracker Card */
+.stats-card.step-tracker {
+  background: linear-gradient(145deg, #ffffff, #f0f7ff);
+  border-left: 4px solid #4CAF50;
+}
+
+/* Calorie Counter Card */
+.stats-card.calorie-stats {
+  background: linear-gradient(145deg, #ffffff, #fff6f0);
+  border-left: 4px solid #FF5722;
+}
+
+/* Main Stats Card - Calorie Progress */
 .calorie-progress-container {
   display: flex;
   justify-content: center;
@@ -928,8 +1028,8 @@ body.dark-mode .empty-history {
 }
 
 .progress-circle {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   position: relative;
 }
 
@@ -941,7 +1041,7 @@ body.dark-mode .empty-history {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: conic-gradient(#4CAF50 var(--progress, 0%), #E0E0E0 0%);
+  background: conic-gradient(#FF5722 var(--progress, 0%), #E0E0E0 0%);
   transition: background 0.3s ease;
 }
 
@@ -962,7 +1062,7 @@ body.dark-mode .empty-history {
 #calorie-progress {
   font-size: 36px;
   font-weight: 700;
-  color: #4CAF50;
+  color: #FF5722;
 }
 
 .progress-unit {
@@ -990,196 +1090,22 @@ body.dark-mode .empty-history {
   transform: translateX(5px);
 }
 
-.info-label {
-  color: #757575;
-  font-weight: 500;
-}
-
-.info-value {
-  font-weight: 700;
-  color: #333;
-}
-
-/* Macro Stats Card */
-.macro-stats {
-  height: auto !important;
-  display: flex;
-  flex-direction: column;
-}
-
-.macro-chart-container {
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  padding: 0;
-}
-
-.macro-chart {
-  height: 180px;
-  position: relative;
-  margin-bottom: 5px;
-}
-
-.macro-legend {
-  margin-top: 5px;
-}
-
-.macro-legend-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.macro-legend-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.macro-color {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.macro-color.protein {
-  background-color: #FF6384;
-}
-
-.macro-color.carbs {
-  background-color: #36A2EB;
-}
-
-.macro-color.fat {
-  background-color: #FFCE56;
-}
-
-.macro-legend-text {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.macro-name {
-  font-weight: 600;
-  min-width: 60px;
-}
-
-.macro-value {
-  font-weight: 700;
-}
-
-.macro-percent {
-  color: #757575;
-  margin-left: auto;
-  background: #f0f0f0;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-}
-
-/* Daily Summary Card */
-.daily-summary {
-  margin-top: 20px;
-}
-
-.summary-metrics {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 15px; /* Add margin to properly position the metrics */
-}
-
-.summary-metric {
-  flex: 1;
-  min-width: 150px;
-  display: flex;
-  background: #f8f8f8;
-  padding: 15px;
-  border-radius: 12px;
-  transition: transform 0.2s ease;
-}
-
-.summary-metric:hover {
-  transform: translateY(-5px);
-}
-
-.metric-icon {
-  font-size: 26px;
-  margin-right: 15px;
-  display: flex;
-  align-items: center;
-}
-
-.metric-data {
-  flex: 1;
-}
-
-.metric-data h4 {
-  margin: 0 0 5px 0;
-  font-size: 14px;
-  color: #757575;
-  font-weight: 500;
-}
-
-.metric-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
-}
-
-/* Dark Mode for Stats */
-body.dark-mode .stats-card {
-  background: #1f1f1f;
-  color: #e0e0e0;
-}
-
-body.dark-mode .stats-card h3 {
-  color: #e0e0e0;
-}
-
-body.dark-mode .progress-circle-inner {
-  background: #1f1f1f;
-}
-
-body.dark-mode #calorie-progress {
-  color: #81c784;
-}
-
-body.dark-mode .calorie-info-item {
-  background: #2a2a2a;
-}
-
-body.dark-mode .info-label {
-  color: #b0b0b0;
-}
-
-body.dark-mode .info-value {
-  color: #e0e0e0;
-}
-
-body.dark-mode .macro-percent {
-  background: #333;
-  color: #b0b0b0;
-}
-
-body.dark-mode .summary-metric {
-  background: #2a2a2a;
-}
-
-body.dark-mode .metric-data h4 {
-  color: #b0b0b0;
-}
-
-body.dark-mode .metric-value {
-  color: #e0e0e0;
-}
-
-/* Media Queries for Responsiveness */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .stats-card.step-tracker, 
+  .stats-card.calorie-stats {
+    max-width: 100%;  /* Full width on small screens */
+  }
+  
+  .stats-card.macro-stats, 
+  .stats-card.daily-summary {
+    max-width: 100%;  /* Full width on small screens */
+  }
+  
+  .stats-row {
+    flex-direction: column;
+  }
+  
   .calorie-progress-ring {
     flex-direction: column;
     align-items: center;
@@ -1203,57 +1129,75 @@ body.dark-mode .metric-value {
   }
 }
 
-/* ===== APPOINTMENTS & MEDICINE SECTION ===== */
-.medicine-section,
-.appointment-section {
-  margin-top: 20px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Dark Mode for Stats */
+body.dark-mode .stats-card {
+  background: #1f1f1f;
+  color: #e0e0e0;
 }
 
-.medicine-section input,
-.medicine-section button,
-.appointment-section input,
-.appointment-section button {
-  width: 90%;
-  padding: 8px;
-  font-size: 16px;
+body.dark-mode .stats-card h3 {
+  color: #e0e0e0;
 }
 
-.medicine-section input[type="text"],
-.medicine-section input[type="time"],
-.medicine-section input[type="date"],
-.appointment-section input[type="text"],
-.appointment-section input[type="time"],
-.appointment-section input[type="date"] {
-  max-width: 160px;
+body.dark-mode .stats-card.step-tracker {
+  background: linear-gradient(145deg, #1f1f1f, #252d38);
+  border-left: 4px solid #81c784;
 }
 
-form input,
-form button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+body.dark-mode .stats-card.calorie-stats {
+  background: linear-gradient(145deg, #1f1f1f, #38291f);
+  border-left: 4px solid #FF8A65;
 }
 
-.set-reminder-btn,
-.medicine-section button,
-.appointment-section button {
-  background-color: orangered;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s ease-in-out;
-  font-size: 16px;
-  width: 100%;
-  margin-top: 10px;
+body.dark-mode .stats-card.macro-stats {
+  background: linear-gradient(145deg, #1f1f1f, #1a2536);
+  border-left: 4px solid #2186cf;
+}
+
+body.dark-mode .stats-card.daily-summary {
+  background: linear-gradient(145deg, #1f1f1f, #2d1f36);
+  border-left: 4px solid #9b59b6;
+}
+
+body.dark-mode .summary-metric {
+  background: #2a2a2a;
+}
+
+body.dark-mode .metric-icon {
+  background: #333;
+}
+
+body.dark-mode .metric-data h4 {
+  color: #bbb;
+}
+
+body.dark-mode .metric-value {
+  color: #e0e0e0;
+}
+
+body.dark-mode .progress-circle-inner {
+  background: #1f1f1f;
+}
+
+body.dark-mode #calorie-progress {
+  color: #FF8A65;
+}
+
+body.dark-mode #steps-count {
+  color: #81c784;
+}
+
+body.dark-mode .calorie-info-item,
+body.dark-mode .step-info-item {
+  background: #2a2a2a;
+}
+
+body.dark-mode .info-label {
+  color: #b0b0b0;
+}
+
+body.dark-mode .info-value {
+  color: #e0e0e0;
 }
 
 /* ===== SETTINGS SECTION ===== */
